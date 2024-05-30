@@ -1,0 +1,1888 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+
+    <style>
+        .title-wrapper-2 {
+            grid-template-columns: 40% 56%;
+        }
+
+        @media (max-width: 1700px) {
+
+
+
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1300px) {}
+
+
+
+        #main-grid {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            grid-template-columns: 18% 78%;
+            column-gap: 4%;
+        }
+
+        .x-axis .domain {
+            opacity: .2;
+        }
+
+
+        .myx .tick:first-of-type {
+            text-anchor: start;
+        }
+
+        .myx .tick:last-of-type {
+            text-anchor: end;
+        }
+
+        #chart svg {
+            overflow: visible;
+        }
+
+        .dash-line {
+            stroke-dasharray: 3 3;
+            stroke: black;
+            stroke-width: 1.5;
+        }
+
+        .green-line {
+            stroke: #00A199;
+            stroke-width: 1.4;
+        }
+
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: clamp(12px, 1.25vw, 20px);
+            line-height: clamp(18px, 1.35vw, 25px);
+            cursor: pointer;
+            -webkit-text-stroke: medium;
+            -webkit-text-stroke-color: transparent;
+            transition: .3s all ease-in-out;
+            margin-bottom: 8%;
+        }
+
+        .li-active {
+            /* font-weight: bold; */
+            -webkit-text-stroke-color: #005F9E;
+            color: #005F9E;
+            letter-spacing: 1.1px;
+        }
+
+        .content-01-header {
+            font-size: clamp(25px, 4.8vw, 70px);
+            letter-spacing: -1.09px;
+            font-weight: 900;
+            width: 70%;
+            width: 23ch;
+            line-height: 1.1em;
+        }
+
+        div#content-02 {
+            height: 86%;
+            width: 100%;
+        }
+
+        .content-01-text-row,
+        .content-02-text-row,
+        .content-03-text-row {
+
+
+            font-size: clamp(12px, 1.4vw, 26px);
+            line-height: clamp(9px, 2.04vw, 33px);
+            /* flex-grow: .8; */
+            /* width: 91%; */
+        }
+
+        .content-01-bottom {
+            display: grid;
+            grid-template-columns: 29% auto 29% auto 29%;
+            grid-template-columns: 35% 10% 35%;
+            padding-bottom: 3%;
+            padding-left: 3%;
+        }
+
+        .content-01-card {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0px 15px 30px #0000001A;
+            padding: 8% 7%;
+            text-align: center;
+            border: 2px solid rgba(0, 41, 75, 0);
+            transition: border .3s ease-in-out;
+        }
+
+        .content-01-card:hover {
+            border: 2px solid rgba(0, 41, 75, 1);
+        }
+
+        .content-01-card-title {
+            color: #6F6F6F;
+            letter-spacing: 1.35px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .content-01-card-val {
+            font-size: clamp(70px, 7.5vw, 120px);
+            letter-spacing: -.05em;
+            color: #363636;
+            opacity: .87;
+            line-height: 1.35em;
+        }
+
+        .content-01-card-text {
+            line-height: 1.25;
+        }
+
+        .text-blue {
+            color: #005F9E;
+        }
+
+        .content-01-space {
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: #6F6F6F;
+            text-align: center;
+            align-self: center;
+        }
+
+        .content-02-bottom-title {
+            letter-spacing: 0.23px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            height: 90%;
+        }
+
+        .content-02-bottom {
+            flex-grow: 1;
+            display: flex;
+            flex-flow: column;
+            padding-bottom: 4%;
+            height: 100%;
+            padding-top: 2%;
+        }
+
+        .flex-row {
+            display: flex;
+            margin-bottom: 60px;
+        }
+
+        .content-02-bottom-card {
+            max-width: 1447px;
+            box-shadow: 0px 15px 30px #0000001A;
+            padding: 20px;
+            height: 310px;
+            border: 2px solid transparent;
+            transition: .3s all ease-in-out;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+
+        }
+
+        .content-02-bottom-card:hover {
+            border-color: #00294B;
+        }
+
+
+        .box-row {
+            min-width: 600px;
+            display: grid;
+            grid-template-columns: .3fr .5fr .75fr 1fr 1fr;
+            text-align: center;
+            margin-bottom: 5px;
+            height: 50%;
+        }
+
+        .box-row p {
+            font-size: 15px;
+            letter-spacing: 0.01px;
+            line-height: 23px;
+            color: #363636;
+            align-self: center;
+            text-align: left;
+        }
+
+        .box {
+            justify-content: flex-end;
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            height: 100%;
+            background-color: #005F9E;
+            justify-content: center;
+        }
+
+        .terq-box,
+        .box-1 {
+            justify-content: center;
+            padding-right: 0;
+        }
+
+        .terq-box {
+            background-color: #00AEA9;
+        }
+
+        .subtext {
+            font-size: 20px;
+        }
+
+        .box-1 {
+            flex-grow: 2;
+        }
+
+        .box-2 {
+            flex-grow: 3;
+        }
+
+        .box-3 {
+            flex-grow: 4;
+        }
+
+        .box-4 {
+            flex-grow: 5;
+        }
+
+        .content {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        div#content-01 {
+            height: 87%;
+            width: 100%;
+        }
+
+        .col-02 {
+            position: relative;
+            height: 100%;
+        }
+
+        /* .active {
+            opacity: 1;
+            pointer-events: all;
+        } */
+
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            align-items: flex-end;
+            height: 70%;
+        }
+
+        .arrow-img {
+            margin-bottom: 110%;
+            width: clamp(30px, 2vw, 100px);
+            padding: 5%;
+            padding-left: 20%;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        /* .multi-person-icon {
+            width: 90px;
+            margin-top: 22px;
+        } */
+
+        .span-col-4 {
+            grid-column: 2/5;
+        }
+
+        .content-03-bottom {
+            height: 100%;
+        }
+
+        #content-03-quote {
+            display: grid;
+            grid-template-columns: 25% 75%;
+            width: 65%;
+        }
+
+        #content-03-quote .p-50 {
+            line-height: .7;
+        }
+
+        #content-03 {
+            height: 100%;
+        }
+
+
+        .fund-component {
+            background-color: white;
+            position: relative;
+            box-shadow: 0px 3px 6px #00000029;
+            opacity: .2;
+            pointer-events: none;
+            transition: .3s all ease-in-out;
+            user-select: none;
+            -moz-user-select: none;
+            display: flex;
+            z-index: 1;
+            align-items: center;
+            width: 50%;
+            color: black;
+            height: clamp(25px, 2.5vw, 50px);
+            padding: 3%;
+
+            height: 0;
+            padding: 0;
+            margin-bottom: 0;
+            overflow: hidden;
+            transition: .5s all ease-in-out;
+        }
+
+        .li-active .fund-component {
+            height: clamp(25px, 2.5vw, 50px);
+            padding: 3%;
+            margin-bottom: 6%;
+        }
+
+        .fund-component:hover #forward-arrow {
+            margin-left: 20%;
+        }
+
+
+        .fund-component .fund-square {
+            padding: 10%;
+            margin-right: 11%;
+        }
+
+        .fund-component #forward-arrow {
+            margin-left: 15%;
+            filter: contrast(0.5);
+            transition: .3s all ease-in-out;
+            position: relative;
+            left: 0;
+            height: 70%;
+        }
+
+        .collapse {
+            -webkit-text-stroke-color: transparent;
+            letter-spacing: 0.01em;
+            overflow: hidden;
+            position: relative;
+            left: 14%;
+            display: flex;
+            height: fit-content;
+            flex-flow: column;
+            justify-content: space-between;
+            transition: .5s all ease-in-out;
+            cursor: default;
+        }
+
+        .li-active .collapse {
+            /* height: 15%; */
+            overflow: visible;
+        }
+
+        /* 
+        .li-active .collapse:nth-of-type(2) {
+            height: 28%;
+        } */
+
+        .li-text {
+            margin-bottom: 0;
+            transition: .5s margin-bottom ease-in-out;
+        }
+
+        .li-active .li-text {
+            margin-bottom: 7%;
+        }
+
+        .collapse .actionable {
+            display: flex;
+            height: 0;
+            cursor: pointer;
+            align-items: center;
+            margin-bottom: 0;
+            overflow: hidden;
+            transition: .5s all ease-in-out;
+        }
+
+        .li-active .actionable {
+            height: clamp(20px, 2vw, 34px);
+            margin-bottom: 2px;
+        }
+
+        .outter-circle {
+            padding: 7%;
+            padding: 2%;
+            padding: 4px;
+            margin-right: 3.5%;
+            border-radius: 100%;
+            background: transparent linear-gradient(180deg, #009CDC 0%, #20B07E 53%, #004C46 100%) 0% 0% no-repeat padding-box;
+            position: relative;
+        }
+
+        .inner-circle {
+            background: white;
+            height: clamp(7px, 0.9vw, 14px);
+            width: clamp(7px, 0.9vw, 14px);
+            top: 0;
+            left: 0;
+            border-radius: 100%;
+            display: flex;
+            box-shadow: 0px 0px 0px 2px white;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-labels {
+            fill: black;
+            color: black;
+            opacity: 1;
+        }
+
+        .line-off .domain {
+            opacity: 0;
+        }
+
+        .nice-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 5% 25% repeat(4, 1fr);
+            column-gap: .5%;
+            row-gap: 1.25%;
+            height: 90%;
+            width: 95%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nice-grid>div {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .nice-grid .img-grid {
+            position: relative;
+            display: grid;
+            height: 100%;
+            grid-template-rows: 65% 30%;
+        }
+
+        .img-grid img {
+            margin: auto;
+            max-height: 100%;
+        }
+
+        .white-bg {
+            background-color: #FFFFFF;
+        }
+
+
+
+        .info-window {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: .5s all ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            background-color: rgba(0, 0, 0, 0.25);
+            z-index: 5;
+        }
+
+        .inner-window {
+            position: relative;
+            width: 35%;
+            max-width: 600px;
+            height: 60%;
+            max-height: 600px;
+            top: 20%;
+            left: 20%;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.16);
+            border-top: solid 5px #00AEA9;
+            border-top-width: clamp(2px, .5vw, 6px);
+            padding: 2%;
+            padding-bottom: 2.5%;
+            display: flex;
+            flex-flow: column;
+        }
+
+        .close-hover {
+            position: absolute;
+            z-index: 4;
+            right: 3%;
+            top: 2%;
+            transform: scale(1);
+            font-size: clamp(12px, 1.7vw, 20px);
+            font-weight: 900;
+            -webkit-text-stroke: thin;
+            transition: .3s all ease-in-out;
+            cursor: pointer;
+            pointer-events: none;
+            user-select: none;
+            -moz-user-select: none;
+        }
+
+        .close-hover:hover {
+            transform: scale(1.1);
+        }
+
+        .active .close-hover {
+            pointer-events: all;
+        }
+
+        .active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 5;
+        }
+
+        .outer-ring {
+            border-radius: 100%;
+            border: #00AEA9 3px solid;
+            border-width: clamp(2px, 2vw, 4.5px);
+            width: clamp(10px, 3vw, 40px);
+            height: clamp(10px, 3vw, 40px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 0px;
+            color: #00AEA9;
+            margin: auto;
+        }
+
+        .collapse .sma:hover {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+
+            <div id='info-window' class='info-window' onclick="closeBox()">
+                <div class='inner-window'>
+                    <div class="close-hover" id="close-hover-2" onclick="closeBox()">
+                        ✕
+                    </div>
+                    <div class="outer-ring p-18 bold">
+                        i
+                    </div>
+                    <div class='p-20 center lh-30' style='margin-top: 7%;
+                    height: 15%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;'>
+                        Innovation is everywhere and here to stay.
+                    </div>
+
+                    <div
+                        style='margin-top: 9%; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;'>
+
+                        <div>
+                            <div class='p-18 bold'>
+                                Implication
+                            </div>
+                            <div class='p-16'>
+                                The market is placing an undue emphasis on whether “growth” or “value” will reign –
+                                active management and stock selection is more important.
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class='p-18 bold'>
+                                Implementation idea
+                            </div>
+                            <div class='p-16'>
+                                Consider a flexible capital appreciation strategy that is not beholden to strict style
+                                parameters.
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class='p-18 bold'>
+                                Consider for whom?
+                            </div>
+                            <div class='p-16'>
+                                Investors with longer time horizons and/or seeking capital
+                                appreciation for a portion of their portfolios.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+
+                    <section id="content-area">
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div style='display: flex; flex-direction: column; height: 100%;'>
+                                <h1>
+                                    Flexible objectives
+                                </h1>
+
+                                <div class='p-24 bold' style='flex-grow: 1;    align-items: center;
+                                display: flex;'>
+                                    The Growth Fund of America
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <div class="blurb" style='width: 89%;'>
+                                    The Growth Fund of America has produced better outcomes for building wealth during
+                                    periods of volatility, and this has led to meaningful long-term value (versus the
+                                    index)
+                                    over nearly five decades
+                                </div>
+
+                                <div class='p-20 bold' style='margin-top: 3%;'>
+                                    Figures shown are past results for Class F-2 shares and are not predictive of
+                                    results in
+                                    future periods. Current and future results may be lower or higher than those shown.
+                                    Prices and returns will vary, so investors may lose money. Investing for short
+                                    periods
+                                    makes losses more likely. For current information and month-end results, visit
+                                    <span class="p-blue" onclick="window.open('https://capitalgroup.com')"
+                                        style='text-decoration: underline; cursor: pointer;'>capitalgroup.com</span>.
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- end content title -->
+
+                        <div id="main-page-content">
+                            <div id='main-grid'>
+                                <div class="col-01">
+                                    <ul>
+                                        <li class="item li-active" onclick="switchContent('content-01', this)">
+                                            <div class='li-text'>
+                                                01 — Success
+                                            </div>
+                                        </li>
+                                        <li class="item" onclick="switchContent('content-02', this)">
+                                            <div class='li-text'>
+                                                02 — Excess returns
+                                            </div>
+                                        </li>
+                                        <li class="item" onclick="switchContent('content-03', this)">
+                                            <div class='li-text'>
+                                                03 — Examples
+                                            </div>
+                                            <div class='collapse'>
+                                                <div class="fund-component p-16">
+                                                    <div class="fund-square" style="background-color: #012D72;"></div>
+                                                    GFA
+                                                    <img id="forward-arrow" class="footer-btn"
+                                                        src="./engine/imgs/arrow-right-thicker.svg" alt="right-arrow">
+                                                </div>
+                                                <div class="fund-component p-16 sma">
+                                                    <div class="fund-square" style="background-color: #6F6F6F;"></div>
+                                                    CGFG
+                                                    <img id="forward-arrow" class="footer-btn"
+                                                        src="./engine/imgs/arrow-right-thicker.svg" alt="right-arrow">
+                                                </div>
+                                                <div class='actionable' onclick='showOverlay(0)'>
+                                                    <div class="outter-circle">
+                                                        <div class="inner-circle">
+                                                            <div style="margin: 0; color: #20B07E; position: relative;
+                                                            left: .2px; top: .6px" class="p-14 bold">i</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='p-16 p-black normal'>
+                                                        Actionable Insights
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                                <div class="col-02">
+
+                                    <div id="content-01" class="content active">
+                                        <div class='p-16 demi'>Hypothetical value of $10,000 invested on November
+                                            30,1973</div>
+                                        <div class="legend-wrapper" style="margin-top: 0.5%;">
+                                            <div class="legend-item">
+                                                <div class="legend-dot ocean" style="background-color: #084E8A;">
+                                                </div>
+                                                <span class="p-16">The Growth Fund of America</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <div class="legend-dot light-grey" style="background-color: #B0A8A3;">
+                                                </div>
+                                                <span class="p-16">Standard and Poor's 500 Composite
+                                                    Index<sup>1</sup>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class='' id='chart'></div>
+                                    </div>
+
+                                    <div id="content-02" class="content">
+                                        <div class='p-16 demi'>
+                                            Average annual excess return (percentage points) vs. S&P 500 (calendar
+                                            years) as of December 31,
+                                            2021
+                                        </div>
+                                        <div class="legend-wrapper" style="margin-top: 0.5%;">
+                                            <div class="legend-item">
+                                                <div class="legend-dot ocean" style="background-color: #084E8A;">
+                                                </div>
+                                                <span class="p-16">The Growth Fund of America</span>
+                                            </div>
+
+                                            <div class="legend-item">
+                                                <div class="legend-dot light-grey" style="background-color: #B0A8A3;">
+                                                </div>
+                                                <span class="p-16">Large Growth Category median</span>
+                                            </div>
+                                        </div>
+
+                                        <div class='' id='chart-1'></div>
+                                    </div>
+
+                                    <div id="content-03" class="content" style='width: 100%; height: 94%;'>
+
+                                        <div class='nice-grid'>
+                                            <div class='p-16 demi'
+                                                style='grid-column: 1/5; display: block; align-self: flex-start;'>
+                                                Examples of top holdings in the portfolios<sup>2</sup>
+                                            </div>
+
+                                            <div></div>
+                                            <div class='img-grid'>
+                                                <img src="./img/icons_credit_card_24px.svg" alt="credit card"
+                                                    style='width: 85%'>
+                                                <div style='display: flex; justify-content: center; height: 100%;'>
+                                                    <div class='p-18 demi'>Mastercard</div>
+                                                </div>
+                                            </div>
+                                            <div class='img-grid'>
+                                                <img src="./img/icon_stethoscope_24px.svg" alt="credit card" style='width: 70%;
+                                                    position: relative;
+                                                    top: -6%;'>
+                                                <div style='display: flex; justify-content: center; height: 100%;'>
+                                                    <div class='p-18 demi'>Thermo Fisher Scientific</div>
+                                                </div>
+                                            </div>
+                                            <div class='img-grid'>
+                                                <img src="./img/icon_gears_24px.svg" alt="credit card" style='width: 72%;
+                                                    position: relative;
+                                                    top: -3%;'>
+                                                <div style='display: flex; justify-content: center; height: 100%;'>
+                                                    <div class='p-18 demi'>CSX</div>
+                                                </div>
+                                            </div>
+
+                                            <div class='p-22 demi' style='align-items: flex-start;'>Sectors</div>
+                                            <div style='background-color: #00294B; color: white;' class='p-22 bold'>
+                                                Information technology
+                                            </div>
+                                            <div style='background-color: #138E76; color: white;' class='p-22 bold'>
+                                                Health care
+                                            </div>
+                                            <div style='background-color: #762157; color: white;' class='p-22 bold'>
+                                                Industrials
+                                            </div>
+
+                                            <div class='p-22 demi' style='align-items: flex-start;'>Market cap<br>
+                                                ($US
+                                                millions)</div>
+                                            <div class='white-bg p-22 demi'>779,727</div>
+                                            <div class='white-bg p-22 demi'>180,603</div>
+                                            <div class='white-bg p-22 demi'>53,104</div>
+
+
+                                            <div class='p-22 demi' style='align-items: flex-start;'>
+                                                Price-to-earnings
+                                                <br>
+                                                (next 12 months)
+                                            </div>
+                                            <div class='white-bg p-22 demi'>64.5</div>
+                                            <div class='white-bg p-22 demi'>80.8</div>
+                                            <div class='white-bg p-22 demi'>32.1</div>
+
+
+                                            <div class='p-22 demi' style='display: block'>EPS
+                                                growth<sup>3</sup><br> (forward looking)</div>
+                                            <div class='white-bg p-22 demi'>20.2</div>
+                                            <div class='white-bg p-22 demi'>18.5</div>
+                                            <div class='white-bg p-22 demi'>46.3</div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <sup>1</sup> Results reflect dividends net of withholding taxes.
+                                <br><br>
+
+                                <sup>2</sup> Companies shown are among the top
+                                20 holdings by weight in The Growth Fund of America as of 12/31/21. (Tesla Inc.,
+                                Microsoft, Netflix, Facebook, Alphabet, Amazon, UnitedHealth Group, Broadcom, ASML,
+                                Mastercard Inc., TSMC, PayPal, CSX, Abbott Laboratories, Thermo Fisher Scientific,
+                                Charter Communications, JPMorgan Chase, ServiceNow, EOG Resources, Home Depot).
+                                <br><br>
+
+                                <sup>3</sup> EPS:
+                                Earnings per share. Long-term consensus estimated growth. Sources for Success chart:
+                                Morningstar, Capital Group. As of December 31, 2021.
+                                <br><br>
+                                Sources for Success chart: Morningstar, Capital Group. As of December 31, 2021.
+                                <br><br>
+                                Source for Excess returns chart:
+                                Morningstar; “growth-led” and “value-led” markets are determined by the Russell 1000
+                                Growth and Russell 1000 Value indices. Periods included since the first full calendar
+                                year following the inception of the Russell 1000 Growth and Value indices, 12/31/78.
+                                Class F-2 shares were first offered on 8/1/08. Class F-2 share results prior to 8/1/08
+                                are based on the original share class of the fund without a sales charge.
+                                <br><br>
+                                Source for
+                                Examples chart: Factset as of December 31, 2021.
+                                <br><br>
+
+                                <span>
+                                    Investors should carefully consider
+                                    investment objectives, risks, charges and expenses. This and other important
+                                    information
+                                    is contained in the fund prospectuses and summary prospectuses, which can be
+                                    obtained
+                                    from a financial professional and should be read carefully before investing.
+                                </span>
+                                <br><br>
+
+                                Indexes are
+                                unmanaged and, therefore, have no expenses. Investors cannot invest directly in an index
+                                <br><br>
+
+                                The Russell 1000 Growth Index is a market capitalization-weighted index that represents
+                                the large-cap growth segment of the U.S. equity market and includes stocks from the
+                                Russell 1000 Index that have higher price-to-book ratios and higher expected growth
+                                values.
+                                <br><br>
+                                Russell 1000 Value Index is a market capitalization-weighted index that
+                                represents the large-cap value segment of the U.S. equity market and includes stocks
+                                from the Russell 1000 Index that have lower price-to-book ratios and lower expected
+                                growth values.
+                                <br><br>
+                                Russell 2000 Index measures the performance of 2,000 small cap stocks.
+                                <br><br>
+                                Standard & Poor's 500 Composite Index is a market capitalization-weighted index based on
+                                the results of approximately 500 widely held common stocks. The Standard & Poor’s 500
+                                Composite Index is a product of S&P Dow Jones Indices LLC and/or its affiliates and has
+                                been licensed for use by Capital Group. Copyright © 2022 S&P Dow Jones Indices LLC, a
+                                division of S&P Global, and/or its affiliates. All rights reserved. Redistribution or
+                                reproduction in whole or in part are prohibited without written permission of S&P Dow
+                                Jones Indices LLC.
+                                <br><br>
+                                © 2022 Morningstar, Inc. All rights reserved. The information
+                                contained herein: (1) is proprietary to Morningstar and/or its content providers; (2)
+                                may not be copied or distributed; and (3) is not warranted to be accurate, complete or
+                                timely. Neither Morningstar nor its content providers are responsible for any damages or
+                                losses arising from any use of this information. Past performance is no guarantee of
+                                future results.
+                                <br><br>
+                                London Stock Exchange Group plc and its group undertakings
+                                (collectively, the “LSE Group”). © LSE Group 2022 FTSE Russell is a trading name of
+                                certain of the LSE Group companies. Russell® is a trademark of the relevant LSE Group
+                                companies and is used by any other LSE Group company under license. All rights in the
+                                FTSE Russell indexes or data vest in the relevant LSE Group company which owns the index
+                                or the data. Neither LSE Group nor its licensors accept any liability for any errors or
+                                omissions in the indexes or data and no party may rely on any indexes or data contained
+                                in this communication. No further distribution of data from the LSE Group is permitted
+                                without the relevant LSE Group company’s express written consent. The LSE Group does not
+                                promote, sponsor or endorse the content of this communication.
+                                <br><br>
+                                Statements attributed to
+                                an individual represent the opinions of that individual as of the date published and do
+                                not necessarily reflect the opinions of Capital Group or its affiliates. This
+                                information is intended to highlight issues and should not be considered advice, an
+                                endorsement or a recommendation.
+                                <br><br>
+                                This content, developed by Capital Group, home of
+                                American Funds, should not be used as a primary basis for investment decisions and is
+                                not intended to serve as impartial investment or fiduciary advice.
+                                <br><br>
+                                All Capital Group
+                                trademarks mentioned are owned by The Capital Group Companies, Inc., an affiliated
+                                company or fund. All other company and product names mentioned are the property of their
+                                respective companies.
+                                <br><br>
+                                American Funds Distributors, Inc., member FINRA.
+                                <br><br>
+                                © 2022 Capital
+                                Group. All rights reserved.
+                            </div>
+
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+<script>
+
+    //**************************************************************************//
+    //**************************************************************************//
+    //**************************************************************************//
+    //**************************************************************************//    
+    const listItems = document.querySelectorAll('.item');
+    const conentEls = document.querySelectorAll('.content');
+    const quotes = document.querySelectorAll('.p-quote');
+    const disclosures = document.querySelectorAll('.disclosure-changer')
+
+    function switchContent(id, element) {
+        let activeContent = document.getElementById(id);
+        let activeQuote = document.getElementById(`${id}-quote`)
+
+        if (disclosures.length) {
+            disclosures.forEach(disc => disc.classList.remove('active'))
+            disclosures[Number(id.split('-')[1][1]) - 1].classList.add('active')
+        }
+
+        listItems.forEach(el => {
+            el.classList.remove('li-active');
+        })
+        element.classList.add('li-active');
+
+        conentEls.forEach(el => {
+            el.classList.remove('active');
+        })
+        activeContent.classList.add('active');
+
+        quotes.forEach(quote => {
+            quote.classList.remove('active');
+        })
+        if (activeQuote)
+            activeQuote.classList.add('active');
+    }
+
+    //**************************************************************************//
+    //**************************************************************************//
+    //**************************************************************************//
+    //**************************************************************************//
+
+
+    const TERQ = '#00ADA9';
+    const SKY = '#7BD0E2';
+    const SAPH = '#004E8A';
+
+    class drawBar {
+        constructor(el) {
+            this.data = [
+                { color: SAPH, name: 'Growth-led market (23 years)', value: 3.68 },
+                { color: "#B0A8A3", name: 'Growth-led market (23 years)', value: 3.48 },
+
+                { color: SAPH, name: 'Value-led market (20 years)', value: .61 },
+                { color: "#B0A8A3", name: 'Value-led market (20 years)', value: -2.84 },
+            ]
+            this.el = el;
+            this.draws = 0;
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART 
+            vis.chartDiv = document.getElementById(vis.el);
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'g-bars')
+
+            vis.bars = vis.g.append('g');
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis')
+
+            // APPEND X AXIS 
+            vis.xAxis2 = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis')
+
+            // APPEND y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('display', 'none')
+
+            /// vis.textLabel = vis.g.append('text').attr('class', 'p-18 center demi').text('Rolling 12-month inflation rate')
+
+            setTimeout(() => {
+                this.redraw();
+            }, 500);
+        }
+
+        redraw() {
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.clientHeight;
+            const MARGIN = { top: 0, right: 0, bottom: height * .05, left: 0 };
+            const gWIDTH = width - (MARGIN.left + MARGIN.right);
+            const gHEIGHT = height - (MARGIN.top + MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", width)
+                .attr("height", height)
+                .style('overflow', 'visible');
+
+            // SET G
+            vis.g.attr('width', gWIDTH)
+                .attr('height', gHEIGHT)
+                .attr('transform', 'translate(' + MARGIN.left + ',' + MARGIN.top + ')');
+
+            // X SCALE
+            let x = d3
+                .scaleBand()
+                .domain(vis.data.map(d => d.name))
+                .range([0, gWIDTH])
+                .paddingInner(.5)
+                .paddingOuter(0.3)
+
+            // Y SCALE
+            let y = d3
+                .scaleLinear()
+                .range([gHEIGHT, 0])
+                .domain([-4.5, 5.6])
+
+            const barWidth = x.bandwidth() * .5;
+            const barGap = x.bandwidth() * .012;
+
+            // JOIN
+            const bars = vis.bars
+                .selectAll('rect')
+                .data(vis.data)
+
+            // EXIT
+            bars.exit().remove()
+
+            // UPDATE
+            bars
+                .transition()
+                .duration(500)
+                .attr('width', barWidth)
+                .attr('x', (d, i) => i % 2 === 0 ? x(d.name) - barGap : x(d.name) + barWidth + barGap)
+                .attr('y', d => (d.value >= 0 ? y(d.value) - 1 : y(0) + 1))
+                .attr('height', d => Math.abs(y(d.value) - y(0)));
+
+            // ENTER
+            bars
+                .enter()
+                .append('rect')
+                .attr('fill', d => d.color)
+                .attr('x', (d, i) => i % 2 === 0 ? x(d.name) - barGap : x(d.name) + barWidth + barGap)
+                .attr('y', d => y(0))
+                .attr('width', barWidth)
+                .attr('height', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => 33 * i + 100)
+                .attr('y', d => (d.value >= 0 ? y(d.value) - 1 : y(0) + 1))
+                .attr('height', d => Math.abs(y(d.value) - y(0)))
+
+            // NUMERICAL LABELS
+            // JOIN
+            const numericalTextLabel = d3.select(vis.chartDiv)
+                .selectAll('.num-labels')
+                .data(vis.data)
+
+            // EXIT
+            numericalTextLabel.exit().remove();
+
+            // UPDATE
+            numericalTextLabel
+                .transition()
+                .duration(500)
+                .style('opacity', 1)
+                .style('width', x.bandwidth() / 2 + 'px')
+                .style('left', (d, i) => i % 2 === 0 ? x(d.name) + 'px' : x(d.name) + barGap + barWidth + 'px')
+                .style('top', d => d.value < 0 ? y(d.value) - x.bandwidth() * .13 + 'px' : y(d.value) + x.bandwidth() * .01 + 'px')
+                .style('transform', d => d.value === .61 ? 'translateY(' + -x.bandwidth() * .125 + 'px)' : 'initial')
+
+            // ENTER
+            numericalTextLabel
+                .enter()
+                .append('div')
+                .attr('class', 'num-labels p-28 demi pa')
+                .style('color', d => d.value === .61 ? SAPH : 'white')
+                .style('text-align', 'center')
+                .style('width', x.bandwidth() / 2 + 'px')
+                .style('height', '1px')
+                .style('overflow', 'visible')
+                .style('left', (d, i) => i % 2 === 0 ? x(d.name) + 'px' : x(d.name) + barGap + barWidth + 'px')
+                .style('top', d => d.value < 0 ? y(d.value) - x.bandwidth() * .13 + 'px' : y(d.value) + x.bandwidth() * .01 + 'px')
+                .style('transform', d => d.value === .61 ? 'translateY(' + -x.bandwidth() * .125 + 'px)' : 'initial')
+                .html(d => d.value.toFixed(2).replace('-', '—') + '<sup>%</sup>')
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay(500)
+                .style('opacity', 1);
+
+            // X AXIS
+            const xAxisCall = d3
+                .axisBottom()
+
+            if (vis.draws === 1) {
+                vis.xAxis
+                    .attr('class', 'text-labels p-18 demi axis x-axis line-off')
+                    .attr('transform', `translate(${0}, ${y(-4) - 1})`)
+                    .attr('width', 0)
+                    .transition()
+                    .delay(250)
+                    .duration(500)
+                    .attr('opacity', 1)
+                    .attr('width', gWIDTH)
+                    .call(xAxisCall.scale(x).tickSizeOuter([0]));
+            } else {
+                vis.xAxis
+                    .transition()
+                    .duration(500)
+                    .attr('transform', `translate(${0}, ${y(-4) - 1})`)
+                    .attr('opacity', 1)
+                    .call(xAxisCall.scale(x).tickSizeOuter([0]));
+            }
+
+            // X2 AXIS
+            const x2AxisCall = d3
+                .axisBottom()
+                .tickFormat(d => null)
+
+            if (vis.draws === 1) {
+                vis.xAxis2
+                    .attr('class', 'text-labels p-18 demi axis x-axis')
+                    .attr('transform', `translate(${0}, ${y(0) - 1})`)
+                    .attr('width', 0)
+                    .transition()
+                    .delay(250)
+                    .duration(500)
+                    .attr('opacity', 1)
+                    .attr('width', gWIDTH)
+                    .call(x2AxisCall.scale(x).tickSizeOuter([0]));
+            } else {
+                vis.xAxis2
+                    .transition()
+                    .duration(500)
+                    .attr('transform', `translate(${0}, ${y(0) - 1})`)
+                    .attr('opacity', 1)
+                    .call(x2AxisCall.scale(x).tickSizeOuter([0]));
+            }
+
+            // Y AXIS
+            const yAxisCall = d3
+                .axisLeft()
+                .ticks(5)
+                .tickFormat(e => e === 20 ? e + " (%)" : String(e).replace('-', '–'))
+
+            if (vis.draws === 1) {
+                vis.yAxis
+                    .attr('class', 'text-labels p-18 demi axis y-axis')
+                    .style('text-anchor', 'start')
+                    .attr('transform', `translate(${-MARGIN.left + 8}, ${0})`)
+                    .attr('width', 0)
+                    .transition()
+                    .delay(250)
+                    .duration(500)
+                    .attr('opacity', 1)
+                    .attr('width', gWIDTH)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]));
+            } else {
+                vis.yAxis
+                    .transition()
+                    .duration(500)
+                    .attr('transform', `translate(${-MARGIN.left + 8}, ${0})`)
+                    .attr('opacity', 1)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]));
+            }
+
+            // vis.textLabel
+            //     .attr('y', y(-12.85))
+            //     .attr('text-anchor', 'middle')
+            //     .attr('x', width / 2)
+            //     .attr('dx', -MARGIN.left)
+        }
+
+    } // end draw bars
+
+    //**************************************************************************//
+    //**************************************************************************// 
+    //**************************************************************************//
+    //**************************************************************************// 
+
+    const mountainData = [
+        { date: "Fri Nov 30 1973 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 10000.0011528, sp: 9999.99999999948, },
+        { date: "Mon Dec 31 1973 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 10051.3320048, sp: 10197.9991687528, },
+        { date: "Tue Dec 31 1974 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 7863.0775326, sp: 7498.91938981628, },
+        { date: "Wed Dec 31 1975 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 10687.7670941, sp: 10290.5862221872, },
+        { date: "Fri Dec 31 1976 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 12664.9245608, sp: 12752.8132623805, },
+        { date: "Sat Dec 31 1977 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 15208.7735124, sp: 11840.0509968415, },
+        { date: "Sun Dec 31 1978 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 19305.4386042, sp: 12618.0368701709, },
+        { date: "Mon Dec 31 1979 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 28210.5353916, sp: 14966.1545221765, },
+        { date: "Wed Dec 31 1980 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 39525.8111601, sp: 19830.738784336, },
+        { date: "Thu Dec 31 1981 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 39758.7002844, sp: 18854.4615738807, },
+        { date: "Fri Dec 31 1982 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 49923.8086017, sp: 22916.9234637364, },
+        { date: "Sat Dec 31 1983 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 63446.1912516, sp: 28085.9086988787, },
+        { date: "Mon Dec 31 1984 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 60048.0173226, sp: 29847.921055558, },
+        { date: "Tue Dec 31 1985 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 76466.9198602, sp: 39317.7042472712, },
+        { date: "Wed Dec 31 1986 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 89010.3370488, sp: 46656.3791325885, },
+        { date: "Thu Dec 31 1987 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 95721.827817, sp: 49106.1326665272, },
+        { date: "Sat Dec 31 1988 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 113628.5490483, sp: 57261.8652578924, },
+        { date: "Sun Dec 31 1989 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 148097.9786314, sp: 75405.9819732238, },
+        { date: "Mon Dec 31 1990 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 142291.295211, sp: 73065.1978753622, },
+        { date: "Tue Dec 31 1991 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 193624.0159456, sp: 95325.1176634704, },
+        { date: "Thu Dec 31 1992 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 208391.9906904, sp: 102588.241618791, },
+        { date: "Fri Dec 31 1993 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 239103.224997, sp: 112927.82153721, },
+        { date: "Sat Dec 31 1994 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 239661.1698048, sp: 114418.973929974, },
+        { date: "Sun Dec 31 1995 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 311727.0226902, sp: 157415.072679463, },
+        { date: "Tue Dec 31 1996 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 358742.017354, sp: 193557.955882446, },
+        { date: "Wed Dec 31 1997 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 456042.7830013, sp: 258135.397594315, },
+        { date: "Thu Dec 31 1998 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 602235.434333, sp: 331906.729652241, },
+        { date: "Fri Dec 31 1999 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 879300.8163729, sp: 401745.038639428, },
+        { date: "Sun Dec 31 2000 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 947105.0864308, sp: 365168.670594554, },
+        { date: "Mon Dec 31 2001 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 832590.4979576, sp: 321765.379026458, },
+        { date: "Tue Dec 31 2002 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 650606.5638072, sp: 250653.59140159, },
+        { date: "Wed Dec 31 2003 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 866463.016104, sp: 322552.372534227, },
+        { date: "Fri Dec 31 2004 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 972051.595788, sp: 357652.702681544, },
+        { date: "Sat Dec 31 2005 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1112676.346965, sp: 375220.482694225, },
+        { date: "Sun Dec 31 2006 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1237019.5007874, sp: 434483.824425344, },
+        { date: "Mon Dec 31 2007 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1375392.4117235, sp: 458354.213796372, },
+        { date: "Wed Dec 31 2008 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 839802.20346, sp: 288773.091948732, },
+        { date: "Thu Dec 31 2009 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1132688.3022, sp: 365195.420979505, },
+        { date: "Fri Dec 31 2010 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1275043.98204, sp: 420206.13839496, },
+        { date: "Sat Dec 31 2011 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1215968.1436, sp: 429079.965932628, },
+        { date: "Mon Dec 31 2012 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1469516.8551, sp: 497747.735042703, },
+        { date: "Tue Dec 31 2013 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 1971472.90395, sp: 658958.926104571, },
+        { date: "Wed Dec 31 2014 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 2159502.7152, sp: 749160.728234052, },
+        { date: "Thu Dec 31 2015 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 2280546.44077, sp: 759527.861228319, },
+        { date: "Sat Dec 31 2016 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 2478806.1191, sp: 850366.801923332, },
+        { date: "Sun Dec 31 2017 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 3132720.16008, sp: 1036015.17880535, },
+        { date: "Mon Dec 31 2018 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 3048472.59958, sp: 990592.654258309, },
+        { date: "Tue Dec 31 2019 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 3914224.29944, sp: 1302494.8198147, },
+        { date: "Thu Dec 31 2020 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 5406801.12518, sp: 1542137.96591574, },
+        { date: "Fri Dec 31 2021 16:00:00 GMT-0800 (Pacific Standard Time)", gfa: 6465143, sp: 1984815, },
+    ]
+
+    mountainData.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    class drawMountain {
+        constructor() {
+            this.draws = 0;
+            this.data = mountainData;
+            this.keys = ['sp', 'gfa']
+
+            this.initVis();
+        }
+
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'vis-g')
+
+            vis.specialWidth = vis.g.append('text').attr('class', 'p-16').text('$$6,000,000')
+                .attr('opacity', 0).style('pointer-events', 'none')
+
+            // ADD AREA
+            vis.areaTwo = vis.g.append("path")
+                .attr('fill', "#004E8A");
+            vis.areaOne = vis.g.append("path")
+                .attr('fill', "#CCC5BE");
+
+            vis.text0 = vis.g.append("text").attr('class', 'p-22 demi')
+                .html('12/31/2021')
+                .attr('opacity', 0)
+
+            vis.text1 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16 demi')
+                .style('line-height', '1.2em')
+                .html('Annualized growth<br>since launch').attr('opacity', 1).style('position', 'absolute').style('color', '#004E8A')
+                .style('opacity', 0)
+
+            vis.text2 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16 demi')
+                .style('position', 'absolute')
+                .style('opacity', 0)
+
+            vis.text3 = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-16')
+                .style('transition', '.3s all ease-in-out')
+                .style('color', '#004E8A')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .style('opacity', 0)
+                .html(`
+                    <div class='p-30 demi'>$${d3.format(',')(vis.data[vis.data.length - 1][vis.keys[1]])}</div>
+                    <div>
+                        The Growth Fund<br> of America F-2
+                    </div>
+                `)
+
+            vis.text4 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16')
+                .style('position', 'absolute')
+                .style('transition', '.3s all ease-in-out')
+                .style('color', '#00A199')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .style('opacity', 0)
+                .html(`
+                    <div class='p-30 demi'>3.3x</div>
+                    <div>
+                        more wealth in $ terms
+                    </div>
+                `)
+
+            vis.text5 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16 ')
+                .style('position', 'absolute')
+                .style('transition', '.3s all ease-in-out')
+                .style('color', '#6F6F6F')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .style('opacity', 0)
+                .html(`
+                    <div class='p-30 demi'>$${d3.format(',')(vis.data[vis.data.length - 1][vis.keys[0]])}</div>
+                    <div>
+                        Benchmark<sup>1</sup>
+                    </div>
+                `)
+
+            vis.bottomLine = vis.g.append('line').attr('stroke', 'black').attr('stroke-width', '1.5px')
+            vis.lineOne = vis.g.append('line').attr('class', 'dash-line')
+            vis.lineTwo = vis.g.append('line').attr('class', 'dash-line')
+            vis.lineThree = vis.g.append('line').attr('class', 'dash-line')
+            vis.lineFour = vis.g.append('line').attr('class', 'dash-line')
+            vis.greenLine1 = vis.g.append('line').attr('class', 'green-line')
+            vis.greenLine2 = vis.g.append('line').attr('class', 'green-line')
+
+            vis.box1 = vis.g.append('rect')
+            vis.box2 = vis.g.append('rect')
+            vis.boxVal1 = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-20 demi p-white').style('position', 'absolute')
+            vis.boxVal2 = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-20 demi p-white').style('position', 'absolute')
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-16 myx')
+                .style('opacity', 0)
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'end')
+                .attr('class', 'axis y-axis p-16')
+                .style('opacity', 0)
+
+            // DEFINE MARKER
+            vis.defs = vis.svg.append("defs")
+
+            vis.defs.append("marker")
+                .attr("id", "arrow")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 5)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr('fill', '#00A199')
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("class", "arrowHead");
+
+            vis.defs.append("marker")
+                .attr("id", "arrow-reverse")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 5)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr('fill', '#00A199')
+                .attr("orient", "auto-start-reverse")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("class", "arrowHead");
+
+            setTimeout(() => {
+                vis.redraw()
+            }, 500);
+        }
+
+        redraw() {
+
+            const vis = this;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = vis.height * .13;
+            vis.top = 8;
+            vis.MARGIN = { top: vis.top, right: vis.width * .17, bottom: vis.bottom, left: vis.width * .09 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            // X SCALE
+            vis.x = d3.scaleTime()
+                .domain(d3.extent(vis.data, d => d.date))
+                .range([0, vis.gWIDTH])
+            const x = vis.x;
+
+            let yMax = 7500000;
+            let yMin = 0;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+            ///////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
+
+            const areaOne = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(yMin))
+                .y0(d => y(d[vis.keys[0]]))
+
+            const areaTwo = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(yMin))
+                .y0(d => y(d[vis.keys[1]]))
+
+            ////////////////// LINE BLUE
+            if (vis.draws <= 1) {
+                vis.areaOne
+                    .attr('d', areaOne(vis.data))
+                    .attr('opacity', 1)
+
+                vis.areaTwo
+                    .attr('d', areaTwo(vis.data))
+                    .attr('opacity', 1)
+            } else {
+                vis.areaOne
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', areaOne(vis.data))
+                    .attr('opacity', 1)
+
+                vis.areaTwo
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', areaTwo(vis.data))
+                    .attr('opacity', 1)
+            }
+
+            //////////////////////////////// X AXIS ////////////////////////////////
+            //////////////////////////////// X AXIS ////////////////////////////////
+            //////////////////////////////// X AXIS ////////////////////////////////
+
+            const tickValsX = []
+            const endOfTime = ' 16:00:21 GMT-0700 (Pacific Daylight Time)';
+            tickValsX.push(new Date('Jan 1 1973' + endOfTime))
+            tickValsX.push(new Date('Jan 1 1978' + endOfTime))
+            tickValsX.push(new Date('Jan 1 1983' + endOfTime))
+            tickValsX.push(new Date('Jan 1 1987' + endOfTime))
+            tickValsX.push(new Date('Jan 1 1992' + endOfTime))
+            tickValsX.push(new Date('Jan 1 1996' + endOfTime))
+            tickValsX.push(new Date('Jan 1 2001' + endOfTime))
+            tickValsX.push(new Date('Jan 1 2005' + endOfTime))
+            tickValsX.push(new Date('Jan 1 2010' + endOfTime))
+            tickValsX.push(new Date('Jan 1 2015' + endOfTime))
+            tickValsX.push(new Date('Dec 31 2021' + endOfTime))
+
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickValsX)
+                .tickPadding(4)
+                .tickSizeOuter([0])
+                .tickFormat(e => String(e.getFullYear()));
+
+            if (vis.draws <= 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+            } else {
+                vis.xAxis
+                    .transition()
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .call(xAxisCall.scale(x))
+            }
+
+            ////////////////////////////////
+            //////////////////////////////// Y AXIS ////////////////////////////////
+            ////////////////////////////////
+
+            // const tickVals = [0, 40000, 80000, 120000, 160000, 200000, 240000, 280000]
+            const xOffset = vis.specialWidth.node().getBBox().width - vis.MARGIN.left;
+            const yAxisCall = d3.axisLeft()
+                .ticks(6)
+                // .tickPadding(vis.specialWidth.node().getBBox().width)
+                .tickFormat(e => e === 7000000 ? '$' + d3.format(',')(e.toFixed(0)) : d3.format(',')(e))
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(${xOffset},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            ///////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
+
+            const boxWidth = x(new Date('1/1/2006')) - x(new Date('1/1/2000'))
+            const leftBoxPosition = x(new Date('1/1/77'))
+            const greyboxPosition = x(new Date('1/15/86'))
+
+            const box1xPos = leftBoxPosition
+            const box2xPos = greyboxPosition
+            const halfwayBetweenBoxes = (box2xPos - (box1xPos + boxWidth)) / 2;
+            const leftArrowXpos = box1xPos + boxWidth + halfwayBetweenBoxes + 'px';
+            const leftLinesWidth = halfwayBetweenBoxes * 1.3
+
+            const pushUp = window.innerWidth < 1700 ? -10 : 0;
+            const pullLeft = window.innerWidth < 1700 ? -7 : 0;
+            const masterUpDown = vis.gHEIGHT * .1;
+
+            vis.text1
+                .style('text-align', 'center')
+                // .style('margin-top', vis.value === 'gross' ? -vis.text1.node().clientHeight / 2 : 0)
+                .style('transition', '.3s margin-top ease-in-out')
+                .style('left', box1xPos + vis.MARGIN.left + boxWidth / 2 + 'px')
+                .style('margin-left', -vis.text1.node().clientWidth / 2 + 'px')
+                .style('top', vis.gHEIGHT * .21 + vis.MARGIN.top + pushUp + masterUpDown + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 500 : 0)
+                .delay(vis.draws === 1 ? 100 : 0)
+                .style('opacity', 1)
+
+            const valueOfWhatever = 2.8;
+
+            vis.text2
+                .style('color', '#00A199')
+                .style('text-align', 'center')
+                .style('line-height', '25px')
+                .html(`
+                <div class='p-30' style='line-height: 1.08'>${valueOfWhatever}<sup>%</sup> pts</div>
+                <div class='p-16 demi' style='line-height: 1.2em;'>
+                    higher than the <br> market return
+                        </div>
+                `)
+                .style('left', box2xPos + vis.MARGIN.left + boxWidth / 2 + 'px')
+                .style('margin-left', -vis.text2.node().clientWidth / 2 + 'px')
+                .style('top', vis.gHEIGHT * .242 + vis.MARGIN.top + pushUp + masterUpDown + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 500 : 0)
+                .delay(vis.draws === 1 ? 100 : 0)
+                .style('opacity', 1)
+
+            vis.lineOne
+                .attr('x1', box1xPos + boxWidth)
+                .attr('x2', box1xPos + boxWidth + leftLinesWidth)
+                .attr('y1', vis.gHEIGHT * .3 + masterUpDown)
+                .attr('y2', vis.gHEIGHT * .3 + masterUpDown)
+
+            vis.lineTwo
+                .attr('x1', box2xPos - leftLinesWidth)
+                .attr('x2', box2xPos)
+                .attr('y1', vis.gHEIGHT * .4 + masterUpDown)
+                .attr('y2', vis.gHEIGHT * .4 + masterUpDown)
+
+            const topVal = vis.data[vis.data.length - 1][vis.keys[1]];
+            const lastXpos = x(new Date(vis.data[vis.data.length - 1].date));
+            const lineWidth = vis.gWIDTH + vis.MARGIN.right * .3;
+            const lowerVal = vis.data[vis.data.length - 1][vis.keys[0]];
+            if (vis.draws === 1) {
+                vis.bottomLine
+                    .attr('x1', x(new Date('4/1/2019')))
+                    .attr('x2', x(new Date('12/31/2021')))
+                    .attr('y1', y(340000))
+                    .attr('y2', y(340000))
+
+                vis.lineThree
+                    .attr('x1', lastXpos)
+                    .attr('x2', lineWidth)
+                    .attr('y1', y(topVal))
+                    .attr('y2', y(topVal))
+
+                vis.lineFour
+                    .attr('x1', lastXpos)
+                    .attr('x2', lineWidth)
+                    .attr('y1', y(lowerVal))
+                    .attr('y2', y(lowerVal))
+            } else {
+
+                vis.bottomLine
+                    .transition()
+                    .duration(500)
+                    .attr('x1', x(new Date('4/1/2019')))
+                    .attr('x2', x(new Date('12/31/2021')))
+                    .attr('y1', y(340000))
+                    .attr('y2', y(340000))
+
+                vis.lineThree
+                    .transition()
+                    .duration(500)
+                    .attr('x1', lastXpos)
+                    .attr('x2', lineWidth)
+                    .attr('y1', y(topVal))
+                    .attr('y2', y(topVal))
+
+                vis.lineFour
+                    .transition()
+                    .duration(500)
+                    .attr('x1', lastXpos)
+                    .attr('x2', lineWidth)
+                    .attr('y1', y(lowerVal))
+                    .attr('y2', y(lowerVal))
+            }
+
+
+            vis.box1
+                .attr('width', boxWidth)
+                .attr('height', vis.gHEIGHT * .25)
+                .attr('fill', '#004E8A')
+                .attr('y', vis.gHEIGHT * .3 + masterUpDown)
+                .attr('x', leftBoxPosition)
+
+            vis.box2
+                .attr('width', boxWidth)
+                .attr('height', vis.gHEIGHT * .15)
+                .attr('fill', '#CCC5BE')
+                .attr('y', vis.gHEIGHT * .4 + masterUpDown)
+                .attr('x', greyboxPosition)
+
+            const pushRight = 5
+            vis.boxVal1
+                .style('text-align', 'center')
+                .style('left', leftBoxPosition + vis.MARGIN.left + pushRight + 'px')
+                .style('top', vis.gHEIGHT * .33 + vis.MARGIN.top + masterUpDown + 'px')
+                .style('width', boxWidth + 'px')
+                .html('14.4<sup>%</sup>')
+                .style('margin-left', -2)
+
+            vis.boxVal2
+                .style('text-align', 'center')
+                .style('left', greyboxPosition + vis.MARGIN.left + pushRight + 'px')
+                .style('top', vis.gHEIGHT * .43 + vis.MARGIN.top + masterUpDown + 'px')
+                .style('width', boxWidth + 'px')
+                .html('11.6<sup>%</sup>')
+
+            const arrowTop = y(topVal - 75000);
+            const arrowBottom = y(lowerVal + 75000);
+            const line2x = vis.gWIDTH + vis.MARGIN.right * .05;
+
+            if (vis.draws === 1) {
+                vis.greenLine1
+                    .attr('marker-end', "url('#arrow')")
+                    .attr('marker-start', "url('#arrow-reverse')")
+                    .attr('x1', leftArrowXpos)
+                    .attr('x2', leftArrowXpos)
+                    .attr('y1', masterUpDown + vis.gHEIGHT * .31)
+                    .attr('y2', masterUpDown + vis.gHEIGHT * .39)
+
+                vis.greenLine2
+                    .attr('marker-end', "url('#arrow')")
+                    .attr('marker-start', "url('#arrow-reverse')")
+                    .attr('x1', line2x)
+                    .attr('x2', line2x)
+                    .attr('y1', arrowTop)
+                    .attr('y2', arrowBottom)
+            } else {
+                vis.greenLine1
+                    .transition()
+                    .duration(500)
+                    .attr('x1', leftArrowXpos)
+                    .attr('x2', leftArrowXpos)
+                    .attr('y1', vis.gHEIGHT * .31 + masterUpDown)
+                    .attr('y2', vis.gHEIGHT * .39 + masterUpDown)
+
+                vis.greenLine2
+                    .transition()
+                    .duration(500)
+                    .attr('x1', line2x)
+                    .attr('x2', line2x)
+                    .attr('y1', arrowTop)
+                    .attr('y2', arrowBottom)
+            }
+
+            // far right texts
+            const leftPos = vis.gWIDTH + vis.MARGIN.right * .7
+
+            vis.text0
+                .attr('text-anchor', 'end')
+                .attr('x', x(new Date('12/1/2018')))
+                .attr('y', y(200000))
+                .transition()
+                .duration(0)
+                .delay(vis.draws === 1 ? 100 : 0)
+                .attr('opacity', 1)
+
+            vis.text3
+                .style('left', leftPos)
+                .style('top', y(topVal * 1.05))
+                .transition()
+                .duration(0)
+                .delay(vis.draws === 1 ? 100 : 0)
+                .style('opacity', 1)
+
+            vis.text4
+                .style('top', y(topVal - lowerVal))
+                .style('left', leftPos)
+                .transition()
+                .duration(0)
+                .delay(vis.draws === 1 ? 100 : 0)
+                .style('opacity', 1)
+
+            vis.text5
+                .style('top', y(lowerVal))
+                .style('margin-top', -vis.text5.node().clientHeight / 5)
+                .style('left', leftPos)
+                .transition()
+                .duration(0)
+                .delay(vis.draws === 1 ? 100 : 0)
+                .style('opacity', 1)
+
+        } // end redraw
+    } //end class
+
+    const mountain = new drawMountain();
+    const barChart = new drawBar('chart-1');
+
+    function redraw() {
+        barChart.redraw();
+        mountain.redraw();
+    }
+    window.addEventListener("resize", () => redraw());
+
+
+    ////////////////////////////////////
+    ///////////////////////////////
+    //////////////////////////
+    /////////////////////
+    ///////////////
+    ////////////
+    ///////
+    ////
+    function showOverlay(num) {
+        // if (num === 0)
+        document.getElementById('info-window').classList.add('active')
+    }
+
+    function closeBox() {
+        document.querySelectorAll('.info-window').forEach(el => el.classList.remove('active'))
+    }
+
+</script>
+
+
+</html>

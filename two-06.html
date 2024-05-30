@@ -1,0 +1,1541 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+
+    <style>
+        #bar-chart-2 svg,
+        #bar-chart-3 svg {
+            overflow: visible;
+        }
+
+        .borders {
+            fill: none;
+            stroke-width: 1;
+            stroke: white;
+            transition: .8s stroke-width ease-in-out;
+            pointer-events: none;
+
+        }
+
+        .land {
+            fill: rgba(214, 214, 214, .5);
+            pointer-events: none;
+        }
+
+        .countries {
+            fill: #f8f8f8;
+            /* stroke: rgba(255, 255, 255, 1);
+            stroke-width: 1px; */
+            pointer-events: none;
+        }
+
+        .region-name,
+        .region-num,
+        .labels {
+            text-anchor: middle;
+            cursor: pointer;
+        }
+
+
+        .chart-holder {
+            box-shadow: 3px 15px 30px #B5B5B5;
+            background-color: white;
+            width: 40%;
+            height: 88%;
+            position: absolute;
+            right: 0;
+            top: -5%;
+            padding: 1.35%;
+            transition: .3s opacity ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .chart-holder.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .info-box {
+            box-shadow: 0px 10px 30px transparent;
+            width: 100%;
+            height: 33%;
+            z-index: 2;
+            position: relative;
+            padding: 4%;
+            transition: .3s all ease-in-out;
+            background-color: transparent;
+        }
+
+        .info-box:hover {
+            box-shadow: 0px 10px 30px #00000029;
+            background-color: white;
+        }
+
+        .info-header-row {
+            display: flex;
+            justify-content: space-between;
+            /* align-items: flex-end; */
+            flex-direction: column;
+        }
+
+        .bar-chart {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            top: -8%;
+        }
+
+        .domain {
+            stroke: rgba(0, 0, 0, 0.5);
+            stroke-width: .35;
+        }
+
+        #slider-container {
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+            margin-left: auto;
+            position: relative;
+            height: 94%;
+        }
+
+        #slider-container .tip {
+            background-color: #E3E3E3;
+            height: 4%;
+            width: 50%;
+            margin-left: auto;
+            position: relative;
+        }
+
+        #slider {
+            background-color: #E3E3E3;
+            height: 98%;
+            width: 50%;
+            margin-left: auto;
+            position: relative;
+            z-index: 22;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        #slider-handle {
+            height: 3%;
+            width: 550%;
+            margin-left: auto;
+            position: absolute;
+            cursor: grab;
+            padding: 50% 0;
+            align-items: center;
+            background-color: #E3E3E3;
+            box-shadow: 0px 3px 6px #00000029;
+            display: flex;
+            justify-content: center;
+            flex-flow: column;
+            z-index: 22;
+            pointer-events: all;
+        }
+
+        #slider-handle div {
+            background-color: grey;
+            height: 13%;
+            width: 25%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            pointer-events: none;
+        }
+
+        #slider .tick {
+            position: absolute;
+            background-color: #E3E3E3;
+            width: 580%;
+            height: .5%;
+            right: 18%;
+            pointer-events: none;
+        }
+
+        .tick p {
+            margin: 0;
+            left: -90%;
+            top: -200%;
+            position: absolute;
+        }
+
+        #slider .tick:nth-of-type(1) {
+            top: 0%;
+        }
+
+        #slider .tick:nth-of-type(2) {
+            top: 25%;
+            width: 300%;
+        }
+
+        #slider .tick:nth-of-type(3) {
+            top: 50%;
+        }
+
+        #slider .tick:nth-of-type(4) {
+            top: 75%;
+            width: 300%;
+        }
+
+        #slider .tick:nth-of-type(5) {
+            top: 100%;
+        }
+
+        #slider-container .click-box {
+            position: absolute;
+            background-color: transparent;
+
+            height: 10%;
+            width: 700%;
+            right: -100%;
+            top: 0%;
+
+            cursor: pointer;
+            z-index: 21;
+        }
+
+        #slider-container #cb-2 {
+            top: 45%;
+        }
+
+        #slider-container #cb-3 {
+            top: 90%;
+        }
+
+        .magic-box {
+            background-color: white;
+            position: relative;
+            top: 20%;
+            padding: 1%;
+            padding-left: 1%;
+            padding-right: 2.8%;
+            box-shadow: 0px 3px 6px #00000029;
+            transition: .3s all ease-in-out;
+            user-select: none;
+            -moz-user-select: none;
+            display: flex;
+            z-index: 1;
+            align-items: center;
+            width: fit-content;
+            height: clamp(15px, 2.5vw, 40px);
+        }
+
+        .magic-box .outter-circle {
+            padding: 7%;
+            padding: 2%;
+            padding: 4px;
+            margin-right: 5%;
+            border-radius: 100%;
+            background: transparent linear-gradient(180deg, #009CDC 0%, #20B07E 53%, #004C46 100%) 0% 0% no-repeat padding-box;
+            position: relative;
+        }
+
+        .magic-box #forward-arrow {
+            margin-left: 4%;
+            filter: contrast(0.5);
+            transition: .3s all ease-in-out;
+            position: relative;
+            left: 0;
+            height: unset;
+        }
+
+        .magic-box:hover #forward-arrow {
+            margin-left: 5%;
+        }
+
+        .inner-circle {
+            background: white;
+            height: clamp(9px, 2vw, 12px);
+            width: clamp(9px, 2vw, 12px);
+            top: 0;
+            left: 0;
+            border-radius: 100%;
+            display: flex;
+            box-shadow: 0px 0px 0px 2px white;
+        }
+
+        #overlay-container.up {
+            pointer-events: all;
+            top: 0%;
+        }
+
+        #overlay-container.visible {
+            opacity: 1;
+        }
+
+        #overlay-container.block {
+            display: block;
+        }
+
+        #overlay-container {
+            position: absolute;
+            height: fit-content;
+            width: 100%;
+            top: 100vh;
+            opacity: 0;
+            z-index: 9;
+            background-color: #02294B;
+            transition: .7s top ease-in-out;
+            padding: 3%;
+            padding-top: 4%;
+
+            display: none;
+        }
+
+        /* #overlay-container::-webkit-scrollbar {
+            display: none;
+        } */
+
+        .close-hover {
+            font-size: clamp(9px, 1vw, 16px);
+            -webkit-text-stroke-width: medium;
+            right: .5%;
+            top: 2%;
+            padding: .2% .4%;
+            padding-bottom: .15%;
+            position: absolute;
+            cursor: pointer;
+            z-index: 22;
+            transition: all .3s;
+            transform-origin: center center;
+            background-color: white;
+        }
+
+        .close-hover:hover {
+            transform: scale(1.1);
+        }
+
+        .p-96 {
+            font-size: clamp(66px, 5vw, 96px);
+            line-height: 1em;
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-top: 2.5%;
+        }
+
+        .blue-row {
+            background-color: #032D72;
+            color: white;
+            padding: 2% 6%;
+        }
+
+        .pis-blue {
+            background-color: #CDD5E2;
+            padding: 4% 6%;
+        }
+
+        .light-blue {
+            background-color: #F5F6F9;
+            padding: 4% 6%;
+        }
+
+        .two-cols .p-24>div {
+            margin-bottom: 1%;
+        }
+
+        .saph-dot {
+            fill: #005F9E;
+            stroke: rgba(0, 95, 158, 0.4);
+        }
+
+        .terq-dot {
+            fill: #1BAEA9;
+            stroke: rgba(27, 174, 169, 0.4);
+        }
+
+        .green-dot {
+            fill: #064C46;
+            stroke: rgba(6, 76, 70, 0.4);
+        }
+
+        #chart svg,
+        #chart-1 svg {
+            overflow: visible;
+        }
+
+        .title-wrapper-2,
+        .chart-ui-row {
+            z-index: 1;
+        }
+
+        .chart-dot {
+            fill: white;
+            stroke: #004E8D;
+            stroke-width: 2px;
+        }
+
+
+
+
+        .hover-element {
+            /* width: fit-content; */
+            /* min-width: clamp(20%, 22.5vw, 25%); */
+            min-width: clamp(26%, 31vw, 30%);
+            margin-left: clamp(-15%, -31vw, -13%);
+            /* height: 61%; */
+            margin-top: -20%;
+            position: absolute;
+            transition: .3s opacity ease-in-out, .5s left, .5s top;
+            opacity: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hover-element.on {
+            opacity: 1;
+        }
+
+        .white-cover {
+            background-color: white;
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+            position: relative;
+        }
+
+        .hover-content {
+            padding: 6%;
+            padding-bottom: 7%;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            cursor: pointer;
+        }
+
+        .on .hover-content {
+            pointer-events: all;
+        }
+
+        .white-arrow {
+            height: clamp(20px, 3vw, 40px);
+            margin-top: clamp(-10px, -1vw, 0px);
+            width: clamp(20px, 3vw, 40px);
+            margin-left: clamp(-20px, -3vw, -10px);
+            transform: scaleX(.7) rotate(45deg);
+            position: absolute;
+            box-shadow: 0px 20px 30px #0000001c;
+            background-color: white;
+            z-index: 2;
+            top: 90%;
+            left: 50%;
+            pointer-events: none;
+        }
+
+        #arrow-2 {
+            top: -3%;
+            margin-top: clamp(-2px, 1vw, 0px);
+        }
+
+        #arrow-6 {
+            top: -3%;
+            margin-top: clamp(-2px, 1vw, 0px);
+        }
+
+        #arrow-7 {
+            transform: rotate(-45deg) scaleY(.91);
+            left: 93.5%;
+            top: 14%;
+            margin-left: unset;
+            margin-left: clamp(-9px, -1vw, 0px);
+            margin-left: clamp(-10px, -0.2vw, 6px);
+        }
+
+        .box-shadow {
+            box-shadow: 0px 10px 40px #00000043;
+            z-index: 1;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            top: 0;
+        }
+
+        .map-dot {
+            cursor: pointer;
+        }
+
+        .map-dot:hover {
+            stroke-width: 15px;
+        }
+
+        @media (max-width: 1700px) {
+
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1200px) {}
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div>
+                                <h1>
+                                    Dividends are staging a comeback of global proportions
+                                </h1>
+                                <h2>
+                                    Many companies are shifting from dividend zeros to dividend heroes
+                                </h2>
+                            </div>
+
+                            <div class='blurb'>
+                                Dividend growers historically have tended to generate greater returns than other
+                                dividend strategies, while also keeping up relatively well with the broader market.
+                                Because it is reflective of stronger earnings, dividend growth can also offer a measure
+                                of resilience against interest rate hikes.
+                            </div>
+
+                        </div>
+                        <!-- end content title -->
+                        <section class="chart-ui-row">
+                        </section>
+                        <section class="chart-ui-row">
+                            <div class="chart-title-wrapper">
+                                <h3>
+                                    Dividends per share are rising around the world
+                                </h3>
+                                <div class="legend-wrapper">
+                                    <div class="legend-item">
+                                        <div class="legend-dot bg-ash" style="background-color: #1BAEA9;"></div>
+                                        <span class="p-16">United States</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background-color: #0B5F9E;"></div>
+                                        <span class="p-16">International</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot" style="background-color: #064C46;"></div>
+                                        <span class="p-16">Emerging markets</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="magic-box p-16" style="cursor: pointer;" onclick="toggleChart()">
+                                <div class="outter-circle">
+                                    <div class="inner-circle">
+                                        <div style="margin: auto; color: #20B07E; position: relative;
+                                        left: 0.35px;" class="p-10 bold">i</div>
+                                    </div>
+                                </div>
+                                <div style="white-space: nowrap">
+                                    Dividends per share projections
+                                </div>
+                                <img id="forward-arrow" class="footer-btn" src="./engine/imgs/arrow-right-thicker.svg"
+                                    alt="right-arrow">
+                            </div>
+                        </section>
+
+                        <div id='main-page-content'>
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div id="chart"></div>
+                                <div class='chart-holder' id='chart-holder'>
+                                    <div class='p-18 bold' style="margin-bottom: 2%;">
+                                        Dividends per share (MSCI ACWI)
+                                    </div>
+                                    <div style='width: 100%; height: 92%; position: relative;'>
+                                        <div id="chart-1"></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <p>
+                                    Sources: Capital Group, Refinitiv Datastream, Refinitiv Eikon. As of December 31, 2021. 
+                                    Revenue figures and estimates are converted to USD from local currencies based on daily 
+                                    spot rates. DPS represents “dividend per share” and is calculated on a forward rolling 
+                                    12-month basis based on current consensus estimates. The source for the Dividends Per 
+                                    Share Projections chart (overlay) is Factset. The chart uses MSCI All Country World 
+                                    Index (ACWI) to represent global dividends and is as of December 31, 2021.
+                                </p>
+                                <p>
+                                    MSCI All Country World Index (ACWI) is a free float-adjusted market capitalization 
+                                    weighted index that is designed to measure equity market results in the global 
+                                    developed and emerging markets, consisting of more than 40 developed and emerging 
+                                    market country indexes. Results reflect dividends gross of withholding taxes through 
+                                    December 31, 2000, and dividends net of withholding taxes thereafter. This index is 
+                                    unmanaged, and its results include reinvested dividends and/or distributions but do 
+                                    not reflect the effect of sales charges, commissions, account fees, expenses or U.S. 
+                                    federal income taxes.
+                                </p>
+                                <p>
+                                    MSCI has not approved, reviewed or produced this report, makes no express or implied 
+                                    warranties or representations and is not liable whatsoever for any data represented. 
+                                    You may not redistribute MSCI data or use it as a basis for other indices or investment 
+                                    products.
+                                </p>
+                                <p>
+                                    <span>
+                                        Investors should carefully consider investment objectives, risks, charges and
+                                        expenses. This and other important information is contained in the fund
+                                        prospectuses and summary prospectuses, which can be obtained from a financial
+                                        professional and should be read carefully before investing.
+                                    </span>
+                                </p>
+                                <p>
+                                    Statements attributed to an individual represent the opinions of that individual as
+                                    of the date published and do not necessarily reflect the opinions of Capital Group
+                                    or its affiliates. This information is intended to highlight issues and should not
+                                    be considered advice, an endorsement or a recommendation.
+                                </p>
+                                <p>
+                                    This content, developed by Capital Group, home of American Funds, should not be used
+                                    as a primary basis for investment decisions and is not intended to serve as
+                                    impartial investment or fiduciary advice.
+                                </p>
+                                <p>
+                                    All Capital Group trademarks mentioned are owned by The Capital Group Companies,
+                                    Inc., an affiliated company or fund. All other company and product names mentioned
+                                    are the property of their respective companies.
+                                </p>
+                                <p>
+                                    American Funds Distributors, Inc., member FINRA.
+                                </p>
+                                <p>
+                                    © 2022 Capital Group. All rights reserved.
+                                </p>
+
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+
+<script src="./js/topojson.min.js"></script>
+<script src="./js/d3-geo-projection.v2.min.js"></script>
+
+<script src="./js/worldMap.js"></script>
+<script src="./js/countries.js"></script>
+
+<script>
+    //************************** D3 CHARTS ***************************************************//
+    //****************************************************************************************//  
+    class drawMap {
+        constructor(element, data) {
+            this.element = element;
+            this.data = data;
+            this.antarctica = countries.features.filter(el => el.properties.name === 'Antarctica')
+            this.draws = 0;
+            this.initVis();
+        }
+
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById(vis.element);
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            //need this for correct panning
+            vis.g = vis.svg.append("g").attr('class', 'main-g');
+
+            /////////////
+            vis.countries = vis.g.append('g').attr('class', 'land');
+
+            // COUNTRIES GROUP
+            vis.countryDivs = vis.g.append('g').attr('class', 'countries')
+            vis.borders = vis.g.append('g').attr('class', 'borders').append('path');
+
+            // APPEND COUNTRIES PATHS
+            vis.antarctica.forEach(el => {
+                vis.countryDivs.append('path')
+                    .attr('id', `${el.properties.name.replaceAll(' ', '-')}`)
+                    .attr('class', 'country')
+            })
+
+            vis.dots = vis.g.append('g').attr('class', 'dots');
+
+            vis.labels = vis.g.append('g').attr('class', 'labels p-22 bold')
+
+            vis.nums = vis.g.append('g').attr('class', 'nums')
+
+            vis.taiwanLine2 = vis.labels.append('text').text('Manufacturing')
+
+            this.appendBoxes(vis.chartDiv);
+            this.redraw();
+        }
+
+        appendBoxes(chartDiv) {
+
+            const mapDots = [
+                {
+                    title: 'Broadcom', city: "San Jose, United States of America", year: 1961,
+                    g1: '274.7B',
+                    g2: '2.5',
+                    g3: '26',
+                },
+                {
+                    title: 'Canadian Natural Resources', city: "Calgary, Canada", year: 1973,
+                    g1: '49.6B',
+                    g2: '4.4',
+                    g3: '57',
+                },
+                {
+                    title: 'TC Energy', city: "Calgary, Canada", year: 1951,
+                    g1: '45.6B',
+                    g2: '5.9',
+                    g3: '16',
+                },
+                {
+                    title: 'UnitedHealth', city: "Minnetonka, United States of America", year: 1977,
+                    g1: '472.9B',
+                    g2: '1.2',
+                    g3: '34',
+                },
+                {
+                    title: 'Comcast', city: "Philadelphia, United States of America", year: 1963,
+                    g1: '230B',
+                    g2: '2.0',
+                    g3: '19',
+                },
+                {
+                    title: 'TD Bank', city: "Toronto, Canada", year: 1855,
+                    g1: '139.8B',
+                    g2: '3.7',
+                    g3: '20',
+                },
+                {
+                    title: 'JP Morgan Chase', city: "New York City, United States of America", year: 2000,
+                    g1: '468B',
+                    g2: '2.5',
+                    g3: '11',
+                },
+
+                {
+                    title: 'Brasil, Bolsa, Balcão', city: "Sao Paulo, Brazil", year: 1890,
+                    g1: '12.3B',
+                    g2: '7.4',
+                    g3: '246',
+                },
+
+                {
+                    title: 'Carlsberg', city: "Copenhagen, Denmark", year: 1847,
+                    g1: '25.6B',
+                    g2: '1.9',
+                    g3: '22',
+                },
+
+                {
+                    title: 'Unilever', city: "London, United Kingdom", year: 1929,
+                    g1: '136.8B',
+                    g2: '3.6',
+                    g3: '6',
+                },
+
+                {
+                    title: 'Zurich Insurance Group', city: "Zurich, Switzerland", year: 1872,
+                    g1: '66.1B',
+                    g2: '5',
+                    g3: '5',
+                },
+                {
+                    title: 'Enel', city: "Rome, Italy", year: 1962,
+                    g1: '81.6B',
+                    g2: '5.4',
+                    g3: '12',
+                },
+                {
+                    title: 'Power Grid Corporation of India', city: "Gurgaon, India", year: 1989,
+                    g1: '19.2B',
+                    g2: '4.9',
+                    g3: '44',
+                },
+                {
+                    title: 'China Gas Holdings', city: "Hong Kong", year: 1995,
+                    g1: '11.5B',
+                    g2: '3.4',
+                    g3: '20',
+                },
+                {
+                    title: 'Samsung', city: "Suwon, South Korea", year: 1969,
+                    g1: '393.2B',
+                    g2: '2',
+                    g3: '113',
+                },
+                {
+                    title: 'Tokyo Electron', city: "Minato-Ku, Japan", year: 1963,
+                    g1: '90.6B',
+                    g2: '1.9',
+                    g3: '80',
+                },
+                {
+                    title: 'Softbank', city: "Minato-Ku, Japan", year: 1981,
+                    g1: '60.5B',
+                    g2: '5.9',
+                    g3: '33',
+                },
+                {
+                    title: 'Taiwan Semiconductor Manufacturing', city: "Hsinchu, Taiwan", year: 1987,
+                    g1: '576.4B',
+                    g2: '1.8',
+                    g3: '19',
+                },
+            ]
+
+            function closeBox(i) {
+                document.getElementById('hover-' + i).classList.remove('on');
+
+                document.getElementById('dot-' + i).removeAttribute('click');
+                document.getElementById('num-' + i).removeAttribute('click');
+                if (i === 17)
+                    document.getElementById('numAgain-17').removeAttribute('click')
+            }
+
+            mapDots.forEach((el, i) => {
+                d3.select(chartDiv).append('div')
+                    .attr('class', 'hover-element')
+                    .attr('id', `hover-${i}`)
+                    .on('click', () => closeBox(i))
+                    .html(`
+                        <div style='display: none;' class="close-hover" onclick="closeBox(this)">✕</div>
+    
+                        <div class="white-cover">
+                            <div class="hover-content">
+
+                                <div class="p-18 demi" style='margin-bottom: 1%;'>${el.title}</div>
+
+                                <div class="demi p-14" style='letter-spacing: .15; color: #000; margin-bottom: 1%;'>
+                                    ${el.city}
+                                </div>
+
+                                <div class="bold p-14" style='letter-spacing: .15; color: #000; margin-bottom: 6%;'>
+                                    <span class='normal'>Founded </span>
+                                    ${el.year}
+                                </div>
+
+                                <div style='display: grid; grid-template-columns: auto auto auto; column-gap: 4%;'>
+                                    <div>
+                                        <div class='p-34 demi'>$${el.g1}</div>
+                                        <div class='p-16 demi' style='color: #363636; white-space:nowrap;'>Market<br>Cap</div>
+                                    </div>
+
+                                    <div>
+                                        <div class='p-34 demi'>${el.g2}<sup>%</sup></div>
+                                        <div class='p-16 demi' style='color: #363636; white-space:nowrap;'>2021 Dividend<br>Yield</div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div style='display: flex;'>
+                                            <div class='p-34 demi'>${el.g3}<sup>%</sup></div>
+                                            <div style='margin-left: 5%;'>
+                                                <svg height="6" width="12" style="overflow: visible; margin:auto; transform: translateY(95%);">
+                                                    <polygon points="6,0 12,6 0,6" style="fill:#008E77; stroke:none;"></polygon>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class='p-16 demi' style='color: #363636; white-space:nowrap;'>2Y Change in 12-<br>Month Fwd DPS</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white-arrow" id="arrow-${i}"></div>
+                        <div class="box-shadow"></div>
+                `)
+            })
+        }
+
+        redraw() {
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth
+            vis.height = vis.chartDiv.clientHeight;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height)
+
+            // // params
+            // const scale = seismicApp ? 170 : smallLapTop ? 230 : iPad ? 230 : 300;
+            // const xPos = seismicApp ? width * .47 : smallLapTop ? width * .49 : iPad ? width * .48 : width * .49;
+            // const yPos = seismicApp ? height * .7 : smallLapTop ? height * .78 : iPad ? height * .6 : height * .7;
+
+            // SCALING/POSITIONING params
+            const scale = window.innerWidth * .12;
+            const xPos = window.innerWidth * .469;
+            const yPos = scale * 1.6;
+
+            // map
+            // const projection = d3.geoPatterson()
+            const projection = d3.geoMercator()
+                .scale(scale)
+                .translate([xPos, yPos])
+                .rotate([-10, 0, 0])
+                .precision(.1)
+
+            vis.path = d3.geoPath()
+                .projection(projection);
+
+            //countries,  (all countries group)
+            const allCountries = vis.countries
+                .selectAll("path")
+                .data(topojson.feature(world, world.objects.countries).features)
+
+            allCountries
+                .exit().remove()
+
+            allCountries
+                .attr("d", vis.path);
+
+            allCountries
+                .enter()
+                .append("path")
+                .attr('class', 'country')
+                .attr("id", d => d.id)
+                .attr("d", vis.path);
+
+            // ANACRTICA IS HIDDEN BY THIS SEPARATE COUNTRY PATH
+            vis.antarctica.forEach(el => {
+                const countryName = el.properties.name;
+                const currentCountry = countries.features.filter(d => {
+                    return d.properties.name == countryName;
+                })
+                vis.countryDivs.select(`#${countryName.replaceAll(' ', '-')}`)
+                    .data(currentCountry)
+                    .attr("d", vis.path)
+            });
+
+            // DRAW MAP
+            // vis.land
+            //     .datum(topojson.feature(world, world.objects.land))
+            //     .attr("d", path);
+
+            // DRAW BORDERS
+            vis.borders
+                .datum(topojson.mesh(world, world.objects.countries, function (a, b) { return a !== b; }))
+                .attr("d", vis.path);
+
+            // DRAW DOTS
+            // add circles to g
+            vis.dotSize = window.innerWidth * .004;
+            vis.dotStroke = vis.dotSize * 1.3
+
+            const dots = vis.dots.selectAll(".map-dot")
+                .data(vis.data)
+
+            dots.exit().remove();
+
+            dots
+                .style('transition', '0s stroke-width, .0s opacity, 0s r')
+                .transition()
+                .duration(1000)
+                .attr('opacity', 1)
+                .attr("cx", d => projection(d.coords)[0])
+                .attr("cy", d => projection(d.coords)[1])
+                .attr('r', d => vis.dotSize)
+                .attr('class', d => `map-dot ${d.className}`)
+                .attr('stroke-width', vis.dotStroke)
+                .transition()
+                .delay(1000)
+                .duration(100)
+                .style('transition', '.3s stroke-width, .3s opacity, 1s r')
+
+            dots
+                .enter()
+                .append("circle")
+                .attr('class', d => `map-dot ${d.className}`)
+                .attr('stroke-width', d => vis.dotStroke)
+                .attr('id', (d, i) => `dot-${i}`)
+                .attr("cx", d => projection(d.coords)[0])
+                .attr("cy", d => projection(d.coords)[1])
+                .attr('r', d => 1)
+                .on('mouseover', (d, i, nodes) => dotHover(nodes[i]))
+                .on('mouseout', (d, i, nodes) => dotLeave(nodes[i]))
+                .on('click', (d, i, nodes) => dotClick(nodes[i]))
+                .attr('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => 100 + (i * 200))
+                .attr('r', d => vis.dotSize)
+                .attr('opacity', 1)
+                .transition()
+                .duration(100)
+                .style('transition', '.3s stroke-width, .3s opacity, 1s r')
+
+            ///////////////////////////////////////////////////////////////////////////
+            function dotHover(dot) {
+                const id = dot.id.split('-')[1]
+                console.log(id)
+                document.getElementById('hover-' + id).classList.add('on')
+            }
+
+            function dotLeave(dot) {
+                if (dot.getAttribute('click') === 'true')
+                    return
+
+                const id = dot.id.split('-')[1]
+                document.getElementById('hover-' + id).classList.remove('on')
+            }
+
+            function dotClick(dot) {
+                const id = dot.id.split('-')[1];
+
+                if (dot.getAttribute('click') === 'true') {
+                    document.getElementById('dot-' + id).removeAttribute('click')
+                    document.getElementById('num-' + id).removeAttribute('click')
+
+                    if (id === '17')
+                        document.getElementById('numAgain-17').removeAttribute('click')
+                } else {
+                    document.getElementById('dot-' + id).setAttribute('click', 'true')
+                    document.getElementById('num-' + id).setAttribute('click', 'true')
+
+                    if (id === '17')
+                        document.getElementById('numAgain-17').setAttribute('click', 'true')
+                }
+            }
+
+            //*************************************************************************************************//
+            // add nums
+            const label = vis.labels.selectAll(".region-num")
+                .data(vis.data)
+
+            label.exit().remove();
+
+            const moveLR = vis.dotSize * 2.5;
+            const moveDown = vis.dotSize * 4.4;
+            const moveUp = moveDown / 1.6;
+
+            label
+                .transition()
+                .duration(1000)
+                .style('opacity', 1)
+                .text(d => d.id)
+                .attr("x", d => projection(d.coords)[0])
+                .attr("y", d => projection(d.coords)[1])
+                .attr('dy', d => d.id === 'Canadian Natural Resources' ? -moveUp * .5 : d.id === 'TD Bank' ? -moveUp * .4 : d.id === 'TC Energy' ? -moveUp * .3 : d.pos === 'D' ? moveDown : d.pos === 'U' ? -moveUp : vis.dotSize / 1.1)
+                .attr('dx', d => d.id === 'TD Bank' ? moveLR * 3.3 : d.pos === 'R' ? moveLR : d.pos === 'L' ? -moveLR : 0)
+                .style('text-anchor', d => d.id === 'China Gas' ? 'end' : d.pos === 'R' ? 'start' : d.pos === 'L' ? 'end' : 'middle')
+
+            label
+                .enter()
+                .append("text")
+                .attr('class', d => 'region-num p-22 bold')
+                .attr('id', (d, i) => `num-${i}`)
+                .attr("x", d => projection(d.coords)[0])
+                .attr("y", d => projection(d.coords)[1])
+                .attr('dy', d => d.id === 'Canadian Natural Resources' ? -moveUp * .5 : d.id === 'TD Bank' ? -moveUp * .4 : d.id === 'TC Energy' ? -moveUp * .3 : d.pos === 'D' ? moveDown : d.pos === 'U' ? -moveUp : vis.dotSize / 1.1)
+                .attr('dx', d => d.id === 'TD Bank' ? moveLR * 3.3 : d.pos === 'R' ? moveLR : d.pos === 'L' ? -moveLR : 0)
+                .style('text-anchor', d => d.id === 'China Gas' ? 'end' : d.pos === 'R' ? 'start' : d.pos === 'L' ? 'end' : 'middle')
+                .text(d => d.id)
+                .style('opacity', vis.draws === 1 ? 0 : 1)
+                .on('mouseover', (d, i, nodes) => dotHover(nodes[i]))
+                .on('mouseout', (d, i, nodes) => dotLeave(nodes[i]))
+                .on('click', (d, i, nodes) => dotClick(nodes[i]))
+                .transition()
+                .delay((d, i) => 300 + (i * 200))
+                .duration(1000)
+                .style('opacity', 1)
+                .style('transition', '1s stroke-width, .3s opacity, 1s r')
+
+            vis.taiwanLine2
+                .attr('class', 'p-22 bold')
+                .attr('id', 'numAgain-17')
+                .attr("x", projection(vis.data[17].coords)[0])
+                .attr("y", projection(vis.data[17].coords)[1])
+                .attr('dy', vis.dotSize / 1.1 + vis.dotSize * 3.5)
+                .attr('dx', moveLR)
+                .style('text-anchor', 'start')
+                .style('opacity', vis.draws === 1 ? 0 : 1)
+                .on('mouseover', (d, i, nodes) => dotHover(nodes[i]))
+                .on('mouseout', (d, i, nodes) => dotLeave(nodes[i]))
+                .on('click', (d, i, nodes) => dotClick(nodes[i]))
+                .transition()
+                .delay(3900)
+                .duration(1000)
+                .style('opacity', 1)
+
+            // vis.g.on('mousemove', positionBoxes)
+
+            setTimeout(() => {
+                positionBoxes();
+            }, 500);
+
+            setTimeout(() => {
+                positionBoxes();
+            }, vis.draws === 1 ? 4000 : 1200); // we need to wait for the map to change
+
+
+            function positionBoxes() {
+                const coords = [
+                    [-120.3, 43.5], // Broadcom
+                    [-92, 50.5], // Canadian Natural Resources
+                    [-92, 50.5], // TC Energy
+                    [-92, 50.5], // UnitedHealth
+                    [-77.7, -24.5], // Comcast
+                    [-77.8, 49.7], // TD Bank
+                    [-72.5, 47], // JP Morgan Chase
+
+                    [-47, -20], // brasil
+
+                    [10, 58], // Carls
+                    [1, 54] // Unilever
+                    [10.3, 53], // Zurich Insurance Group
+                    [14, -20], // Enel
+
+                    [78.6, 36], // India
+                    [42, -23.5], // China Gas
+                    [110, 44], // Samsung
+                    [164.5, 42], // Tokyo Electron
+                    [145, 42,], // softbank
+                    [142, 31], // Taiwan Semiconductor
+                ]
+
+                const dotEls = document.querySelectorAll('.map-dot')
+
+                const topOfPageHeight = document.getElementById('main-page-content').getBoundingClientRect().top
+
+                document.querySelectorAll('.hover-element').forEach((el, i) => {
+                    const dotYpos = dotEls[i].getBoundingClientRect().y
+
+                    const downUnder = i === 4 || i === 6;
+                    const moveUp = downUnder ? dotYpos - topOfPageHeight + (el.clientHeight * 1.14) : dotYpos - topOfPageHeight * 1.05;
+
+                    const isChina = i === 13;
+                    const chinaXoffset = isChina ? el.clientWidth * .56 : 0;
+                    const chinaYoffset = isChina ? el.clientHeight * .8 : 0;
+
+                    // el.style.left = projection(coords[i])[0] + 'px'
+                    el.style.left = dotEls[i].getBoundingClientRect().x + 'px'
+                    el.style.top = moveUp + chinaYoffset + 'px'
+                    // el.style.height = Math.abs(projection([0, 70])[1] - projection([0, 0])[1]) + 'px';
+                    el.style.marginTop = -el.clientHeight + 'px';
+                    el.style.marginLeft = -chinaXoffset + (el.clientWidth * -.59) + 'px'
+                })
+            }
+        } // REDRAW
+    } // CLASS
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+    class drawLine {
+        constructor(el) {
+            this.el = el;
+            this.data = [
+                // { dividends: 9.9, date: '2007-02-01', },
+                // { dividends: 8.2, date: '2008-02-01', },
+                { dividends: 7.450, date: '2009-02-01', },
+                { dividends: 8.274, date: '2010-02-01', },
+                { dividends: 9.010, date: '2011-02-01', },
+                { dividends: 9.353, date: '2012-02-01', },
+                { dividends: 10.14, date: '2013-02-01', },
+                { dividends: 10.25, date: '2014-02-01', },
+                { dividends: 10.52, date: '2015-02-01', },
+                { dividends: 10.75, date: '2016-02-01', },
+                { dividends: 12.23, date: '2017-02-01', },
+                { dividends: 12.90, date: '2018-02-01', },
+                { dividends: 13.29, date: '2019-02-01', },
+                { dividends: 12.11, date: '2020-02-01', },
+                { dividends: 13.9, date: '2021-02-01', },
+                { dividends: 14.8, date: '2022-02-01', },
+                { dividends: 15.6, date: '2023-02-01', },
+                { dividends: 18.5, date: '2024-02-01', },
+            ];
+
+            this.data2 = [
+                { dividends: 12.11, date: '2020-02-01', },
+                { dividends: 13.9, date: '2021-02-01', },
+                { dividends: 14.8, date: '2022-02-01', },
+                { dividends: 15.6, date: '2023-02-01', },
+                { dividends: 18.5, date: '2024-02-01', },
+            ]
+
+            this.data.forEach(el => {
+                el.date = new Date(Date.parse(el.date))
+            });
+
+            this.data2.forEach(el => {
+                el.date = new Date(Date.parse(el.date))
+            });
+
+            this.draws = 0;
+            this.initVis();
+        }
+
+        initVis() {
+            const vis = this;
+
+            vis.chartDiv = document.getElementById(vis.el);
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'g-thing')
+
+            // APPEND LINE
+            vis.dividendsLine = vis.g
+                .append('path')
+                .attr('stroke', '#004E8D')
+                .attr('stroke-width', 3)
+                .attr('fill', 'none')
+
+            vis.greyBox = vis.g.append('rect')
+            vis.label = vis.g.append('g');
+
+            // APPEND LINE
+            vis.dashedLine = vis.g
+                .append('path')
+                .attr('stroke', '#004E8D')
+                .attr('stroke-width', 3)
+                .attr('stroke-dasharray', '3 3')
+                .attr('fill', 'none')
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-14 demi ls-np36')
+                .attr('opacity', .5)
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'end')
+                .attr('class', 'axis y-axis p-14 ls-np36 demi')
+                .attr('opacity', .5)
+
+            vis.numText1 = vis.g.append('text').attr('class', 'p-16 demi').attr('text-anchor', 'middle').text('$' + vis.data2[vis.data2.length - 1].dividends)
+            vis.numText2 = vis.g.append('text').attr('class', 'p-16 demi').attr('text-anchor', 'middle').text('$7.5')
+
+            vis.dot1 = vis.g.append('circle').attr('class', 'chart-dot')
+            vis.dot2 = vis.g.append('circle').attr('class', 'chart-dot')
+
+            this.redraw();
+        }
+
+        redraw() {
+            const vis = this;
+
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.clientHeight;
+            const bot = height < 260 ? 10 : 0;
+            const MARGIN = { top: 0, right: width * .02, bottom: bot, left: width * .07 };
+            vis.gWIDTH = width - (MARGIN.left + MARGIN.right);
+            vis.gHEIGHT = height - (MARGIN.top + MARGIN.bottom);
+
+            vis.draws += 1;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", width)
+                .attr("height", height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + MARGIN.left + ',' + MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            let yMax = 19.3;
+            let yMin = 5.5;
+
+            // X SCALE
+            const x = d3
+                .scaleTime()
+                .domain([d3.min(this.data, d => d.date), d3.max(this.data, d => d.date)])
+                .range([0, vis.gWIDTH])
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            // ****************  LINE FUNCTIONS ****************************
+            const generateLine = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.dividends));
+
+            // **************** END LINE FUNCTIONS ****************************
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.data.map(k => {
+                return { date: k.date, dividends: 7 };
+            });
+
+            let startLine2 = vis.data2.map(k => {
+                return { date: k.date, dividends: 7 };
+            });
+
+            ////////////////// LINES 
+            if (vis.draws <= 1) {
+                vis.dividendsLine
+                    .attr('d', generateLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.data))
+
+                vis.dashedLine
+                    .attr('d', generateLine(startLine2))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.data2))
+
+            } else {
+                vis.dividendsLine
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.data));
+
+                vis.dashedLine
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.data2));
+            }
+
+            const greyStart = new Date('Jun 15 2021 16:00:21 GMT-0700 (Pacific Daylight Time)');
+            const greyEnd = new Date('June 01 2024 16:00:21 GMT-0700 (Pacific Daylight Time)');
+            const labelDate = new Date('May 01 2022 16:00:21 GMT-0700 (Pacific Daylight Time)');
+            vis.greyBox
+                .attr("x", x(greyStart))
+                .attr('y', y(yMax))
+                .attr("width", x(greyEnd) - x(greyStart))
+                .attr("fill", '#ebebeb')
+                .attr('class', 'grey-area')
+                .attr('height', vis.draws === 1 ? 0 : vis.gHEIGHT + MARGIN.bottom)
+                .transition()
+                .duration(1000)
+                .delay(100)
+                .attr('height', vis.gHEIGHT + MARGIN.bottom)
+
+            vis.estLabel = vis.label.selectAll('.estimate-label').data(vis.data);
+
+            vis.estLabel.exit().remove();
+
+            vis.estLabel
+                .transition()
+                .duration(500)
+                .attr("x", x(labelDate))
+                .attr('y', -vis.gHEIGHT * .03)
+
+            vis.estLabel
+                .enter()
+                .append("text")
+                .attr("x", x(labelDate))
+                .attr('y', -vis.gHEIGHT * .03)
+                .style('text-anchor', "middle")
+                .attr("fill", '#898888')
+                .attr('class', 'estimate-label p-12 demi')
+                .style('letter-spacing', '1px')
+                .text('Estimates');
+
+            const tickVals = []
+            for (let i = 2009; i <= 2024; i = i + 1) {
+                tickVals.push(new Date('Jan 1 ' + String(i) + ' 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            }
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickSizeOuter([0])
+                .tickPadding(10)
+                .tickFormat(e => {
+                    return "'" + e.getFullYear().toString().substr(-2);
+                });
+
+            if (vis.draws <= 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(0, ${y(7)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(0, ${y(7)})`)
+            } else {
+                vis.xAxis
+                    .transition()
+                    .delay(0)
+                    .duration(500)
+                    .attr('transform', `translate(0, ${y(7)})`)
+                    .call(xAxisCall.scale(x))
+            }
+
+            //////////////////////////////// Y AXIS
+            const yAxisCall = d3.axisLeft()
+                .tickValues([7, 9, 11, 13, 15, 17, 19])
+                .tickFormat(e => {
+                    return e === 19 ? '$' + e : e
+                });
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${-vis.gWIDTH * .025},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(500)
+                    .attr('transform', `translate(${-vis.gWIDTH * .025},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            //////////////////////
+            vis.numText1
+                .attr('x', x(new Date('2023-04-01')))
+                .attr('dx', -vis.gWIDTH * .01)
+                .attr('y', y(vis.data2[vis.data2.length - 1].dividends))
+                .attr('dy', vis.gHEIGHT * .009)
+
+            vis.numText2
+                .attr('x', x(new Date('2009-02-01')))
+                .attr('y', y(8))
+
+            //////////////////////
+            vis.dot1
+                .attr('r', vis.gWIDTH * .01)
+                .attr('cx', x(new Date('2024-02-01')))
+                .attr('cy', y(vis.data2[vis.data2.length - 1].dividends))
+
+            vis.dot2
+                .attr('r', vis.gWIDTH * .01)
+                .attr('cx', x(new Date('2009-02-01')))
+                .attr('cy', y(7.5))
+
+        } // end redraw
+    } //end class
+
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+    const points2022 = [
+        { pos: 'L', className: 'terq-dot', id: 'Broadcom', coords: [-121.88, 37.35,] },
+        { pos: 'L', className: 'saph-dot', id: 'Canadian Natural Resources', coords: [-119, 52] },
+        { pos: 'R', className: 'saph-dot', id: 'TC Energy', coords: [-112, 51] },
+        { pos: 'L', className: 'terq-dot', id: 'UnitedHealth', coords: [-93.46, 44.93] },
+        { pos: 'L', className: 'terq-dot', id: 'Comcast', coords: [-79.16, 38.01,] },
+        { pos: 'U', className: 'saph-dot', id: 'TD Bank', coords: [-79.36, 43.76] },
+        { pos: 'R', className: 'terq-dot', id: 'JP Morgan Chase', coords: [-74.01, 40.713] },
+
+        { pos: 'R', className: 'green-dot', id: 'Brasil, Bolsa, Balcão', coords: [-47, -20] },
+
+        { pos: 'R', className: 'saph-dot', id: 'Carlsberg', coords: [10, 58] },
+        { pos: 'L', className: 'saph-dot', id: 'Unilever', coords: [1, 54] },
+        { pos: 'R', className: 'saph-dot', id: 'Zurich Insurance Group', coords: [8.57, 47.48,] },
+        { pos: 'R', className: 'saph-dot', id: 'Enel', coords: [12.49, 41.90,] },
+
+        { pos: 'L', className: 'green-dot', id: 'Power Grid Corporation of India', coords: [77.02, 28.46,] },
+        { pos: 'D', className: 'green-dot', id: 'China Gas', coords: [114.16, 22.32,] },
+        { pos: 'L', className: 'green-dot', id: 'Samsung', coords: [126.98, 37.55,] },
+        { pos: 'R', className: 'saph-dot', id: 'Tokyo Electron', coords: [139.73, 35.65,] },
+        { pos: 'R', className: 'saph-dot', id: 'Softbank', coords: [145, 42,] },
+        { pos: 'R', className: 'green-dot', id: 'Taiwan Semiconductor', coords: [120.96, 24.81,] },
+    ]
+
+    const map = new drawMap('chart', points2022);
+    let line;
+    setTimeout(() => {
+        line = new drawLine('chart-1');
+    }, 1200);
+
+    // Redraw based on the new size whenever the browser window is resized.
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        map.redraw();
+        line.redraw();
+    }
+
+    /////////////////////////////
+    function toggleChart() {
+        document.getElementById('chart-holder').classList.toggle('visible')
+    }
+
+    //*************************************************************************************************//
+    function showPic() {
+        document.querySelector('.popup').style.opacity = 1;
+    }
+
+    function hidePic() {
+        const popup = document.querySelector('.popup');
+
+        if (!popup.hasAttribute('clicked'))
+            popup.style.opacity = 0;
+    }
+
+    function clickPic() {
+        showPic();
+        const popup = document.querySelector('.popup');
+        popup.setAttribute('clicked', 'JOERULZ YEEEEAH');
+        popup.style.pointerEvents = 'all'
+    }
+
+    function hidePopup(el) {
+        el.style.pointerEvents = 'none'
+        el.style.opacity = 0;
+        document.querySelector('.popup').removeAttribute('clicked')
+    }
+
+</script>
+
+
+</html>

@@ -1,0 +1,749 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+
+    <style>
+        .toggle-wrapper path {
+            transition: .5s fill ease-in-out;
+        }
+
+        .toggle-wrapper {
+            position: relative;
+            left: -6%;
+        }
+
+        .axis {
+            color: rgb(111, 111, 111)
+        }
+
+        .x-axis text {
+            text-anchor: middle;
+        }
+
+        .y-axis .domain,
+        .domain {
+            display: block;
+            opacity: .4;
+        }
+
+        @media (max-width: 1700px) {
+
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1200px) {}
+
+        .dot-square {
+            border-radius: 0;
+            transform: rotate(45deg) scale(.8);
+            margin-right: clamp(4px, 0.55vw, 9px);
+        }
+
+        .dot {
+            fill: rgb(222, 222, 222);
+            transition: .3s fill ease-in-out;
+            cursor: pointer;
+        }
+
+        .img-holder {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding: 2%;
+            cursor: pointer;
+            transition: .3s opacity ease-in-out;
+        }
+
+        .img-holder img {
+            margin-right: 4px;
+        }
+
+        .info-box {
+            background-color: #FFFFFF;
+            box-shadow: 3px 15px 30px #0000004D;
+            position: absolute;
+            height: fit-content;
+            right: 3%;
+            padding: 1.5% 2%;
+            padding-bottom: 3%;
+            transition: .3s opacity ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+            width: 30%;
+            top: -15%;
+        }
+
+        .info-box.on {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .title-wrapper-a h1,
+        .title-wrapper-2 h1 {
+            margin-bottom: 0;
+        }
+
+        .title-wrapper-2 h2 {
+            color: #A39E99;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div>
+                                <h1 style='white-space: nowrap;'>
+                                    Low rates are supportive of high equity valuations
+                                </h1>
+                                <h2 class="bold">
+                                    But the prospect of rising rates may cause some volatility
+                                </h2>
+                            </div>
+
+                            <div class='blurb'>
+
+                            </div>
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="chart-ui-row">
+                                <div class="chart-title-wrapper">
+                                    <h3></h3>
+
+                                    <div class="legend-wrapper">
+
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-square" style='background-color: #D91943;'></div>
+                                            <span class='p-16'>Current</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-square" style='background-color: #7BD0E2;'></div>
+                                            <span class='p-16'>Based on 2022 EPS</span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </section>
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div class='info-box'>
+                                    <div class='p-22 bold' style='color:rgba(0, 0, 0, .87)'>
+                                        1/1/95 - 3/10/00
+                                    </div>
+                                    <div class="p-16 bold" style='color: rgba(54, 54, 54, .5); margin-top: 5%'>
+                                        Dot com bubble
+                                    </div>
+                                    <div class='p-16' style='margin-top: 5%;'>
+                                        Valuations for internet and
+                                        telecommunications companies,
+                                        particularly early-stage
+                                        companies with little or no
+                                        earnings, soared during the
+                                        period. Valuations were
+                                        supported by low interest rates
+                                        and a reduction in capital gains
+                                        taxes, as well as the rapid
+                                        adoption of the internet. During
+                                        the period, the Federal Reserve
+                                        raised short-term interest rates
+                                        from 3% to more than 6%. Rising
+                                        rates, several high profile
+                                        accounting scandals and
+                                        bankruptcies ultimately led to a
+                                        broad equity market selloff, and
+                                        equity valuations decreased
+                                        significantly.
+                                    </div>
+                                </div>
+
+                                <div class='info-box'>
+                                    <div class='p-22 bold' style='color:rgba(0, 0, 0, .87)'>
+                                        6/30/09 - 12/6/21
+                                    </div>
+                                    <div class="p-16 bold" style='color: rgba(54, 54, 54, .5); margin-top: 5%'>
+                                        Current
+                                    </div>
+                                    <div class='p-16' style='margin-top: 5%;'>
+                                        Low interest rates, aggressive
+                                        monetary and fiscal stimulus
+                                        measures, and consistent
+                                        economic growth in the post-Global Financial Crisis Era have
+                                        contributed to high equity
+                                        valuations relative to historical
+                                        levels. Digital transformation and
+                                        globalization have helped drive
+                                        significant productivity gains,
+                                        while near term inflationary
+                                        pressures, the myriad impacts of
+                                        the COVID-19 pandemic, high
+                                        debt-to-GDP ratios, and the pace
+                                        of interest rate hikes present
+                                        potential challenges for further
+                                        valuation growth.
+                                    </div>
+                                </div>
+
+                                <div class='info-box'>
+                                    <div class='p-22 bold' style='color:rgba(0, 0, 0, .87)'>
+                                        1/1/70 - 12/31/79
+                                    </div>
+                                    <div class="p-16 bold" style='color: rgba(54, 54, 54, .5); margin-top: 5%'>
+                                        1970s stagflation
+                                    </div>
+                                    <div class='p-16' style='margin-top: 5%;'>
+                                        Period of economic instability
+                                        driven by high inflation and cost-push shocks across commodities
+                                        and oil; the global monetary
+                                        system moved to a floating
+                                        exchange, leading to devaluation
+                                        of the U.S. dollar; high
+                                        unemployment and high inflation
+                                        existed simultaneously,
+                                        challenging established
+                                        economic theory.
+                                    </div>
+                                </div>
+
+                                <div class='info-box'>
+                                    <div class='p-22 bold' style='color:rgba(0, 0, 0, .87)'>
+                                        1/1/51 - 12/31/73
+                                    </div>
+                                    <div class="p-16 bold" style='color: rgba(54, 54, 54, .5); margin-top: 5%'>
+                                        Post-war boom
+                                    </div>
+                                    <div class='p-16' style='margin-top: 5%;'>
+                                        Period of broad economic
+                                        expansion and full employment,
+                                        underpinned by high productivity
+                                        growth, easy fiscal policy, low
+                                        interest rates, cheap energy costs,
+                                        and the Bretton Woods monetary
+                                        system.
+                                    </div>
+                                </div>
+
+                                <div id="chart">
+                                </div>
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <p>
+                                    Sources: Capital Group, FactSet, Federal Reserve, Standard & Poor’s. Dots represent
+                                    monthly data from 1/31/1950 - 12/31/21. P/E = Price to earnings ratio.
+                                </p>
+                                <p>
+                                    <span>
+                                        Investors should carefully consider investment objectives, risks, charges and
+                                        expenses. This and other important information is contained in the fund
+                                        prospectuses and summary prospectuses, which can be obtained from a financial
+                                        professional and should be read carefully before investing.
+                                    </span>
+                                </p>
+                                <p>
+                                    Statements attributed to an individual represent the opinions of that individual as
+                                    of the date published and do not necessarily reflect the opinions of Capital Group
+                                    or its affiliates. This information is intended to highlight issues and should not
+                                    be considered advice, an endorsement or a recommendation.
+                                </p>
+                                <p>
+                                    This content, developed by Capital Group, home of American Funds, should not be used
+                                    as a primary basis for investment decisions and is not intended to serve as
+                                    impartial investment or fiduciary advice.
+                                </p>
+                                <p>
+                                    All Capital Group trademarks mentioned are owned by The Capital Group Companies,
+                                    Inc., an affiliated company or fund. All other company and product names mentioned
+                                    are the property of their respective companies.
+                                </p>
+                                <p>
+                                    American Funds Distributors, Inc., member FINRA.
+                                </p>
+                                <p>
+                                    © 2022 Capital Group. All rights reserved.
+                                </p>
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+<script src="./data/two04.js"></script>
+
+<script>
+
+    // Gradients
+    const SAPPH = 'rgba(0, 95, 158, 1)';
+    const SAPPH50 = 'rgba(0, 95, 158, 0.4)';
+    const SAPPH0 = 'rgba(0, 95, 158, 0)';
+
+    const SAPPH_GRADIENT = 'url(#SAPPH-grad)';
+
+    let zoomed = false;
+    let filled = true;
+    let lowDate = null;
+    let highDate = null;
+
+    const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+    const desktop = window.innerWidth > 1400;
+    const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+    const seismicApp = window.innerWidth < 1100;
+    const shortScreen = window.innerHeight <= 830;
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+
+    class drawChart {
+        constructor() {
+            this.draws = 0;
+            this.data = data;
+            this.lineData = lineData;
+            this.initVis();
+        }
+
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg").attr('id', 'g-line');
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'svg-thing')
+
+            vis.backgroundBox = vis.g.append('rect').attr('fill', 'transparent')
+            vis.dots = vis.g.append('g').attr('class', 'dots')
+
+            // APPEND LINE
+            vis.line = vis.g
+                .append('path')
+                .attr('stroke', 'rgba(0, 0, 0, 1)')
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+
+            vis.vertLine = vis.g
+                .append('line')
+                .attr('stroke', 'rgba(0, 0, 0, .6)')
+                .attr('stroke-width', '1')
+
+            vis.currentVal = vis.g
+                .append("path")
+                .style("stroke-width", 0)
+                .style("fill", "rgba(217, 25, 67, 1)")
+
+            vis.val2202 = vis.g
+                .append("path")
+                .style("stroke-width", 0)
+                .style("fill", "rgba(123, 208, 226, 1)")
+
+            vis.div1 = d3.select(vis.chartDiv).append('div').attr('class', 'ten img-holder')
+            vis.div2 = d3.select(vis.chartDiv).append('div').attr('class', 'nin img-holder')
+            vis.div3 = d3.select(vis.chartDiv).append('div').attr('class', 'fif img-holder')
+            vis.div4 = d3.select(vis.chartDiv).append('div').attr('class', 'sev img-holder')
+
+            vis.img1 = vis.div1.append('img').attr('src', './img/i.png').style('opacity', '.75')
+            vis.img2 = vis.div2.append('img').attr('src', './img/i.png').style('opacity', '.75')
+            vis.img3 = vis.div3.append('img').attr('src', './img/i.png').style('opacity', '.75')
+            vis.img4 = vis.div4.append('img').attr('src', './img/i.png').style('opacity', '.75')
+
+            vis.text1 = vis.div1.append('text').attr('class', 'p-18 demi').text('Current')
+            vis.text2 = vis.div2.append('text').attr('class', 'p-18 demi').text('Dot com bubble')
+            vis.text3 = vis.div3.append('text').attr('class', 'p-18 demi').text('Post-war boom')
+            vis.text4 = vis.div4.append('text').attr('class', 'p-18 demi').text('1970s stagflation')
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi')
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'start')
+                .attr('class', 'axis y-axis p-18 demi')
+
+            vis.titleSide = d3.select(vis.chartDiv).append("div")
+                .attr('class', 'p-18 demi')
+                .style('position', 'absolute')
+                .style('transform', 'rotate(270deg)')
+                .style('color', 'rgba(111, 111, 111, .7)')
+                .html("P/E ratio")
+
+            vis.titleBottom = d3.select(vis.chartDiv).append("div")
+                .attr('class', 'p-18 demi')
+                .style('position', 'absolute')
+                .style('color', 'rgba(111, 111, 111, .7)')
+                .html("10-year Treasury yield (%)")
+
+            this.redraw();
+        }
+
+        redraw() {
+            const vis = this;
+
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+            const shortScreen = window.innerHeight <= 830;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = vis.height * .11;
+            vis.top = 18;
+            vis.MARGIN = { top: vis.top, right: vis.width * .015, bottom: vis.bottom, left: vis.width * .023 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            vis.draws += 1;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+
+            let yMax = 30;
+            let yMin = 0;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            // X SCALE
+            vis.x = d3
+                .scaleLinear()
+                .domain([0, 16])
+                .range([0, vis.gWIDTH])
+            const x = vis.x;
+
+            // ****************  LINE FUNCTIONS ****************************
+            const generateLine = d3.line()
+                .x(d => x(d.yield))
+                .y(d => y(d.points));
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.lineData.map(k => {
+                return { points: 0, yield: k.yield };
+            });
+
+            ////////////////// LINE
+            if (vis.draws <= 1) {
+                vis.line
+                    .attr('d', generateLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.lineData))
+            } else {
+                vis.line
+                    .transition()
+                    .duration(1000)
+                    .delay(0)
+                    .attr('d', generateLine(vis.lineData));
+            }
+
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickSizeOuter([0])
+                .ticks(16)
+                .tickPadding(7)
+                .tickFormat(e => {
+                    return e
+                });
+
+            if (vis.draws === 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+            } else {
+                vis.xAxis
+                    .transition()
+                    .delay(0)
+                    .duration(1000)
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+                    .call(xAxisCall.scale(x))
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = seismicApp ? 9 : 10;
+            const yAxisCall = d3.axisLeft()
+                .ticks(5)
+                .tickPadding(vis.MARGIN.left / 1.36)
+                .tickFormat(e => {
+                    if (e === 50)
+                        return '50%'
+                    return e
+                })
+
+            if (vis.draws === 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${0},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(1000)
+                    .attr('transform', `translate(${0},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            ////////////////////////////////
+            const dots = vis.dots.selectAll('.dot').data(vis.data)
+
+            dots.exit().remove()
+
+            dots
+                .attr('id', (d, i) => d.fifties ? 'fif' + '-' + i : d.seventies ? 'sev' + '-' + i : d.nineties ? 'nin' + '-' + i : 'ten' + '-' + i)
+                .attr('class', (d, i) => d.fifties ? 'fif dot' : d.seventies ? 'sev dot' : d.nineties ? 'nin dot' : 'ten dot')
+                .transition()
+                .duration(1000)
+                .attr('cx', d => x(d.yield))
+                .attr('cy', d => y(d.fifties) ? y(d.fifties) : y(d.seventies) ? y(d.seventies) : y(d.nineties) ? y(d.nineties) : y(d.tens))
+                .attr('r', vis.gWIDTH * .006)
+
+            dots
+                .enter()
+                .append('circle')
+                .attr('class', (d, i) => d.fifties ? 'fif dot' : d.seventies ? 'sev dot' : d.nineties ? 'nin dot' : 'ten dot')
+                .attr('id', (d, i) => d.fifties ? 'fif' + '-' + i : d.seventies ? 'sev' + '-' + i : d.nineties ? 'nin' + '-' + i : 'ten' + '-' + i)
+                .style('fill', 'rgba(222, 222, 222, 1)')
+                .attr('cx', d => x(d.yield))
+                .attr('cy', d => y(d.fifties) ? y(d.fifties) : y(d.seventies) ? y(d.seventies) : y(d.nineties) ? y(d.nineties) : y(d.tens))
+                .attr('r', vis.gWIDTH * .006)
+                .on('mouseover', (d, i, n) => hover(n[i]))
+                .on('click', clicked)
+
+            ///////////////////////////////////
+            function clicked() {
+                // var mouse = d3.mouse(this);
+                d3.event.stopPropagation();
+
+                if (vis.clicked) {
+                    vis.clicked = false;
+                    reset();
+                    hover(this, true)
+                } else {
+                    vis.clicked = true;
+                }
+                console.log('vis.clicked', vis.clicked)
+            }
+
+            d3.select("body").on('click', unclick)
+
+            function unclick() {
+                vis.clicked = false;
+                reset()
+            }
+
+            function hover(dot, flag = false) {
+                if (vis.clicked) return
+                if (flag) vis.clicked = true
+
+                const currentClass = dot.classList[0]
+                const colorLookup = []
+                colorLookup['fif'] = '#000000'
+                colorLookup['sev'] = '#005F9E'
+                colorLookup['nin'] = '#008E77'
+                colorLookup['ten'] = '#762157'
+
+                const infoBoxLookup = []
+                infoBoxLookup['nin'] = 0
+                infoBoxLookup['ten'] = 1
+                infoBoxLookup['sev'] = 2
+                infoBoxLookup['fif'] = 3
+
+                // show info box
+                document.querySelectorAll('.info-box').forEach((el, i) => {
+                    if (i === infoBoxLookup[currentClass]) {
+                        el.classList.add('on')
+                    } else {
+                        el.classList.remove('on')
+                    }
+                })
+
+                // color the dots
+                document.querySelectorAll('.' + currentClass).forEach(el => el.style.fill = colorLookup[currentClass])
+
+                // turn off the label div
+                document.querySelectorAll('.img-holder').forEach(el => {
+                    if (el.classList[0] === currentClass)
+                        el.style.opacity = 0;
+                    else
+                        el.style.opacity = 1;
+                })
+
+                // raise the current group of dots
+                setTimeout(() => {
+                    document.querySelectorAll('.' + currentClass).forEach(el => d3.select(el).raise())
+                }, 500);
+            }
+
+            vis.backgroundBox
+                .attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .on('mouseover', reset)
+
+            function reset() {
+                if (vis.clicked) return
+
+                document.querySelectorAll('.dot').forEach(el => el.style.fill = 'rgba(222,222,222,1)')
+                document.querySelectorAll('.img-holder').forEach(el => el.style.opacity = 1)
+
+                // hide info box
+                document.querySelectorAll('.info-box').forEach((el, i) => el.classList.remove('on'))
+            }
+
+            const size = vis.gWIDTH * .011;
+
+            // diamond shape
+            vis.currentVal
+                .attr("d", `M 
+                ${size} 0 
+                ${size * 2} ${size} 
+                ${size} ${size * 2} 
+                0 ${size} 
+                Z`)
+                .attr('transform', `translate(${x(1.28) - size}, ${y(23.9)})`)
+                .style('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .delay(500)
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .style('opacity', 1)
+
+            // diamond shape
+            vis.val2202
+                .attr("d", `M 
+                ${size} 0 
+                ${size * 2} ${size} 
+                ${size} ${size * 2} 
+                0 ${size} 
+                Z`)
+                .attr('transform', `translate(${x(1.28) - size}, ${y(20.6)})`)
+                .style('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .delay(500)
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .style('opacity', 1)
+
+            vis.vertLine
+                .attr('x1', x(1.28))
+                .attr('y1', y(23))
+                .attr('x2', x(1.28))
+                .attr('y2', y(0))
+                .style('stroke-dasharray', '2 2')
+                .style('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .delay(500)
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .style('opacity', 1)
+
+            const imgSize = size * 1.4;
+
+            vis.div1.style('left', x(.6)).style('top', 0 + y(30.5)).on('mouseover', divHover).on('click', clicked)
+            vis.div2.style('left', x(4.8)).style('top', 0 + y(29)).on('mouseover', divHover).on('click', clicked)
+            vis.div3.style('left', x(2.1)).style('top', 0 + y(12)).on('mouseover', divHover).on('click', clicked)
+            vis.div4.style('left', x(10.8)).style('top', 0 + y(10)).on('mouseover', divHover).on('click', clicked)
+
+            function divHover() {
+                hover(this)
+            }
+
+            vis.img1.attr('width', imgSize).attr('height', imgSize)
+            vis.img2.attr('width', imgSize).attr('height', imgSize)
+            vis.img3.attr('width', imgSize).attr('height', imgSize)
+            vis.img4.attr('width', imgSize).attr('height', imgSize)
+
+            vis.titleSide
+                .style('left', -vis.titleSide.node().clientWidth / 2 - (vis.titleSide.node().clientHeight / 1.2) + 'px')
+                .style('top', '46%')
+                .style('margin-top', -vis.titleSide.node().clientHeight)
+
+            vis.titleBottom
+                .style('left', vis.gWIDTH / 2 + vis.MARGIN.left + 'px')
+                .style('margin-left', -vis.titleBottom.node().clientWidth / 2)
+                .style('top', vis.height + 'px')
+                .style('margin-top', -vis.titleSide.node().clientHeight)
+
+
+        } // end redraw
+    } //end class
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+
+    const chart = new drawChart();
+
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        chart.redraw();
+    }
+
+</script>
+
+</html>

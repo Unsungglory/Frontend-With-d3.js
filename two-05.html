@@ -1,0 +1,1049 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+    <style>
+        .title-wrapper-2 {
+            display: grid;
+            grid-template-columns: 50% 44%;
+            column-gap: 5%;
+        }
+
+        .dot-1 {
+            background-color: rgba(0, 95, 158, 1);
+        }
+
+        .dot-2 {
+            background-color: #B42573;
+        }
+
+        .dot-3 {
+            background-color: #E3E3E3;
+            border-radius: 0;
+        }
+
+        .x-axis .domain {
+            display: initial;
+        }
+
+        .domain {
+            display: none;
+        }
+
+        .toggle-wrapper path {
+            transition: .5s fill ease-in-out;
+        }
+
+        .toggle-wrapper {
+            position: relative;
+            left: -6%;
+        }
+
+        .axis {
+            color: rgba(39, 38, 38, 0.5)
+        }
+
+        .x-axis .tick {
+            text-anchor: start;
+        }
+
+        .x-axis .tick:last-of-type {
+            text-anchor: end;
+        }
+
+        /* #chart svg {
+            overflow: visible;
+        } */
+
+        .dash-line {
+            stroke-dasharray: 2 1;
+            stroke-width: 2px;
+            stroke: rgba(0, 0, 0, 0.671);
+        }
+
+        @media (max-width: 1700px) {
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1200px) {}
+
+        .sideways {
+            transform: rotate(-90deg);
+            height: fit-content;
+            white-space: nowrap;
+            display: flex;
+            width: 10%;
+            position: absolute;
+
+            white-space: nowrap;
+            transform-origin: left center;
+            /* margin-right: -2%; */
+            /* top: 73%; */
+            bottom: -1%;
+            margin-left: .5%;
+            align-items: center;
+            z-index: 1;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-a">
+                            <div>
+                                <h1>
+                                    Recent bull market has shown breadth beyond the FAANGs
+                                </h1>
+                                <h2 class="bold p-bold">
+                                    Cyclicals, defensive stocks have also spurred S&P 500 since 2010
+                                </h2>
+                            </div>
+
+
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="chart-ui-row"></section>
+                            <section class="chart-ui-row"></section>
+
+                            <section class="chart-ui-row">
+                                <div class="chart-title-wrapper">
+                                    <h3></h3>
+                                    <div class="legend-wrapper">
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-1" style="background-color: #00AEA9;"></div>
+                                            <span class="p-16">Led by FAANG/Growth</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-2" style="background-color: #00294B;"></div>
+                                            <span class="p-16">Led by cyclicals</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-2" style="background-color: #005F9E;"></div>
+                                            <span class="p-16">Led by defensives</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div style='display: flex;'>
+                                    <div class="toggle-wrapper">
+                                        <div class="p-btn-label p-12 ls-1p2 demi"
+                                            style="color: rgba(127, 127, 127, 1);">
+                                            LINE STYLE</div>
+                                        <toggle class="line-toggle-pill">
+                                            <div id="toggle-slider" class="w50" style='left: 0%;'></div>
+                                            <button onclick="toggleLine()" class="toggle-on">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="21.216" height="13.769"
+                                                    viewBox="0 0 21.216 13.769">
+                                                    <path id='line' style="fill:rgba(0,41,75, .9);"
+                                                        d="M3.591,19.279,9.956,12.9,14.2,17.147,23.216,7.006l-1.5-1.5L14.2,13.965,9.956,9.721,2,17.688Z"
+                                                        transform="translate(-2 -5.51)"></path>
+                                                </svg>
+                                            </button>
+                                            <button onclick="toggleFill()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="14"
+                                                    viewBox="0 0 27 14">
+                                                    <g transform="translate(-0.429 -8.335)">
+                                                        <path id='mountain' fill="rgba(0,41,75,0.3)" d="M9.5,0,19,14H0Z"
+                                                            transform="translate(8.429 8.335)"></path>
+                                                        <path id='mountain-2' fill="rgba(0, 95, 158, 0.3)"
+                                                            d="M7.5,0,15,10H0Z" transform="translate(0.429 12.335)">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </toggle>
+                                    </div>
+                                    <div class="zoom-btn-container">
+                                        <div class="p-btn-label">ZOOM</div>
+                                        <div class="zoom-btn">
+                                            <button id="zoom-plus" onclick="zoomIn()">+</button>
+                                            <button id="zoom-minus" onclick="zoomOut()">
+                                                <div style="transform: scaleX(1.6)">–</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </section>
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div class="sideways">
+                                    <div class="p-18 demi" style="color: #222222; margin-top: -1px;">
+                                        S&P 500 price level
+                                    </div>
+                                </div>
+                                <div id="chart"></div>
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <p>
+                                    Sources: FactSet, MSCI, Standard & Poor's. As of December 31, 2021.
+                                </p>
+                                <p>
+                                    Standard & Poor's 500 Composite Index is a market capitalization-weighted index
+                                    based on the results of approximately 500 widely held common stocks. This index is
+                                    unmanaged, and its results include reinvested dividends and/or distributions but do
+                                    not reflect the effect of sales charges, commissions, account fees, expenses or U.S.
+                                    federal income taxes. Investors cannot invest directly in an index.
+                                </p>
+                                <p>
+                                    The Standard & Poor’s 500 Composite Index is a product of S&P Dow Jones Indices LLC
+                                    and/or its affiliates and has been licensed for use by Capital Group. Copyright ©
+                                    2022 S&P Dow Jones Indices LLC, a division of S&P Global, and/or its affiliates. All
+                                    rights reserved. Redistribution or reproduction in whole or in part are prohibited
+                                    without written permission of S&P Dow Jones Indices LLC.
+                                </p>
+                                <p>
+                                    <span>Investors should carefully consider investment objectives, risks, charges and
+                                        expenses. This and other important information is contained in the fund
+                                        prospectuses and summary prospectuses, which can be obtained from a financial
+                                        professional and should be read carefully before investing.</span>
+                                </p>
+                                <p>
+                                    Statements attributed to an individual represent the opinions of that individual as
+                                    of the date published and do not necessarily reflect the opinions of Capital Group
+                                    or its affiliates. This information is intended to highlight issues and should not
+                                    be considered advice, an endorsement or a recommendation.
+                                </p>
+                                <p>
+                                    This content, developed by Capital Group, home of American Funds, should not be used
+                                    as a primary basis for investment decisions and is not intended to serve as
+                                    impartial investment or fiduciary advice.
+                                </p>
+                                <p>
+                                    All Capital Group trademarks mentioned are owned by The Capital Group Companies,
+                                    Inc., an affiliated company or fund. All other company and product names mentioned
+                                    are the property of their respective companies.
+                                </p>
+                                <p>
+                                    American Funds Distributors, Inc., member FINRA.
+                                </p>
+                                <p>
+                                    © 2022 Capital Group. All rights reserved.
+                                </p>
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+<script src="./data/faang.js"></script>
+
+<script>
+
+    // Gradients
+    const SAPPH = '#005F9E';
+    const SAPPH50 = 'rgba(0, 95, 158, 0.5)';
+    const SAPPH0 = 'rgba(0, 95, 158, 0)';
+
+    const TERQ = '#00AEA9';
+    const DENIMS = '#00294B'
+    const DENIM50 = '#00294B60'
+    const DENIM0 = '#00294B00'
+
+    const SAPPH_GRADIENT = 'url(#SAPPH-grad)';
+    const second_grad = 'url(#second-grad)';
+    const third_grad = 'url(#third-grad)';
+
+    let zoomed = false;
+    let filled = false;
+    let lowDate = null;
+    let highDate = null;
+
+    // data.splice([365]);
+
+    data.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    const maxYear = d3.max(data, d => d.date).getFullYear();
+    const minYear = d3.min(data, d => d.date).getFullYear();
+    const middleOfData = (new Date((d3.min(data, d => d.date).getTime() + d3.max(data, d => d.date).getTime()) / 2));
+    const totalYearsInData = Math.round((maxYear - minYear));
+    const zoomWidth = Math.round(totalYearsInData / 3); // We arbitrarily zoom in to 3x, which shows us 1/3 of the data when zoomed
+    const halfZoom = Math.round(zoomWidth / 2); // this is the number of years above/below the midpoint when zoomed
+
+    const oneYear = 31536000000;
+
+    // set the dates for zooming into the middle of the data (when clicking zoom in before interacting with the chart)
+    let oldLowDate = new Date(String(middleOfData.getFullYear() - halfZoom));
+    let oldHighDate = new Date(String(middleOfData.getFullYear() + halfZoom));
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+
+    class drawChart {
+        constructor() {
+            const vis = this;
+            vis.draws = 0;
+
+            vis.data = []
+            const all = data.map(d => d.val1 ? d.val1 : d.val2 ? d.val2 : d.val3);
+            all.forEach((d, i) => vis.data.push({ date: data[i].date, value: d }))
+
+            let index = 0;
+            ////////////////////////////////////////////
+            vis.blue1 = []
+            for (let i = 0; i < data.length; i++) {
+                if (data[i]["val3"]) {
+                    vis.blue1.push(data[i])
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+            ////////////////////////////////////////////
+            vis.dark1index = index;
+            vis.dark1 = []
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val2"]) {
+                    vis.dark1.push(data[i])
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            ////////////////////////////////////////////
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val1"]) {
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            vis.dark2index = index;
+            vis.dark2 = []
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val2"]) {
+                    vis.dark2.push(data[i])
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            ////////////////////////////////////////////
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val1"]) {
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            vis.blue2index = index;
+            vis.blue2 = []
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val3"]) {
+                    vis.blue2.push(data[i])
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            ////////////////////////////////////////////
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val1"]) {
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            vis.dark3index = index;
+            vis.dark3 = []
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val2"]) {
+                    vis.dark3.push(data[i])
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            ////////////////////////////////////////////
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val1"]) {
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            vis.dark4index = index;
+            vis.dark4 = []
+            for (let i = index; i < data.length; i++) {
+                if (data[i]["val2"]) {
+                    vis.dark4.push(data[i])
+                    index++;
+                } else {
+                    index--
+                    break
+                }
+            }
+
+            setTimeout(() => {
+                vis.initVis();
+            }, 200);
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg").attr('id', 'svg');
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'main-group')
+
+            // ADD AREA
+            vis.terqArea = vis.g.append("path")
+                .attr('fill', second_grad);
+            vis.blue1area = vis.g.append("path")
+                .attr('fill', SAPPH_GRADIENT);
+            vis.blue2area = vis.g.append("path")
+                .attr('fill', SAPPH_GRADIENT);
+            vis.dark1area = vis.g.append("path")
+                .attr('fill', third_grad);
+            vis.dark2area = vis.g.append("path")
+                .attr('fill', third_grad);
+            vis.dark3area = vis.g.append("path")
+                .attr('fill', third_grad);
+            vis.dark4area = vis.g.append("path")
+                .attr('fill', third_grad);
+
+            // APPEND LINE
+            vis.terqLine = vis.g
+                .append('path')
+                .attr('stroke', TERQ)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+
+            // APPEND LINE
+            vis.blueLine = vis.g
+                .append('path')
+                .attr('stroke', SAPPH)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+            vis.blueLine2 = vis.g
+                .append('path')
+                .attr('stroke', SAPPH)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+
+            vis.darkLine = vis.g
+                .append('path')
+                .attr('stroke', DENIMS)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+            vis.darkLine1 = vis.g
+                .append('path')
+                .attr('stroke', DENIMS)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+            vis.darkLine2 = vis.g
+                .append('path')
+                .attr('stroke', DENIMS)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+            vis.darkLine3 = vis.g
+                .append('path')
+                .attr('stroke', DENIMS)
+                .attr('stroke-width', 4)
+                .attr('fill', 'none')
+
+
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi')
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.svg
+                .append('g')
+                .style('text-anchor', 'end')
+                .attr('class', 'axis y-axis p-18 demi')
+
+            // DEFINE LINEAR GRADIENT
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'SAPPH-grad')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', .2)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', 0)
+                .attr('stop-color', SAPPH50);
+            vis.gradient
+                .append('stop')
+                .attr('offset', 1)
+                .attr('stop-color', SAPPH0);
+
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'second-grad')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', 0.5)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', '#00AEA950');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', '#00AEA900');
+
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'third-grad')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', 0.5)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', DENIM50);
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', DENIM0);
+
+            // APPEND WHITE BOX TO COVER AREA WHEN CHART EXPANDS DURING ZOOM
+            vis.whiteBox = vis.svg
+                .append('rect')
+                .attr('fill', '#f8f8f8')
+                .attr('width', 25)
+                .attr('x', 0)
+                .attr('y', 0)
+
+            // FINALLY, APPEND A TOUCH LAYER TO BYPASS ALL OF OUR TEXT AND OTHER DIVS THAT HAVE BEEN APPENDED
+            vis.touchLayer = d3.select('#chart').append('div').attr('class', 'touch-layer').style('position', 'absolute');
+
+
+            this.wrangle();
+        }
+
+        wrangle(x1 = d3.min(this.data, d => d.date), x2 = d3.max(this.data, d => d.date)) {
+            const vis = this;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = 6;
+            vis.top = vis.height * .015;
+            vis.left = window.innerWidth > 1690 ? vis.width * .055 : vis.width * .06;
+            vis.MARGIN = { top: vis.top, right: vis.width * .02, bottom: vis.bottom, left: vis.left };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // X SCALE
+            vis.x = d3
+                .scaleTime()
+                .domain([x1, x2])
+                .range([0, vis.gWIDTH])
+
+            lowDate = x1;
+            highDate = x2;
+
+            // HANDLE CLICKS ///////////////////////////////////////////
+            const svgElement = document.querySelector('#chart svg')
+
+            let holding = false;
+            let clickOne = null;
+            let difference = 0;
+
+            vis.touchLayer.on("mousedown", handleStart);
+            vis.touchLayer.on("touchstart", handleStart);
+
+            // attach the mousemove and mouseup to the body in case one wonders off the svg (we use body)
+            vis.touchLayer.on("mousemove", handleMove).on("mouseup", handleEnd).on('mouseout', handleEnd)
+            vis.touchLayer.on("touchmove", handleMove).on("touchend", handleEnd).on("touchcancel", handleEnd)
+
+            function handleStart() {
+                if (zoomed) {
+                    clickOne = d3.mouse(svgElement)[0];
+                    holding = true;
+                }
+            }
+
+            // sometimes it's hard to drag your way all the way to the very end of the chart, but if you move the opposite way it works
+            let moveTrigger = 0;
+            const overflow = oneYear / 5;
+            function handleMove() {
+                if (zoomed && holding) {
+                    d3.event.preventDefault();
+
+                    const clickTwo = d3.mouse(svgElement)[0]
+                    const date1 = vis.x.invert(clickOne)
+                    const date2 = vis.x.invert(clickTwo)
+
+                    difference = ((date2 - date1));
+
+                    if (lowDate.getTime() - difference > d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        if (highDate.getTime() - difference < d3.max(vis.data, d => d.date).getTime() + overflow) {
+                            vis.x.domain([lowDate.getTime() - difference, highDate.getTime() - difference])
+                            vis.redraw(true)
+                        } else {
+                            moveTrigger += 1;
+                            if (moveTrigger === 30) {
+                                moveTrigger = 0;
+                                vis.x.domain([d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear, d3.max(vis.data, d => d.date).getTime() + overflow])
+                                vis.redraw(true)
+                            }
+                        }
+
+                    } else {
+                        moveTrigger += 1;
+                        if (moveTrigger === 30) {
+                            moveTrigger = 0;
+                            vis.x.domain([d3.min(vis.data, d => d.date).getTime() - overflow, d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear])
+                            vis.redraw(true)
+                        }
+                    }
+                }
+            }
+
+            function handleEnd() {
+                if (zoomed && holding) {
+                    if (lowDate.getTime() - difference < d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        lowDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow)
+                        highDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear)
+                    } else if (highDate.getTime() - difference > d3.max(vis.data, d => d.date).getTime() + overflow) {
+                        lowDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear)
+                        highDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow)
+                    } else {
+                        lowDate = new Date(lowDate.getTime() - difference)
+                        highDate = new Date(highDate.getTime() - difference)
+                    }
+                }
+                holding = false;
+            }
+
+            vis.redraw()
+        }
+
+        redraw(pan = false) {
+            const vis = this;
+
+            vis.draws += 1;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            // SET SIZE FOR TOUCH LAYER
+            vis.touchLayer
+                .style("width", vis.width + 'px')
+                .style("height", vis.height + 'px')
+                .style("top", 0)
+                .attr("pointer-events", "all")
+
+            ///////////////////////////////////////////////////////
+            const x = vis.x;
+
+            let yMax = 6000;
+            let yMin = -350;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            // ****************  LINE FUNCTIONS ****************************
+            const makeLine = (data, key) => {
+                const genLine = d3.line()
+                    .x(d => x(d.date))
+                    .y(d => y(d[key]));
+
+                return genLine(data)
+            }
+
+            // **************** END LINE FUNCTIONS ****************************
+            const makeArea = (data, key) => {
+
+                const generateArea = d3.area()
+                    .x(d => x(d.date))
+                    .y1(d => y(0))
+                    .y0(d => y(d[key]))
+
+                return generateArea(data)
+            }
+
+            const flatArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(0))
+                .y0(d => y(0))
+
+            // ////////////////////////////////////////////////////////////////
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.data.map(k => {
+                return { date: k.date, value: 0, val1: 0, val2: 0, val3: 0 };
+            });
+
+            ////////////////// LINES 
+            if (vis.draws <= 1) {
+                vis.terqLine
+                    .attr('d', makeLine(startLine, 'value'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.data, 'value'))
+
+                vis.blueLine
+                    .attr('d', makeLine(startLine, 'val3'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.blue1, 'val3'))
+
+                vis.darkLine
+                    .attr('d', makeLine(startLine.slice(vis.dark1index), 'val2'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark1, 'val2'))
+
+                vis.darkLine1
+                    .attr('d', makeLine(startLine.slice(vis.dark2index), 'val2'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark2, 'val2'))
+
+                vis.blueLine2
+                    .attr('d', makeLine(startLine.slice(vis.blue2index), 'value'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.blue2, 'val3'))
+
+                vis.darkLine2
+                    .attr('d', makeLine(startLine.slice(vis.dark3index), 'val2'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark3, 'val2'))
+
+                vis.darkLine3
+                    .attr('d', makeLine(startLine.slice(vis.dark4index), 'val2'))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark4, 'val2'))
+            } else {
+
+                vis.terqLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.data, 'value'))
+
+                vis.blueLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.blue1, 'val3'))
+
+                vis.darkLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark1, 'val2'))
+
+                vis.darkLine1
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark2, 'val2'))
+
+                vis.blueLine2
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.blue2, 'val3'))
+
+                vis.darkLine2
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark3, 'val2'))
+
+                vis.darkLine3
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .delay(0)
+                    .attr('d', makeLine(vis.dark4, 'val2'))
+            }
+
+            if (vis.draws <= 1) {
+                null
+            } else {
+                vis.terqArea
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.data, 'value'))
+                    .attr('opacity', filled ? 1 : 0);
+
+                vis.blue1area
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.blue1, 'val3'))
+                    .attr('opacity', filled ? 1 : 0);
+
+                vis.blue2area
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.blue2, 'val3'))
+                    .attr('opacity', filled ? 1 : 0);
+
+                vis.dark1area
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.dark1, 'val2'))
+                    .attr('opacity', filled ? 1 : 0);
+
+                vis.dark2area
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.dark2, 'val2'))
+                    .attr('opacity', filled ? 1 : 0);
+
+                vis.dark3area
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.dark3, 'val2'))
+                    .attr('opacity', filled ? 1 : 0);
+
+                vis.dark4area
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('d', makeArea(vis.dark4, 'val2'))
+                    .attr('opacity', filled ? 1 : 0);
+            }
+
+            const tickVals = []
+            for (let i = 2010; i < 2020; i = i + 2) {
+                tickVals.push(new Date('Dec 1 ' + String(i) + ' 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            }
+            tickVals.push(new Date('Dec 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickSizeOuter([0])
+                .tickFormat(e => {
+                    return e.getMonth() + 1 + '/' + String(e.getFullYear())[2] + String(e.getFullYear())[3];
+                });
+
+            if (vis.draws === 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(${0}, ${y(0)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${0}, ${y(0)})`)
+
+            } else {
+                if (pan) {
+                    vis.xAxis
+                        .attr('transform', `translate(${0}, ${y(0)})`)
+                        .call(xAxisCall.scale(x))
+
+                } else {
+                    if (zoomed) {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(0)})`)
+                            .call(xAxisCall.scale(x))
+
+                    } else {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(0)})`)
+                            .call(xAxisCall.scale(x))
+                    }
+                }
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = vis.MARGIN.left * .9;
+            const yAxisCall = d3.axisLeft()
+                .ticks(6)
+                .tickFormat((e, i, n) => {
+                    return n[i + 1] ? e : e + '';
+                })
+
+            if (vis.draws === 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset},${vis.MARGIN.top})`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(1000)
+                    .attr('transform', `translate(${xOffset},${vis.MARGIN.top})`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            /////////////////
+            vis.whiteBox
+                .attr('height', vis.height)
+                .attr('width', vis.gWIDTH * .018)
+
+        } // end redraw
+    } //end class
+
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+
+    const chart = new drawChart();
+
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        chart.wrangle(lowDate, highDate);
+        adjustSidewaysText();
+    }
+
+    // TOGGLE BUTTONS
+    function toggleLine() {
+        document.querySelector('#toggle-slider').style.left = '0%';
+        filled = false;
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, 1)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, 0.3)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, 0.3)';
+
+        redraw();
+    }
+
+    function toggleFill() {
+        document.querySelector('#toggle-slider').style.left = '50%';
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, .3)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, .6)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, .6)';
+
+        filled = true;
+        redraw();
+    }
+
+    function zoomIn() {
+        if (!zoomed) {
+            zoomed = true;
+            chart.wrangle(oldLowDate, oldHighDate);
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/scroll.svg') 5 5 , ew-resize`;
+        }
+    }
+
+    function zoomOut() {
+        if (zoomed) {
+            zoomed = false;
+
+            oldLowDate = lowDate;
+            oldHighDate = highDate;
+
+            chart.wrangle(); // EXTENT OF THE DATA ON THE X-AXIS (with default args)
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/cursor.svg') 5 5, crosshair`
+        }
+    }
+
+    //*************************************************************************************************//
+    const adjustSidewaysText = () => {
+        const entireGridHeight = document.querySelector('#chart').getBoundingClientRect().height;
+        const sidewaysText = document.querySelector('.sideways');
+
+        sidewaysText.style.width = entireGridHeight - entireGridHeight * .01 + 'px';
+    }
+
+    adjustSidewaysText();
+</script>
+
+</html>

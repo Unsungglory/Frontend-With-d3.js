@@ -1,0 +1,941 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+
+    <style>
+        .invis {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .whats-sup {
+            font-size: 1rem;
+            left: -.09rem;
+            top: -.7;
+        }
+
+        .symbol {
+            position: absolute;
+        }
+
+        #main-page-content {
+            max-height: 68%;
+        }
+
+        .legend-wrapper-a {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        toggle {
+            min-width: 245px;
+        }
+
+        #toggle-slider {
+            width: 50%;
+            left: 0%;
+        }
+
+        .toggle-label {
+            align-self: center;
+            margin-right: 10px;
+            opacity: 0.5;
+        }
+
+        .title-wrapper-2 {
+            grid-template-columns: 46% 50%;
+            margin-bottom: 0;
+            justify-content: space-between;
+            flex-flow: unset;
+            align-items: unset;
+            margin-bottom: 2%;
+        }
+
+        .title-left {
+            width: 100%;
+        }
+
+        .title-right {
+            text-align: right;
+        }
+
+        .fade {
+            transition: .3s opacity ease-in-out;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+        }
+
+        .fade.active {
+            opacity: 1;
+        }
+
+        .rel {
+            position: relative;
+        }
+
+        #chart-1 {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .x-axis .domain {
+            display: none;
+        }
+
+        .fund-names {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .i2-axis {
+            position: absolute;
+            transform: rotate(-30deg);
+            transition: .5s all ease-in-out;
+        }
+
+        .bot-info {
+            margin-top: 2%;
+        }
+
+        .chart-wrapper-a {
+            flex-grow: .98;
+        }
+
+        .margin-0 {
+            margin: 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 46% 50%;
+            margin-top: 2em;
+            column-gap: 4%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div class="title-left">
+                                <div style='position: relative;'>
+                                    <h1 class='fade active rel'>
+                                        Historically lower expense ratios
+                                    </h1>
+                                    <h1 class='fade'>
+                                        Equity-focused mutual funds with<br>index-beating lifetime results
+                                    </h1>
+
+                                    <h2 class='fade active rel'>
+                                        These equity-focused mutual funds feature lower expense ratios than the average
+                                        of their Morningstar category peers<sup>1</sup> — a key element of our culture
+                                        and philosophy
+                                    </h2>
+                                </div>
+
+                            </div>
+
+                            <div class=" fade rel">
+                                <h3 class="p-20 bold lh-1p1 top-disc margin-0">
+
+                                    Figures shown are past results for Class F-2 shares and are not predictive of
+                                    results in future periods. Current and future results may be lower or higher than
+                                    those shown. Prices and returns will vary, so investors may lose money. Investing
+                                    for short periods makes losses more likely. For current information and month-end
+                                    results, visit <span class="p-blue"
+                                        onclick="window.open('https://capitalgroup.com')"
+                                        style='font-weight: 900; font-size: inherit; text-decoration: underline; cursor: pointer;'>capitalgroup.com</span>.
+                                </h3>
+                                <div class="two-column">
+                                    <div class='title-right'>
+                                        <div id="time-weighted-val" class="p-blue p-20 bold">
+                                            <span id="t-val">
+                                                0
+                                            </span><sup>%</sup>
+                                        </div>
+                                        <div class="p-16">Time-weighted average excess return</div>
+                                    </div>
+                                    <div class='title-right'>
+                                        <div id="equal-weighted-val" class="p-blue p-20  bold">
+                                            <span id="e-val">
+                                                0
+                                            </span><sup>%</sup>
+                                        </div>
+                                        <div class="p-16">The equal-weighted average annual excess return</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="legend-wrapper-a">
+
+                                <div class="chart-title-wrapper rel">
+                                    <div>
+                                        <h3 class='fade rel active'>
+                                            Expense ratios are as of each fund’s prospectus available as of December 31,
+                                            2021
+                                        </h3>
+                                        <div class='rel p-16'>
+                                            <div class="legend-wrapper fade active">
+                                                <div class="legend-item">
+                                                    <div class="legend-dot ocean" style="background-color: #005F9E;">
+                                                    </div>
+                                                    <span>American Funds %
+
+                                                        F-2 share class</span>
+                                                </div>
+                                                <div class="legend-item">
+                                                    <div class="legend-dot light-grey"></div>
+                                                    <span>Morningstar peer group median %</span>
+                                                </div>
+                                            </div>
+                                            <div class="legend-wrapper fade rel">
+                                                <h3 class='fade rel'>
+                                                    As of December 31, 2021
+                                                </h3>
+                                                <div class="legend-item">
+                                                    <div class="legend-dot ocean"></div>
+                                                    <span>American Funds return (%)</span>
+                                                </div>
+                                                <div class="legend-item">
+                                                    <div class="legend-dot light-grey"></div>
+                                                    <span>Index lifetime return (%)</span>
+                                                </div>
+                                                <div class="legend-item">
+                                                    <div class="legend-dot light-grey"
+                                                        style="background-color: #00AEA9;"></div>
+                                                    <span>Consumer Price Index (CPI) (%)</span>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="toggle-wrapper">
+                                    <div class="toggle-label p-14 demi ls-1p35"></div>
+                                    <toggle class="line-toggle-pill">
+                                        <div id="toggle-slider"></div>
+                                        <button onclick="toggleSlider(0, this)" class='toggle-on upper toggle-btn'>
+                                            LOW EXPENSE
+                                        </button>
+                                        <button onclick="toggleSlider(1, this)" class=' upper toggle-btn'>
+                                            LIFETIME
+                                        </button>
+
+                                    </toggle>
+                                </div>
+                            </section>
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div id="chart" class='fade active'></div>
+                                <div id="chart-1" class='fade'>
+                                    <div class="p-16 pa" style="top: unset; bottom: -2.3%">Inception dates</div>
+                                </div>
+
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                Source for Lifetime chart: Capital Group. Returns are average annual total returns for
+                                benchmark indexes and average annual total return for funds at net asset value from fund
+                                inception through 12/31/21. Consumer Price Index (CPI) number is the average annual
+                                total return for the CPI in each fund's lifetime.
+                                <br><br>
+                                <span>
+                                    Investors should carefully consider investment objectives, risks, charges and
+                                    expenses.
+                                    This and other important information is contained in the fund prospectuses and
+                                    summary
+                                    prospectuses, which can be obtained from a financial professional and should be read
+                                    carefully before investing.
+                                </span>
+                                <br><br>
+                                Investment results assume all distributions are reinvested and reflect applicable fees
+                                and expenses. When applicable, investment results reflect fee waivers and/or expense
+                                reimbursements, without which the results would have been lower. Past results are not
+                                predictive of results in future periods. Please see capitalgroup.com for more
+                                information.
+                                <br><br>
+                                Fund name abbreviations: The Investment Company of America® (ICA), American Mutual Fund®
+                                (AMF), Washington Mutual Investors Fund<sup>SM</sup> (WMIF), AMCAP Fund® (AMCAP), New
+                                Perspective
+                                Fund® (NPF), The Growth Fund of America® (GFA), The Income Fund of America® (IFA),
+                                American Balanced Fund® (AMBAL), Fundamental Investors® (FI), The New Economy Fund®
+                                (NEF), EuroPacific Growth Fund® (EUPAC), Capital Income Builder® (CIB), SMALLCAP World
+                                Fund® (SCWF), Capital World Growth and Income Fund® (WGI), New World Fund® (NWF),
+                                International Growth and Income Fund<sup>SM</sup> (IGI), American Funds Global Balanced
+                                Fund<sup>SM</sup>
+                                (GBAL), American Funds Global Insight Fund<sup>SM</sup> (GIF), American Funds
+                                International Vantage
+                                Fund<sup>SM</sup> (IVE), American Funds Developing World Growth and Income
+                                Fund<sup>SM</sup> (DWGI)
+                                <br><br>
+                                Time-weighted average annual excess return across all 20 equity-focused American Funds
+                                over 726 combined fund years, as of 12/31/21. The time-weighted average gives greater
+                                emphasis to those funds that have been in existence longer. For example, this means that
+                                the 1.3% annualized difference between The Investment Company of America and its
+                                benchmark is given proportionally greater weighting in alignment with its more than 85
+                                years in existence when calculating the average across all 20 funds. Returns are average
+                                annual total returns for benchmark indexes and average annual returns for funds at net
+                                asset value from fund inception through 12/31/21. The funds’ indexes are as of 12/31/21.
+                                See individual fund detail pages at capitalgroup.com for current information and any
+                                applicable benchmark index changes.
+                                <br><br>
+                                The investment adviser is currently reimbursing a portion of other expenses for American
+                                Funds International Vantage Fund. This reimbursement will be in effect through at least
+                                January 1, 2023. The adviser may elect at its discretion to extend, modify or terminate
+                                the reimbursement at that time. Please see each fund’s most recent prospectus for
+                                details.
+                                <br><br>
+                                Class F-2 shares were first offered on August 1, 2008. Class F-2 share results prior to
+                                the date of first sale are hypothetical based on results of the original share class of
+                                the fund without a sales charge, adjusted for typical estimated expenses.
+                                <br><br>
+                                The 20 American Funds equity-focused funds used in our analysis and the relevant
+                                index/index blends with which they were compared are as follows: AMBAL (60% S&P 500/40%
+                                Bloomberg U.S. Aggregate); AMCAP, GFA, AMF, FI, ICA and WMIF (S&P 500); DWGI (MSCI
+                                Emerging Markets); CIB (70% MSCI ACWI/30% Bloomberg U.S. Aggregate; from 7/30/87 through
+                                12/31/87, the MSCI World was used); EUPAC (MSCI EAFE through 3/31/07, and the MSCI ACWI
+                                ex USA, the fund’s current primary benchmark, thereafter); GBAL (60% MSCI ACWI/40%
+                                Bloomberg Global Aggregate); GIF (MSCI World); IFA (65% S&P 500 Index/35% Bloomberg U.S.
+                                Aggregate; from 12/1/73 through 12/31/75, the Bloomberg Government/Credit Bond Index was
+                                used); IGI (MSCI World ex USA through 6/30/11, and the MSCI ACWI ex USA, the fund’s
+                                current primary benchmark, thereafter); IVE (MSCI EAFE); NPF (MSCI World through
+                                9/30/11, and the MSCI ACWI, the fund’s current primary benchmark, thereafter); NEF (MSCI
+                                World through 12/31/87, and the MSCI ACWI, the fund’s current primary benchmark,
+                                thereafter); NWF (MSCI ACWI); SCWF (S&P Global &lt$3 Billion Index through 9/30/09, and
+                                the MSCI ACWI Small Cap, the fund’s current primary benchmark, thereafter); and WGI
+                                (MSCI World through 11/30/11, and the MSCI ACWI, the fund’s current primary
+                                benchmark, thereafter). Index blends are rebalanced monthly.
+                                <br><br>
+                                American Funds Global
+                                Insight Fund and American Funds International Vantage Fund began investment
+                                operations on April 1, 2011, but were only available to a limited number of
+                                investors. Now available on the American Funds platform, the reorganized funds have
+                                adopted the results and financial history of the original fund.
+                                <br><br>
+                                Investing outside
+                                the United States involves risks, such as currency fluctuations, periods of
+                                illiquidity and price volatility, as more fully described in the prospectus. These
+                                risks may be heightened in connection with investments in developing countries.
+                                Small-company stocks entail additional risks, and they can fluctuate in price more
+                                than larger company stocks. The return of principal for funds with significant
+                                underlying bond holdings is not guaranteed. Fund shares are subject to the same
+                                interest rate, inflation and credit risks associated with the underlying bond
+                                holdings. Lower rated bonds are subject to greater fluctuations in value and risk of
+                                loss of income and principal than higher rated bonds.
+                                <br><br>
+                                If used after March 31, 2022,
+                                this must be accompanied by a current American Funds quarterly statistical update at
+                                capitalgroup.com.
+                                <br><br>
+                                Bloomberg Global Aggregate Index represents the global
+                                investment-grade fixed income markets. Bloomberg U.S. Aggregate Index represents the
+                                U.S. investment-grade fixed-rate bond market and consists of U.S. Treasury and
+                                government related bonds, corporate securities and asset-backed securities. MSCI All
+                                Country World Index is a free float-adjusted, market capitalization-weighted index
+                                that is designed to measure results of more than 40 developed and developing country
+                                markets. Results reflect dividends gross of withholding taxes through 12/31/00, and
+                                dividends net of withholding taxes thereafter. MSCI All Country World Small Cap
+                                Index is a free float-adjusted market capitalization-weighted index that is designed
+                                to measure equity market results of smaller capitalization companies in both
+                                developed and emerging markets. Results reflect dividends net of withholding taxes.
+                                MSCI All Country World ex USA Index is a free float-adjusted, market
+                                capitalization-weighted index that is designed to measure results of more than 40
+                                developed and emerging equity markets, excluding the United States. Results reflect
+                                dividends gross of withholding taxes through 12/31/00, and dividends net of
+                                withholding taxes thereafter. MSCI World Index is a free float-adjusted, market
+                                capitalization-weighted index that is designed to measure results of more than 20
+                                developed equity markets. Results reflect dividends net of withholding taxes. MSCI
+                                EAFE (Europe, Australasia, Far East) Index is a free float-adjusted, market
+                                capitalization weighted index that is designed to measure developed equity market
+                                results, excluding the United States and Canada. Results reflect dividends net of
+                                withholding taxes. S&P 500 Index is a market capitalization-weighted index based on
+                                the average weighted results of approximately 500 widely held common stocks.
+                                Consumer Price Index (CPI) is a measure of the average change over time in the
+                                prices paid by urban consumers for a market basket of consumer goods and services.
+                                Widely used as a measure of inflation, the CPI is computed by the U.S. Department of
+                                Labor, Bureau of Labor Statistics.
+                                <br><br>
+                                The indexes are unmanaged and, therefore, have no
+                                expenses. Investors cannot invest directly in an index. There have been periods when
+                                the funds have lagged the indexes.
+                                <br><br>
+                                Bloomberg Index Services Limited. BLOOMBERG® is a
+                                trademark and service mark of Bloomberg Finance L.P. and its affiliates
+                                (collectively “Bloomberg”). Bloomberg or Bloomberg’s licensors own all proprietary
+                                rights in the Bloomberg Indices. Neither Bloomberg nor Bloomberg’s licensors
+                                approves or endorses this material, or guarantees the accuracy or completeness of
+                                any information herein, or makes any warranty, express or implied, as to the results
+                                to be obtained therefrom and, to the maximum extent allowed by law, neither shall
+                                have any liability or responsibility for injury or damages arising in connection
+                                therewith.
+                                <br><br>
+                                MSCI has not approved, reviewed or produced this report, makes no express
+                                or implied warranties or representations and is not liable whatsoever for any data
+                                in the report. You may not redistribute the MSCI data or use it as a basis for other
+                                indices or investment products.
+                                <br><br>
+                                The S&P 500 Index is a product of S&P Dow Jones
+                                Indices LLC and/or its affiliates and has been licensed for use by Capital Group.
+                                Copyright © 2022 S&P Dow Jones Indices LLC, a division of S&P Global, and/or its
+                                affiliates. All rights reserved. Redistribution or reproduction in whole or in part
+                                is prohibited without written permission of S&P Dow Jones Indices LLC.
+                                <br><br>
+                                This content,
+                                developed by Capital Group, home of American Funds, should not be used as a primary
+                                basis for investment decisions and is not intended to serve as impartial investment
+                                or fiduciary advice.
+                                <br><br>
+                                All Capital Group trademarks mentioned are owned by The Capital
+                                Group Companies, Inc., an affiliated company or fund. All other company and product
+                                names mentioned are the property of their respective companies.
+                                <br><br>
+                                American Funds
+                                Distributors, Inc., member FINRA.
+                                <br><br>
+                                © 2022 Capital Group. All rights reserved.
+
+
+                                <!-- <span class="p-blue"
+                                    onclick="window.open('https://capitalgroup.com')"
+                                    style='font-weight: 700; font-size: inherit; text-decoration: underline; cursor: pointer;'>capitalgroup.com
+                                </span> -->
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<!-- external library -->
+<script src="engine/js/d3.min.js"></script>
+<script src="data/wr02.js"></script>
+<script src="data/lifetimeChartData.js"></script>
+
+<script>
+    const seismicApp = window.innerWidth < 1100;
+    const iPad = window.innerWidth < 1400;
+    const smallLaptop = window.innerHeight < 770;
+
+    class StackedBarChart {
+        constructor(el, data, colors, labels, toFix, dots = null) {
+            const vis = this;
+            vis.colors = colors;
+            vis.el = el;
+            vis.firstChart = vis.el === 'chart' ? true : false;
+            vis.draws = 0;
+            vis.data = data;
+            vis.data.forEach(d => {
+                d.fund = Number(d.fund)
+                d.index = Number(d.index)
+                if (d.cpi)
+                    d.cpi = Number(d.cpi)
+            })
+            vis.labels = labels;
+            vis.toFix = toFix;
+            vis.dotsData = dots;
+
+            vis.topData = [];
+            vis.bottomData = [];
+
+            const keys = Object.keys(vis.data[0]).slice(1)
+            vis.keys = [keys[0], keys[1]]
+
+            this.init();
+        }
+
+        init() {
+            const vis = this;
+
+            // MAIN SVG
+            vis.chartDiv = document.getElementById(vis.el);
+
+            vis.svg = d3.select(vis.chartDiv).append("svg").attr('class', 'svg-class')
+
+            // APPEND G
+            vis.g = vis.svg.append('g').attr('class', 'uf-g');
+            vis.bars = vis.g.append('g').attr('class', 'uf-bars');
+            vis.bottomBars = vis.bars.append('g').attr('class', 'bottom-bars')
+            vis.topBars = vis.bars.append('g').attr('class', 'top-bars')
+            vis.line = vis.svg.append("line").attr('class', 'uf-grey-line');
+            vis.dots = vis.g.append('g').attr("class", 'dots')
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis demi p-16')
+
+            //  TEXT
+            vis.vals = vis.g.append('g').attr('class', 'values');
+            vis.dates = vis.svg.append('g').attr('class', 'inception-dates');
+            vis.botText = vis.svg.append('text');
+            vis.names = d3.select(vis.chartDiv).append('div').attr('class', 'fund-names')
+
+            document.getElementById('t-val').innerHTML = Number(lifeTimeData["shareClassF2"].excessTime).toFixed(2)
+            document.getElementById('e-val').innerHTML = Number(lifeTimeData["shareClassF2"].excessEqual).toFixed(2)
+
+            vis.redraw();
+        }
+
+        redraw() {
+            const seismicApp = window.innerWidth < 1100;
+            const iPad = window.innerWidth < 1400;
+            const smallLaptop = window.innerHeight < 770;
+
+            const vis = this;
+            vis.draws++;
+
+            // set up data
+            vis.bottomData = [];
+            vis.topData = [];
+            for (let i = 0; i < vis.data.length; i++) {
+                if (vis.data[i].fund > vis.data[i].index) {
+
+                    vis.bottomData.push({ 'fundName': vis.data[i].fundName, 'index': vis.data[i].fund })
+                    vis.topData.push({ 'fundName': vis.data[i].fundName, 'excess': vis.data[i].index })
+                }
+
+                if (vis.data[i].index > vis.data[i].fund) {
+                    vis.bottomData.push({ 'fundName': vis.data[i].fundName, 'excess': vis.data[i].index })
+                    vis.topData.push({ 'fundName': vis.data[i].fundName, 'index': vis.data[i].fund })
+                }
+            }
+
+            // Extract the width and height that was computed by CSS.
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.parentElement.clientHeight;
+
+            // DEFINE SVG
+            vis.svg.attr('width', width).attr('height', height);
+
+            // MARGINS
+            const mBottom = !vis.firstChart ? height * .08 : 0;
+            vis.MARGIN = { top: 0, right: 2, bottom: mBottom, left: 2 };
+            vis.gWIDTH = width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // G
+            vis.g
+                .attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            // X SCALE
+            const x = d3.scaleBand()
+                .range([0, vis.gWIDTH])
+                .paddingInner(0.3)
+                .paddingOuter(0)
+                .domain(vis.data.map(d => d.fundName));
+
+            const maxIndex = d3.max(vis.data, d => d.fund);
+            const maxExcess = d3.max(vis.data, d => d.index);
+            const maxValue = d3.max([maxIndex, maxExcess]);
+
+            // Y SCALE
+            if (vis.firstChart) {
+                vis.y = d3.scaleLinear()
+                    .range([vis.gHEIGHT, 0])
+                    .domain([-.175, maxValue + 0.15]);
+            } else {
+                vis.y = d3.scaleLinear()
+                    .range([vis.gHEIGHT, 0])
+                    .domain([-2, maxValue + 1.5]);
+            }
+
+            // ZERO BOTTOM LINE
+            if (vis.draws === 1) {
+                vis.line
+                    .attr("x1", 0)
+                    .attr("y1", vis.y(0))
+                    .attr("x2", width + vis.MARGIN.left + vis.MARGIN.right)
+                    .attr("y2", vis.y(0))
+                    .attr("stroke-width", 1.4)
+                    .attr("stroke", "rgb(221, 221, 221)");
+            } else {
+                vis.line
+                    .transition()
+                    .duration(500)
+                    .attr("x1", 0)
+                    .attr("y1", vis.y(0))
+                    .attr("x2", width + vis.MARGIN.left + vis.MARGIN.right)
+                    .attr("y2", vis.y(0))
+
+            }
+
+            /////////////////////////////////////
+            ////////////////////////////////////
+            // BARS BOTTOM LAYER
+            vis.rects = vis.bottomBars
+                .selectAll("rect")
+                .data(vis.bottomData)
+
+            let counter = 0;
+            let boxIndex = 0;
+            let boxCategory = ['excess', 'index'];
+
+            vis.rects.exit().remove();
+
+            vis.rects
+                .transition()
+                .duration(500)
+                .attr("x", d => x(d.fundName))
+                .attr('height', d => Math.abs(vis.y(d[Object.keys(d)[1]]) - vis.y(0)))
+                .attr('y', d => (d[Object.keys(d)[1]] >= 0 ? vis.y(d[Object.keys(d)[1]]) - 1 : vis.y(0) + 1))
+                .attr("width", x.bandwidth())
+
+            vis.rects
+                .enter()
+                .append("rect")
+                .attr('class', 'rects')
+                .attr("width", x.bandwidth())
+                .attr("x", d => x(d.fundName))
+                .attr("y", d => vis.y(0))
+                .attr("height", d => 0)
+                .attr('fill', d => Object.keys(d)[1] == 'index' ? vis.colors[0] : vis.colors[1])
+                // .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(1000)
+                .attr('height', d => Math.abs(vis.y(d[Object.keys(d)[1]]) - vis.y(0)))
+                .attr('y', d => (d[Object.keys(d)[1]] >= 0 ? vis.y(d[Object.keys(d)[1]]) - 1 : vis.y(0) + 1))
+
+            vis.rects = vis.topBars
+                .selectAll("rect")
+                .data(vis.topData)
+
+            vis.rects.exit().remove();
+
+            vis.rects
+                .transition()
+                .duration(500)
+                .attr("x", d => x(d.fundName))
+                .attr('height', d => Math.abs(vis.y(d[Object.keys(d)[1]]) - vis.y(0)))
+                .attr('y', d => (d[Object.keys(d)[1]] >= 0 ? vis.y(d[Object.keys(d)[1]]) - 1 : vis.y(0) + 1))
+                .attr("width", x.bandwidth())
+
+            // BARS TOP LAYER
+            vis.rects
+                .enter()
+                .append("rect")
+                .attr('class', 'rects')
+                .attr("width", x.bandwidth())
+                .attr("x", d => x(d.fundName))
+                .attr("y", d => vis.y(0))
+                .attr("height", d => 0)
+                .attr('fill', d => Object.keys(d)[1] == 'index' ? vis.colors[0] : vis.colors[1])
+                // .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(1000)
+                .attr('height', d => Math.abs(vis.y(d[Object.keys(d)[1]]) - vis.y(0)))
+                .attr('y', d => (d[Object.keys(d)[1]] >= 0 ? vis.y(d[Object.keys(d)[1]]) - 1 : vis.y(0) + 1))
+
+            /////////////////////////////////////
+            ////////////////////////////////////
+            /// NUMERICAL VALUES for fund
+            vis.values = vis.vals
+                .selectAll('.uf-ind-vals')
+                .data(vis.data)
+
+            vis.values.exit().remove;
+
+            vis.values
+                .transition()
+                .duration(500)
+                .attr('opacity', 1)
+                .text(d => (Math.round(d.fund * 100) / 100).toFixed(vis.toFix))
+                .attr('x', d => x(d.fundName) + x.bandwidth() / 2)
+                .attr('y', d => vis.firstChart ? vis.y(d.fund) - 13 : d.fund > d.index ? vis.y(d.fund) - 13 : vis.y(d.fund) + 25);
+
+            vis.values
+                .enter()
+                .append('text')
+                .attr('class', 'uf-ind-vals bold p-16')
+                .text(d => (Math.round(d.fund * 100) / 100).toFixed(vis.toFix))
+                .style('text-anchor', 'middle')
+                .attr('x', d => x(d.fundName) + x.bandwidth() / 2)
+                .attr('y', vis.y(0))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .attr('fill', d => vis.firstChart ? vis.colors[0] : d.fund < d.index ? '#fff' : vis.colors[0])
+                .transition()
+                .duration(1000)
+                .attr('opacity', 1)
+                .attr('y', d => vis.firstChart ? vis.y(d.fund) - 13 : d.fund > d.index ? vis.y(d.fund) - 13 : vis.y(d.fund) + 25);
+
+            ///////////////////
+            /////////////////////////////////////
+            ////////////////////////////////////
+            /// NUMERICAL VALUES for excess vals
+            vis.valuesEx = vis.vals
+                .selectAll('.uf-ex-vals')
+                .data(vis.data)
+
+            vis.valuesEx.exit().remove;
+
+            vis.valuesEx
+                .transition()
+                .duration(500)
+                .text(d => (Math.round(d.index * 100) / 100).toFixed(vis.toFix))
+                .attr('opacity', 1)
+                .attr('x', d => x(d.fundName) + x.bandwidth() / 2)
+                .attr('y', d => d.index < d.fund ? vis.y(d.index) + 25 : vis.y(d.index) - 13)
+
+            vis.valuesEx
+                .enter()
+                .append('text')
+                .attr('class', 'uf-ex-vals bold p-16')
+                .text(d => (Math.round(d.index * 100) / 100).toFixed(vis.toFix))
+                .style('text-anchor', 'middle')
+                .attr('x', d => x(d.fundName) + x.bandwidth() / 2)
+                .attr('y', vis.y(0))
+                .attr('fill', d => d.index < d.fund ? '#000' : '#000')
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(1000)
+                .attr('opacity', 1)
+                .attr('y', d => d.index < d.fund ? vis.y(d.index) + 25 : vis.y(d.index) - 13)
+
+            ///////////////////
+            /////////////////////////////////////
+            ////////////////////////////////////
+            // ADD BOTTOM LABELS
+            if (vis.labels)
+                addBottomLabels();
+            else {
+                const xAxisCall = d3.axisBottom()
+                    .tickPadding(vis.gHEIGHT * .02)
+                    .tickSizeOuter([0])
+                    .tickFormat(e => e);
+
+                if (vis.draws === 1) {
+                    vis.xAxis
+                        .call(xAxisCall.scale(x))
+                        .attr('transform', `translate(${vis.MARGIN.left}, ${vis.y(0)})`)
+
+                } else {
+                    vis.xAxis
+                        .transition()
+                        .duration(500)
+                        .call(xAxisCall.scale(x))
+                        .attr('transform', `translate(${vis.MARGIN.left}, ${vis.y(0)})`)
+                }
+            }
+
+            function addBottomLabels() {
+                ////////////////////////
+                const yPlace = vis.y(-.7) + 'px';
+                const xPlace = vis.MARGIN.left;
+                vis.fundNames = vis.names
+                    .selectAll('.i2-axis')
+                    .data(vis.data)
+
+                vis.fundNames.exit().remove();
+
+                vis.fundNames
+                    .style('left', d => x(d.fundName) + xPlace + 'px')
+                    .style('top', yPlace)
+                    .style('width', x.bandwidth() + 'px')
+
+                vis.fundNames
+                    .enter()
+                    .append('div')
+                    .attr('class', 'i2-axis bold p-16')
+                    .html((d, i) => `
+                        <div>${d.fundName}</div>
+                        <div class='normal p-14 bot-info'>${d.date}</div>
+                    `)
+                    .style('text-align', 'center')
+                    .style('left', d => x(d.fundName) + xPlace + 'px')
+                    .style('top', yPlace)
+                    .style('width', x.bandwidth() + 'px')
+            }
+            /////////////////////////////////////
+            ////////////////////////////////////
+
+            if (vis.dotsData) {
+                /// add green dots, for one chart but not the other
+                vis.dot = vis.dots
+                    .selectAll('.dot')
+                    .data(vis.data)
+
+                vis.dot.exit().remove;
+
+                vis.dot
+                    .transition()
+                    .duration(500)
+                    .attr('cx', (d, i) => x(d.fundName) + x.bandwidth() / 2)
+                    .attr('cy', d => vis.y(d.cpi))
+                    .attr('opacity', 1)
+                    .attr('r', x.bandwidth() * .35)
+
+                vis.dot
+                    .enter()
+                    .append('circle')
+                    .attr('class', 'dot')
+                    .attr('cx', (d, i) => x(d.fundName) + x.bandwidth() / 2)
+                    .attr('cy', d => vis.y(d.cpi))
+                    .attr('fill', '#00AEA9')
+                    .attr('opacity', 0)
+                    .attr('r', 0)
+                    .transition()
+                    .duration(1000)
+                    .attr('opacity', 1)
+                    .attr('r', x.bandwidth() * .35)
+
+                //////
+                vis.dotLabel = vis.dots
+                    .selectAll('.dotLabel')
+                    .data(vis.data)
+
+                vis.dotLabel.exit().remove;
+
+                vis.dotLabel
+                    .transition()
+                    .duration(500)
+                    .attr('opacity', 1)
+                    .attr('x', (d, i) => x(d.fundName) + x.bandwidth() / 2)
+                    .attr('y', d => vis.y(d.cpi))
+                    .attr('dy', x.bandwidth() * .08)
+
+                vis.dotLabel
+                    .enter()
+                    .append('text')
+                    .attr('class', 'dotLabel p-16 bold')
+                    .attr('fill', 'white')
+                    .attr('text-anchor', 'middle')
+                    .attr('x', (d, i) => x(d.fundName) + x.bandwidth() / 2)
+                    .attr('y', d => vis.y(d.cpi))
+                    .attr('dy', x.bandwidth() * .08)
+                    .text(d => d.cpi.toFixed(1))
+                    .attr('opacity', 0)
+                    .transition()
+                    .duration(1000)
+                    .attr('opacity', 1)
+            }
+
+
+        } // end redraw
+    } // end class
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const smallerData = [
+        { fundName: 'ICA', fund: 0.0038, index: 0.0082, },
+        { fundName: 'AMF', fund: 0.0037, index: 0.0082, },
+        { fundName: 'WMIF', fund: 0.0038, index: 0.0082, },
+        { fundName: 'AMCAP', fund: 0.0045, index: 0.0082, },
+        { fundName: 'NPF', fund: 0.0052, index: 0.0098, },
+        { fundName: 'GFA', fund: 0.0040, index: 0.0082, },
+        { fundName: 'IFA', fund: 0.0035, index: 0.0078, },
+        { fundName: 'AMBAL', fund: 0.0036, index: 0.0084, },
+        { fundName: 'FI', fund: 0.0039, index: 0.0082, },
+        { fundName: 'NEF', fund: 0.0052, index: 0.0098, },
+        { fundName: 'EUPAC', fund: 0.0057, index: 0.0097, },
+        { fundName: 'CIB', fund: 0.0037, index: 0.0097, },
+        { fundName: 'SCWF', fund: 0.0076, index: 0.0125, },
+        { fundName: 'WGI', fund: 0.0052, index: 0.0098, },
+        { fundName: 'NWF', fund: 0.0068, index: 0.0123, },
+        { fundName: 'IGI', fund: 0.0065, index: 0.0097, },
+        { fundName: 'GBAL', fund: 0.0059, index: 0.0097, },
+        { fundName: 'GIF', fund: 0.0056, index: 0.0098, },
+        { fundName: 'IVE', fund: 0.0080, index: 0.0097, },
+        { fundName: 'DWGI', fund: 0.0095, index: 0.0123, },
+    ]
+
+    smallerData.forEach(d => {
+        d.fund = d.fund * 100;
+        d.index = d.index * 100
+    })
+
+    /////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////
+    const firstChart = new StackedBarChart('chart', smallerData, ['rgba(0, 95, 158, 1)', 'rgba(226, 226, 226, 1)'], false, 2);
+    const lifetimeChart = new StackedBarChart('chart-1', lifeTimeData['shareClassF2'].data, ['#009CDC', 'rgba(199, 199, 199, 1)',], true, 1, true);
+
+    window.addEventListener("resize", redraw);
+
+    function redraw() {
+        firstChart.redraw();
+        lifetimeChart.redraw();
+    }
+
+    function toggleSlider(num, el) {
+        const pillToggle = document.getElementById('toggle-slider');
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
+
+        toggleButtons.forEach(button => {
+            button.classList.remove('toggle-on');
+        })
+        el.classList.add('toggle-on');
+
+        document.querySelectorAll('.fade').forEach(el => el.classList.toggle('active'));
+
+        switch (num) {
+            case 0:
+                pillToggle.style.left = '0px';
+                break;
+            case 1:
+                pillToggle.style.left = '50%';
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    function goWeb() {
+        window.open("http://capitalgroup.com")
+    }
+
+
+</script>
+
+</html>

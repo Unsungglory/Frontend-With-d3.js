@@ -1,0 +1,791 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- Jquery -->
+    <!-- <script src="./engine/js/jquery-3.4.1.min.js" type="text/javascript"></script> -->
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+
+    <style>
+        .title-wrapper-a {
+            margin-bottom: 1%;
+        }
+
+        .domain {
+            display: none;
+        }
+
+        .tick {
+            font-family: Avenir;
+        }
+
+        .num-labels {
+            letter-spacing: -2;
+            pointer-events: none;
+        }
+
+        .bar,
+        text {
+            pointer-events: none;
+        }
+
+        .visible {
+            opacity: 1 !important;
+            pointer-events: all !important;
+        }
+
+        @media (max-width: 1300px) {
+            .num-labels {
+                letter-spacing: -1;
+            }
+        }
+
+        .bg-ash {
+            background-color: #008F77;
+        }
+
+        .terq {
+            background-color: #002349;
+        }
+
+
+
+        .sky-box {
+            background-color: #002349;
+        }
+
+        .grey-box {
+            background-color: #008F77;
+        }
+
+        .bars-labels {
+            fill: white;
+            pointer-events: none;
+        }
+
+        #chart {
+            width: 99%;
+        }
+
+
+
+
+        .popup {
+            position: absolute;
+            width: clamp(22%, 2vw, 380px);
+            box-shadow: 3px 15px 30px rgba(32, 77, 96, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, left 0s, top 0s;
+            padding: 1.5%;
+            padding-top: 1.2%;
+            background-color: white;
+            z-index: 2;
+            pointer-events: none;
+            top: 0;
+        }
+
+        .popup.on {
+            opacity: 1;
+        }
+
+        .popup::after {
+            position: absolute;
+            top: 98%;
+            left: 50%;
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: solid 15px white;
+            border-left: solid 13px transparent;
+            border-right: solid 13px transparent;
+        }
+
+        .popup p {
+            margin: 0;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .popup-header img {
+            vertical-align: middle;
+        }
+
+        .popup-content {
+            display: flex;
+            justify-content: space-evenly;
+            padding-top: 8%;
+            padding-bottom: 4%;
+        }
+
+        .popup-content-left,
+        .popup-content-right {
+            width: 50%;
+            text-align: center;
+        }
+
+        .popup-close {
+            cursor: pointer;
+            pointer-events: none;
+            padding: 5%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transition: .3s all ease-in-out;
+            transform: scale(1);
+        }
+
+        .on .popup-close {
+            pointer-events: all !important;
+        }
+
+        .popup-close:hover {
+            transform: scale(1.1);
+        }
+
+        .popup-content-left-value {
+            letter-spacing: -1.5px;
+            color: #002349;
+        }
+
+        .popup-content-right-value {
+            letter-spacing: -1.5px;
+            color: #008F77;
+        }
+
+        .bars {
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div>
+                                <h1>
+                                    International indexes are more weighted toward older industries
+                                </h1>
+                                <h2>
+                                    Bottom-up research can help uncover growth opportunities across sectors
+                                </h2>
+                            </div>
+
+                            <div class="blurb">
+                                Not all indexes are alike, and outsized or underrepresentation of an industry can have
+                                sizable impacts on the broader index.
+                            </div>
+                        </div>
+                        <!-- end content title -->
+
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="chart-ui-row two-grid">
+
+                                <div class="chart-title-wrapper">
+                                    <h3>Non-U.S. indexes are more heavily weighted toward lower growth sectors</h3>
+                                    <div class='p-16' style="margin-top: .25%;">
+                                        Regional exposure of each sector within MSCI All Country World Index (ACWI) (%)
+                                    </div>
+
+                                    <div class="legend-wrapper" style="margin-top: 1.2%;">
+                                        <div class="legend-item">
+                                            <div class="legend-dot terq"></div>
+                                            <span class='p-16'>Non-U.S.</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-dot bg-ash"></div>
+                                            <span class='p-16'>U.S.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div class='' id="chart"></div>
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <p>
+                                    Sources: MSCI, RIMES. As of 12/31/21.
+                                </p>
+                                <p>
+                                    <span>
+                                        Investors should carefully consider investment objectives, risks, charges and
+                                        expenses. This and other important information is contained in the fund
+                                        prospectuses and summary prospectuses, which can be obtained from a financial
+                                        professional and should be read carefully before investing.
+                                    </span>
+                                </p>
+                                <p>
+                                    Indexes are unmanaged and, therefore, have no expenses. Investors cannot invest
+                                    directly in an index.
+                                    <br><br>
+                                    MSCI All Country World Index is a free float-adjusted market capitalization weighted
+                                    index that is designed to measure equity market results in the global developed and
+                                    emerging markets, consisting of more than 40 developed and emerging market country
+                                    indexes. Results reflect dividends gross of withholding taxes through December 31,
+                                    2000, and dividends net of withholding taxes thereafter.
+                                    <br><br>
+                                    MSCI All Country World
+                                    Index ex USA is a free float-adjusted market capitalization weighted index that is
+                                    designed to measure equity market results in the global developed and emerging
+                                    markets, excluding the United States. The index consists of more than 40 developed
+                                    and emerging market country indexes.
+                                    <br><br>
+                                    MSCI has not approved, reviewed or
+                                    produced this report, makes no express or implied warranties or representations and
+                                    is not liable whatsoever for any data in the report. You may not redistribute the
+                                    MSCI data or use it as a basis for other indices or investment products.
+                                    <br><br>
+                                    Statements
+                                    attributed to an individual represent the opinions of that individual as of the date
+                                    published and do not necessarily reflect the opinions of Capital Group or its
+                                    affiliates. This information is intended to highlight issues and should not be
+                                    considered advice, an endorsement or a recommendation.
+                                    <br><br>
+                                    This content, developed by
+                                    Capital Group, home of American Funds, should not be used as a primary basis for
+                                    investment decisions and is not intended to serve as impartial investment or
+                                    fiduciary advice.
+                                    <br><br>
+                                    All Capital Group trademarks mentioned are owned by The Capital
+                                    Group Companies, Inc., an affiliated company or fund. All other company and product
+                                    names mentioned are the property of their respective companies.
+                                    <br><br>
+                                    American Funds
+                                    Distributors, Inc., member FINRA.
+                                    <br><br>
+                                    © 2022 Capital Group. All rights reserved.
+                                </p>
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="engine/js/d3.min.js"></script>
+
+<script>
+
+    const data = [
+        { sector: 'Materials', nonUs: 0.67, us: 0.33, mcwiExUsaReturns: 0.097, usaReturns: 0.265, },
+        { sector: 'Energy', nonUs: 0.55, us: 0.45, mcwiExUsaReturns: 0.260, usaReturns: 0.51, },
+        { sector: 'Financials', nonUs: 0.54, us: 0.46, mcwiExUsaReturns: 0.164, usaReturns: 0.35, },
+        { sector: 'Consumer staples', nonUs: 0.49, us: 0.51, mcwiExUsaReturns: 0.053, usaReturns: 0.172, },
+        { sector: 'Industrials', nonUs: 0.51, us: 0.49, mcwiExUsaReturns: 0.129, usaReturns: 0.194, },
+        { sector: 'Utilities', nonUs: 0.45, us: 0.55, mcwiExUsaReturns: 0.031, usaReturns: 0.163, },
+        { sector: 'Consumer discretionary', nonUs: 0.38, us: 0.62, mcwiExUsaReturns: -0.06, usaReturns: 0.213, },
+        { sector: 'Real estate', nonUs: 0.34, us: 0.66, mcwiExUsaReturns: -0.022, usaReturns: 0.421, },
+        { sector: 'Health care', nonUs: 0.31, us: 0.69, mcwiExUsaReturns: 0.037, usaReturns: 0.248, },
+        { sector: 'Communication services', nonUs: 0.28, us: 0.72, mcwiExUsaReturns: -0.069, usaReturns: 0.186, },
+        { sector: 'Information technology', nonUs: 0.22, us: 0.78, mcwiExUsaReturns: 0.153, usaReturns: 0.313, },
+        // { sector: 'fifty', nonUs: 0.5, us: 0.5, mcwiExUsaReturns: 0.453519130880036, usaReturns: 0.456258754715967, },
+        // { sector: 'one hunder', nonUs: 1, us: 0, mcwiExUsaReturns: 0.453519130880036, usaReturns: 0.456258754715967, },
+    ]
+
+    function closeBox(el) {
+        el.parentElement.parentElement.classList.toggle('clicked');
+        el.parentElement.parentElement.classList.remove('on');
+    }
+
+    class drawBars {
+        constructor() {
+            this.data = data;
+            this.draws = 0;
+            this.topData = [];
+            this.bottomData = [];
+            this.keys = ['nonUs', 'us']
+
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART 
+            vis.chartDiv = document.querySelector("#chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'main-g')
+
+            // COLOR SCALE
+            vis.z = d3.scaleOrdinal()
+                .range(['#002349', '#008F77 '])
+                .domain(vis.keys);
+
+            vis.greyBars = vis.g.append('g').attr('class', 'grey-bars')
+            vis.barsGroupLeft = vis.g.append('g').attr('class', 'bars');
+            vis.barsGroupRight = vis.g.append('g').attr('class', 'bars');
+
+            //  TEXT
+            vis.vals = vis.g.append('g').attr('class', 'values');
+            vis.names = vis.g.append('g').attr('class', 'fund-names')
+
+            vis.getTheWidthOfThisText = vis.g.append('text')
+                .attr('class', 'p-16 demi')
+                .style('pointer-events', 'none')
+                .style('opacity', 0)
+                .text('Communication services+')
+
+            vis.yAxis = vis.g
+                .append('g')
+                .attr('class', 'axis y-axis p-16 demi')
+
+            this.appendHovers();
+
+            setTimeout(() => {
+                this.redraw();
+
+            }, 500);
+        }
+
+        // create hover box for each sector
+        appendHovers() {
+            const vis = this;
+
+            vis.data.forEach((sector, i) => {
+                const mcwiReturn = sector.mcwiExUsaReturns > 0 ? String((sector.mcwiExUsaReturns * 100).toFixed(1)) : `(${String((sector.mcwiExUsaReturns * -100).toFixed(1))})`;
+                const usaReturn = sector.usaReturns > 0 ? String((sector.usaReturns * 100).toFixed(1)) : `(${String((sector.usaReturns * -100).toFixed(1))})`;
+
+                const popup = d3.select(vis.chartDiv).append('div')
+                    .attr('class', 'popup')
+                    .attr('id', `popup-${i}`)
+                    .html(` 
+                            <div class="popup-header">
+                                <div class="popup-header-text">
+                                    <p class="popup-title p-16 demi"> Index sector returns </p>
+                                    <p class="popup-sub p-16"> YTD as of 12/31/21 </p>
+                                </div>
+                                <div class="popup-close" onClick="closeBox(this)">
+                                    <img src="./img/icon-close.svg" />
+                                </div>
+                            </div>
+                            <div class="popup-content">
+                                <div class="popup-content-left">
+                                    <p class="popup-content-left-value p-30 demi">${mcwiReturn}<sup>%</sup></p>
+                                    <p class="p-16"> MSCI ACWI ex USA </p>
+                                </div>
+                                <div class="popup-content-right">
+                                    <p class="popup-content-right-value p-30 demi">${usaReturn}<sup>%</sup></p>
+                                    <p class="p-16"> USA </p>
+                                </div>
+                            </div>`
+                    )
+            });
+        }
+
+        redraw() {
+
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.clientHeight;
+            vis.MARGIN = { top: 0, right: 0, bottom: 0, left: 0 };
+            vis.gWIDTH = width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", width)
+                .attr("height", height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            // X SCALE
+            const greySectionWidth = vis.getTheWidthOfThisText.node().getBBox().width * 1.37;
+            const x = d3.scaleLinear()
+                .range([greySectionWidth, vis.gWIDTH])
+                .domain([0, 1]);
+
+            // Y SCALE
+            const y = d3.scaleBand()
+                .range([0, vis.gHEIGHT])
+                .paddingInner(0.2)
+                .domain(data.map(d => d.sector));
+
+            let counter = 0;
+            let boxIndex = 0;
+
+            const STACKDATA = d3.stack().keys(vis.keys)(data)
+
+            ////////////////////////////////////////////////////////////////////
+            // Add stack class and fill
+            console.warn(x(.5) - x(0), x(1) - x(.0))
+            vis.barsGroupLeft
+                .attr('class', d => `bars stack-group ${STACKDATA[0].key}`)
+                .attr("fill", d => vis.z(STACKDATA[0].key))
+
+            // LEFT BARS
+            vis.leftBars = vis.barsGroupLeft
+                .selectAll('rect')
+                .data(STACKDATA[0])
+
+            vis.leftBars.exit().remove();
+
+            vis.leftBars
+                .style('opacity', 1)
+                .transition()
+                .duration(300)
+                .attr("width", d => {
+                    const rectWidth = x(d[1]) - x(d[0]);
+                    return rectWidth >= 0 ? rectWidth : 0;
+                })
+                .attr("x", d => x(d[0]))
+                .attr("y", d => y(d.data.sector))
+                .attr("height", d => y.bandwidth())
+
+            vis.leftBars
+                .enter()
+                .append("rect")
+                .attr('class', d => `rects ${d.data.sector.replace(' ', '-').toLowerCase()}`)
+                .attr("height", d => y.bandwidth())
+                .attr("width", d => {
+                    const rectWidth = x(d[1]) - x(d[0]);
+                    return rectWidth >= 0 ? rectWidth : 0;
+                })
+                .attr("x", d => x(d[0]))
+                .attr("y", d => y(d.data.sector))
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => i * 100 + 0)
+                .style('opacity', 1)
+
+            ////////////////////////////////////////////////////////////////////
+            // Add stack class and fill
+            vis.barsGroupRight
+                .attr('class', d => `bars stack-group ${STACKDATA[1].key}`)
+                .attr("fill", d => vis.z(STACKDATA[1].key))
+
+            // RIGHT BARS
+            vis.rightBars = vis.barsGroupRight
+                .selectAll('rect')
+                .data(STACKDATA[1])
+
+            vis.rightBars.exit().remove();
+
+            vis.rightBars
+                .style('opacity', 1)
+                .transition()
+                .duration(300)
+                .attr("width", d => {
+                    const rectWidth = x(d[1]) - x(d[0]);
+                    return rectWidth >= 0 ? rectWidth : 0;
+                })
+                .attr("x", d => x(d[0]))
+                .attr("y", d => y(d.data.sector))
+                .attr("height", d => y.bandwidth())
+
+            vis.rightBars
+                .enter()
+                .append("rect")
+                .attr('class', d => `rects ${d.data.sector.replace(' ', '-').toLowerCase()}`)
+                .attr("width", d => {
+                    const rectWidth = x(d[1]) - x(d[0]);
+                    return rectWidth >= 0 ? rectWidth : 0;
+                })
+                .attr("x", d => x(d[0]))
+                .attr("y", d => y(d.data.sector))
+                .attr("height", d => y.bandwidth())
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => i * 100 + 0)
+                .style('opacity', 1)
+
+            ///////////////////////////////////////////////////
+            const moveRight = .01;
+            vis.textLabelsNonUs = d3.selectAll('g.nonUs')
+                .selectAll("text")
+                .data(STACKDATA[0])
+
+            vis.textLabelsNonUs.exit().remove();
+
+            vis.textLabelsNonUs
+                .style('opacity', 1)
+                .transition()
+                .duration(300)
+                .attr("x", d => x(d[1] - moveRight))
+                .attr("y", d => y(d.data.sector) + (y.bandwidth() / 1.4))
+
+            vis.textLabelsNonUs
+                .enter()
+                .append("text")
+                .attr('class', d => 'bars-labels bold p-28')
+                .attr('text-anchor', 'end')
+                .attr("x", d => x(d[1] - moveRight))
+                .attr("y", d => y(d.data.sector) + (y.bandwidth() / 1.4))
+                .text(d => (d.data.nonUs * 100).toFixed() + '.0')
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => i * 100 + 0)
+                .style('opacity', 1)
+            /////////////////////////////////
+
+            vis.textLabelsUs = d3.selectAll('g.us')
+                .selectAll("text")
+                .data(STACKDATA[1])
+
+            vis.textLabelsUs.exit().remove();
+
+            vis.textLabelsUs
+                .style('opacity', 1)
+                .transition()
+                .duration(300)
+                .attr("x", d => x(d[1] - moveRight))
+                .attr("y", d => y(d.data.sector) + (y.bandwidth() / 1.4))
+
+            vis.textLabelsUs
+                .enter()
+                .append("text")
+                .attr('class', d => 'bars-labels bold p-28')
+                .attr('text-anchor', 'end')
+                .attr("x", d => x(d[1] - moveRight))
+                .attr("y", d => y(d.data.sector) + (y.bandwidth() / 1.4))
+                .text(d => (d.data.us * 100).toFixed() + '.0')
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => i * 100 + 0)
+                .style('opacity', 1)
+            ///////////////////////////////////////////////
+            const yAxisCall = d3.axisLeft()
+                .ticks(0)
+                .tickFormat(e => e)
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${greySectionWidth},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+                    .style('opacity', 0)
+                    .transition()
+                    .duration(1000)
+                    .delay((d, i) => i * 100 + 0)
+                    .style('opacity', 1)
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(300)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(${greySectionWidth},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+            const barWidth = y.bandwidth()
+
+            const greyBars = vis.greyBars.selectAll('.grey-bar')
+                .data(vis.data)
+
+            greyBars.exit().remove();
+
+            greyBars
+                .transition()
+                .duration(500)
+                .attr('opacity', 1)
+                .attr("height", barWidth)
+                .attr('width', vis.gWIDTH)
+                .attr('x', 0)
+                .attr("y", d => y(d.sector))
+
+            greyBars
+                .enter()
+                .append("rect")
+                .attr('class', 'grey-bar')
+                .attr('id', (d, i) => 'greybar-' + i)
+                .attr("fill", 'rgba(237, 238, 239, 1)')
+                .attr("height", barWidth)
+                .attr("y", d => y(d.sector))
+                .attr('width', vis.gWIDTH)
+                .attr('x', 0)
+                .on('mousemove', (d, i, n) => handleMove(n[i]))
+                .on('mouseout', (d, i, n) => handleOut(n[i]))
+                .on('click', (d, i, n) => handleClick(n[i]))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(1200)
+                .delay(300)
+                .attr('opacity', 1)
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            function handleMove(currentBox) {
+                const mouseEvent = d3.mouse(vis.chartDiv);
+
+                const barTop = currentBox.getBBox().y;
+                const moveDown = Number(currentBox.getAttribute('height')) / 4;
+
+                const id = currentBox.id.split('-')[1];
+                const popup = document.getElementById(`popup-${id}`);
+                const popupWidth = popup.getBoundingClientRect().width;
+                const popupHeight = popup.getBoundingClientRect().height;
+
+                popup.style.top = barTop + moveDown + 'px';
+                popup.style.marginTop = -popupHeight + 'px'
+
+                if (!popup.classList.contains('clicked')) {
+                    popup.style.left = mouseEvent[0];
+                    popup.style.marginLeft = -popupWidth / 2 + 'px'
+                    popup.classList.add('on');
+                }
+            }
+
+            function handleOut(currentBox) {
+                console.warn('out', currentBox)
+
+                const id = currentBox.id.split('-')[1];
+                const popup = document.getElementById(`popup-${id}`);
+
+                if (!popup.classList.contains('clicked')) {
+                    popup.classList.remove('on');
+                }
+            }
+
+            function handleClick(currentBox) {
+                console.warn('clicked', currentBox)
+
+                const id = currentBox.id.split('-')[1];
+                const popup = document.getElementById(`popup-${id}`);
+
+                popup.classList.toggle('clicked');
+            }
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            //////////////////////////////
+            // LITTLE I-ICON WITH A CIRCLE
+            //////////////////////////////
+            const innerGroup = d3.selectAll('.tick').selectAll('g')
+                .data([0])
+
+            innerGroup.exit().remove();
+
+            innerGroup
+                .attr('transform', `translate(${-greySectionWidth + barWidth * .5}, 0)`)
+                .style('opacity', 1)
+
+            innerGroup
+                .enter()
+                .append("g")
+                .attr('class', 'inner-group')
+                .attr('transform', `translate(${-greySectionWidth + barWidth * .5}, 0)`)
+                .style('pointer-events', 'none')
+                .style('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay((d, i) => i * 100 + 0)
+                .style('opacity', 1)
+
+            //////////////
+            const innerCircle = d3.selectAll('.inner-group').selectAll('circle').data([0])
+
+            innerCircle.exit().remove();
+
+            innerCircle
+                .attr('r', barWidth / 4.5)
+
+            innerCircle
+                .enter()
+                .append('circle')
+                .attr('class', 'inner-circle')
+                .attr("fill", 'transparent')
+                .attr('stroke', 'grey')
+                .attr('opacity', .5)
+                .attr('stroke-width', 2)
+                .attr('r', barWidth / 4.5)
+                .attr("cy", 0)
+
+            //////////////
+            const innerText = d3.selectAll('.inner-group').selectAll('text').data([0])
+
+            innerText.exit().remove();
+
+            innerText
+                .attr('y', barWidth / 3 / 2)
+                .attr('dy', -2)
+
+            innerText
+                .enter()
+                .append('text')
+                .style('text-anchor', 'middle')
+                .attr('fill', 'grey')
+                .attr('opacity', .5)
+                .text('i')
+                .attr('y', barWidth / 3 / 2)
+                .attr('dy', -2)
+        } // end redraw
+    } // end class
+
+    let chart = new drawBars();
+
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        chart.redraw();
+    }
+</script>
+
+</html>

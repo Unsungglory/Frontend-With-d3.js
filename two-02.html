@@ -1,0 +1,1254 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+    <style>
+        .chart-ui-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2%;
+        }
+
+        .dot-1 {
+            background-color: rgba(0, 95, 158, 1);
+        }
+
+        .dot-2 {
+            background-color: #B42573;
+        }
+
+        .dot-3 {
+            background-color: #E3E3E3;
+            border-radius: 0;
+        }
+
+        .domain {
+            display: none;
+        }
+
+        .axis-ticks .domain {
+            display: block;
+            transform: scaleX(1.0035);
+        }
+
+        .toggle-wrapper path {
+            transition: .5s fill ease-in-out;
+        }
+
+        .toggle-wrapper {
+            position: relative;
+            left: -6%;
+        }
+
+        .axis {
+            color: rgba(39, 38, 38, 0.5)
+        }
+
+        .axis-ticks .tick line {
+            display: block;
+        }
+
+        .axis-ticks g.tick:first-of-type {
+            transform: translateX(0px);
+        }
+
+        .chart-wrapper-2 {
+            grid-template-columns: 79% 19%;
+            grid-gap: 2%;
+        }
+
+        #toggle-slider {
+            left: 0%;
+        }
+
+        .title-wrapper-2 h2 {
+            color: #A39E99;
+        }
+
+        @media (max-width: 1700px) {
+
+
+
+
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1200px) {}
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div>
+                                <h1>
+                                    Two flavors of inflation: Sticky and flexible
+                                </h1>
+                                <h2>
+                                    Year-over-year change
+                                </h2>
+
+                            </div>
+
+                            <!-- <div class='blurb'>
+                                There are two types of inflation. Sticky inflation tends to have longer staying power.
+                                Sticky categories include rent, insurance and medical expenses. Flexible inflation —
+                                affecting items such as food, energy and cars — has risen much faster in recent months.
+                            </div> -->
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="chart-ui-row">
+                                <div class="chart-title-wrapper">
+                                    <h3>Sticky and flexible price inflation, YoY change (%)</h3>
+
+                                    <div class="legend-wrapper">
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-1" style='background-color: #009CDC;'></div>
+                                            <span class='p-16'>U.S. flexible CPI</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-dot dot-2" style='background-color: #005F9E;'></div>
+                                            <span class='p-16'>U.S. sticky CPI</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style='display: flex;'>
+                                    <div class="toggle-wrapper">
+                                        <div class="p-btn-label p-12 ls-1p2 demi"
+                                            style="color: rgba(127, 127, 127, 1);">
+                                            LINE STYLE</div>
+                                        <toggle class="line-toggle-pill">
+                                            <div id="toggle-slider" class="w50" style='left: 0%;'></div>
+                                            <button onclick="toggleLine()" class="toggle-on">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="21.216" height="13.769"
+                                                    viewBox="0 0 21.216 13.769">
+                                                    <path id='line' style="fill:rgba(0,41,75, .9);"
+                                                        d="M3.591,19.279,9.956,12.9,14.2,17.147,23.216,7.006l-1.5-1.5L14.2,13.965,9.956,9.721,2,17.688Z"
+                                                        transform="translate(-2 -5.51)"></path>
+                                                </svg>
+                                            </button>
+                                            <button onclick="toggleFill()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="14"
+                                                    viewBox="0 0 27 14">
+                                                    <g transform="translate(-0.429 -8.335)">
+                                                        <path id='mountain' fill="rgba(0,41,75,0.3)" d="M9.5,0,19,14H0Z"
+                                                            transform="translate(8.429 8.335)"></path>
+                                                        <path id='mountain-2' fill="rgba(0, 95, 158, 0.3)"
+                                                            d="M7.5,0,15,10H0Z" transform="translate(0.429 12.335)">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </toggle>
+                                    </div>
+                                    <div class="zoom-btn-container">
+                                        <div class="p-btn-label">ZOOM</div>
+                                        <div class="zoom-btn">
+                                            <button id="zoom-plus" onclick="zoomIn()">+</button>
+                                            <button id="zoom-minus" onclick="zoomOut()">
+                                                <div style="transform: scaleX(1.6)">–</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </section>
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div id="chart"></div>
+
+                                <!-- <div style='position: relative; '>
+                                    <div id='chart-1'>
+                                        <div class='p-20 demi' style='position: relative;
+                                        text-align: center;
+                                        height: 0;
+                                        top: 10%;
+                                        z-index: 1;'>
+                                            Inflation projections (IMF)
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <p>
+                                    Sources: Federal Reserve Bank of Atlanta, IMF, Refinitiv Datastream. Sticky and
+                                    flexible prices reflect the Atlanta Federal Reserve sticky and flexible consumer
+                                    price indexes (CPI). If price changes for a particular CPI component occur less than
+                                    every 4.3 months, that component is a “sticky-price” good. Goods that change prices
+                                    more frequently are “flexible-price” goods. Historic data is through November 2021.
+                                </p>
+                                <p>
+                                    <span>Investors should carefully consider investment objectives, risks, charges and
+                                        expenses. This and other important information is contained in the fund
+                                        prospectuses and summary prospectuses, which can be obtained from a financial
+                                        professional and should be read carefully before investing.</span>
+                                </p>
+                                <p>
+                                    Statements attributed to an individual represent the opinions of that individual as
+                                    of the date published and do not necessarily reflect the opinions of Capital Group
+                                    or its affiliates. This information is intended to highlight issues and should not
+                                    be considered advice, an endorsement or a recommendation.
+                                </p>
+                                <p>
+                                    This content, developed by Capital Group, home of American Funds, should not be used
+                                    as a primary basis for investment decisions and is not intended to serve as
+                                    impartial investment or fiduciary advice.
+                                </p>
+                                <p>
+                                    All Capital Group trademarks mentioned are owned by The Capital Group Companies,
+                                    Inc., an affiliated company or fund. All other company and product names mentioned
+                                    are the property of their respective companies.
+                                </p>
+                                <p>
+                                    American Funds Distributors, Inc., member FINRA.
+                                </p>
+                                <p>
+                                    © 2022 Capital Group. All rights reserved.
+                                </p>
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+<script src="./data/two03.js"></script>
+
+<script>
+
+    // Gradients
+    const SAPPH = 'rgba(0, 95, 158, 1)';
+    const SAPPH50 = 'rgba(0, 95, 158, 0.4)';
+    const SAPPH0 = 'rgba(0, 95, 158, 0)';
+
+    const SKYBLUE = '#009CDC';
+    const SKY15 = 'rgba(0, 156, 220, .15)';
+    const SKY0 = 'rgba(0, 156, 220, 0)';
+
+    // const BONE = 'rgba(213, 208, 202, 1)';
+    const BONE50 = 'rgba(213, 208, 202, 0.30)';
+
+    const LIGHTGREY = '#EAEAEA'
+
+    const SAPPH_GRADIENT = 'url(#SAPPH-grad)';
+    const second_grad = 'url(#second-grad)';
+
+    let zoomed = false;
+    let filled = false;
+    let lowDate = null;
+    let highDate = null;
+
+    data.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    const seismicApp = window.innerWidth < 1100;
+
+    const maxYear = d3.max(data, d => d.date).getFullYear();
+    const minYear = d3.min(data, d => d.date).getFullYear();
+    const middleOfData = (new Date((d3.min(data, d => d.date).getTime() + d3.max(data, d => d.date).getTime()) / 2));
+    const totalYearsInData = Math.round((maxYear - minYear));
+    const zoomWidth = Math.round(totalYearsInData / 3); // We arbitrarily zoom in to 3x, which shows us 1/3 of the data when zoomed
+    const halfZoom = Math.round(zoomWidth / 2); // this is the number of years above/below the midpoint when zoomed
+
+    const oneYear = 31536000000;
+
+    // set the dates for zooming into the middle of the data (when clicking zoom in before interacting with the chart)
+    let oldLowDate = new Date(String(middleOfData.getFullYear() - halfZoom));
+    let oldHighDate = new Date(String(middleOfData.getFullYear() + halfZoom));
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+
+    class drawChart {
+        constructor() {
+            this.draws = 0;
+            this.data = data;
+            this.flexLast = Math.round(data[data.length - 1].flex * 1000) / 1000;
+            this.stickyLast = Math.round(data[data.length - 1].sticky * 1000) / 1000;
+
+            setTimeout(() => {
+                this.initVis();
+            }, 200);
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg").attr('id', 'g-line');
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'main-group')
+
+            vis.greyCircle = vis.g.append('circle').attr('class', 'grey-circle').attr('fill', LIGHTGREY)
+            vis.line1 = vis.g.append('line').attr('class', 'grey-line').attr('stroke', LIGHTGREY).attr('stroke-width', 3)
+            vis.line2 = vis.g.append('line').attr('class', 'grey-line').attr('stroke', LIGHTGREY).attr('stroke-width', 3)
+            vis.line3 = vis.g.append('line').attr('class', 'grey-line').attr('stroke', LIGHTGREY).attr('stroke-width', 3)
+
+            // APPEND LINE
+            vis.blueLine = vis.g
+                .append('path')
+                .attr('stroke', SAPPH)
+                .attr('stroke-width', 2)
+                .attr('fill', 'none')
+
+            // ADD AREA
+            vis.blueArea = vis.g.append("path")
+                .attr('fill', SAPPH_GRADIENT);
+
+            vis.lineTwo = vis.g
+                .append('path')
+                .attr('stroke', SKYBLUE)
+                .attr('stroke-width', 2)
+                .attr('fill', 'none')
+
+            // ADD AREA
+            vis.areaTwo = vis.g.append("path")
+                .attr('fill', second_grad);
+
+            vis.greyBox = vis.g.append('rect').attr('class', 'grey-box').attr('fill', LIGHTGREY)
+            vis.title = vis.g.append('text').attr('class', 'p-18 demi').text('1970s inflationary periods')
+
+            vis.skyBox = vis.g.append('rect').attr('class', 'sky-box').attr('fill', SKYBLUE)
+            vis.skyText = vis.g.append('text').attr('class', 'p-18 demi').text('+' + vis.flexLast + '%').style('fill', 'white')
+            vis.skyDot = vis.g.append('circle').attr('class', 'sky-circle').attr('fill', SKYBLUE)
+
+            vis.blueBox = vis.g.append('rect').attr('class', 'blue-boxx').attr('fill', SAPPH)
+            vis.blueText = vis.g.append('text').attr('class', 'p-18 demi').text('+' + vis.stickyLast + '%').style('fill', 'white')
+            vis.blueDot = vis.g.append('circle').attr('class', 'blue-circle').attr('fill', SAPPH)
+
+            // APPEND WHITE BOX TO COVER AREA WHEN CHART EXPANDS DURING ZOOM
+            vis.whiteBox = vis.svg
+                .append('rect')
+                .attr('fill', 'white')
+                .attr('width', 25)
+                .attr('x', 0)
+                .attr('y', 0)
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi')
+
+            // APPEND X AXIS 
+            vis.xAxisTicks = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi axis-ticks')
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'start')
+                .attr('class', 'axis y-axis p-18 demi')
+
+            // DEFINE LINEAR GRADIENT
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'SAPPH-grad')
+                .attr('x1', 0)
+                .attr('y1', 0.2)
+                .attr('x2', 0)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', SAPPH50);
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', SAPPH0);
+
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'second-grad')
+                .attr('x1', 0)
+                .attr('y1', 0.2)
+                .attr('x2', 0)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', SKY15);
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', SKY0);
+
+            // FINALLY, APPEND A TOUCH LAYER TO BYPASS ALL OF OUR TEXT AND OTHER DIVS THAT HAVE BEEN APPENDED
+            vis.touchLayer = d3.select('#chart').append('div').attr('class', 'touch-layer').style('position', 'absolute');
+
+            this.wrangle();
+        }
+
+        wrangle(x1 = d3.min(this.data, d => d.date), x2 = d3.max(this.data, d => d.date)) {
+            const vis = this;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = 30;
+            vis.top = 30;
+            vis.MARGIN = { top: vis.top, right: vis.width * .02, bottom: vis.bottom, left: seismicApp ? 20 : 45 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // X SCALE
+            vis.x = d3
+                .scaleTime()
+                .domain([x1, x2])
+                .range([0, vis.gWIDTH])
+
+            lowDate = x1;
+            highDate = x2;
+
+            // HANDLE CLICKS ///////////////////////////////////////////
+            const svgElement = document.querySelector('#chart svg')
+
+            let holding = false;
+            let clickOne = null;
+            let difference = 0;
+
+            vis.touchLayer.on("mousedown", handleStart);
+            vis.touchLayer.on("touchstart", handleStart);
+
+            // attach the mousemove and mouseup to the body in case one wonders off the svg (we use body)
+            vis.touchLayer.on("mousemove", handleMove).on("mouseup", handleEnd).on('mouseout', handleEnd)
+            vis.touchLayer.on("touchmove", handleMove).on("touchend", handleEnd).on("touchcancel", handleEnd)
+
+            function handleStart() {
+                if (zoomed) {
+                    clickOne = d3.mouse(svgElement)[0];
+                    holding = true;
+                }
+            }
+
+            // sometimes it's hard to drag your way all the way to the very end of the chart, but if you move the opposite way it works
+            let moveTrigger = 0;
+            const overflow = oneYear / 5;
+            function handleMove() {
+                if (zoomed && holding) {
+                    d3.event.preventDefault();
+
+                    const clickTwo = d3.mouse(svgElement)[0]
+                    const date1 = vis.x.invert(clickOne)
+                    const date2 = vis.x.invert(clickTwo)
+
+                    difference = ((date2 - date1));
+
+                    if (lowDate.getTime() - difference > d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        if (highDate.getTime() - difference < d3.max(vis.data, d => d.date).getTime() + overflow) {
+                            vis.x.domain([lowDate.getTime() - difference, highDate.getTime() - difference])
+                            vis.redraw(true)
+                        } else {
+                            moveTrigger += 1;
+                            if (moveTrigger === 30) {
+                                moveTrigger = 0;
+                                vis.x.domain([d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear, d3.max(vis.data, d => d.date).getTime() + overflow])
+                                vis.redraw(true)
+                            }
+                        }
+
+                    } else {
+                        moveTrigger += 1;
+                        if (moveTrigger === 30) {
+                            moveTrigger = 0;
+                            vis.x.domain([d3.min(vis.data, d => d.date).getTime() - overflow, d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear])
+                            vis.redraw(true)
+                        }
+                    }
+                }
+            }
+
+            function handleEnd() {
+                if (zoomed && holding) {
+                    if (lowDate.getTime() - difference < d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        lowDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow)
+                        highDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear)
+                    } else if (highDate.getTime() - difference > d3.max(vis.data, d => d.date).getTime() + overflow) {
+                        lowDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear)
+                        highDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow)
+                    } else {
+                        lowDate = new Date(lowDate.getTime() - difference)
+                        highDate = new Date(highDate.getTime() - difference)
+                    }
+                }
+                holding = false;
+            }
+
+            vis.redraw()
+        }
+
+        redraw(pan = false) {
+            const vis = this;
+
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+
+            vis.draws += 1;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET SIZE FOR TOUCH LAYER
+            vis.touchLayer
+                .style("width", vis.width + 'px')
+                .style("height", vis.height + 'px')
+                .style("top", 0)
+                .attr("pointer-events", "all")
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            const x = vis.x;
+
+            let yMax = 21;
+            let yMin = -11;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            // ****************  LINE FUNCTIONS ****************************
+            const generateLine = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.flex * 1));
+
+            const generateBlueLine = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.sticky * 1));
+
+            // **************** END LINE FUNCTIONS ****************************
+            const generateArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(0))
+                .y0(d => y(d.sticky * 1))
+
+            const generateAreaRed = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(0))
+                .y0(d => y(d.flex * 1))
+
+            // ////////////////////////////////////////////////////////////////
+
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.data.map(k => {
+                return { date: k.date, flex: 0, sticky: 0 };
+            });
+
+            ////////////////// LINES 
+            if (vis.draws <= 1) {
+                vis.blueLine
+                    .attr('d', generateBlueLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateBlueLine(vis.data))
+                vis.lineTwo
+                    .attr('d', generateLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.data))
+
+            } else {
+                if (pan) {
+                    vis.blueLine
+                        .attr('d', generateBlueLine(vis.data))
+                    vis.lineTwo
+                        .attr('d', generateLine(vis.data))
+
+                } else {
+                    vis.blueLine
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateBlueLine(vis.data));
+                    vis.lineTwo
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateLine(vis.data))
+                }
+            }
+
+            // AREA
+            if (vis.draws <= 1) {
+                // vis.blueArea
+                //     .attr('d', generateArea(startLine))
+                //     .attr('opacity', 0)
+                //     .transition()
+                //     .duration(1500)
+                //     .attr('opacity', 1)
+                //     .attr('d', generateArea(vis.data))
+
+            } else {
+                if (pan) {
+                    vis.blueArea
+                        .attr('d', generateArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+                    vis.areaTwo
+                        .attr('d', generateAreaRed(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+                } else {
+                    vis.blueArea
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+                    vis.areaTwo
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateAreaRed(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+                }
+            }
+
+            const tickVals = []
+            for (let i = 1968; i < 2022; i = i + 3) {
+                tickVals.push(new Date('Jan 1 ' + String(i) + ' 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            }
+            tickVals.push(new Date('Jan 1 ' + 2021 + ' 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickSizeOuter([0])
+                .tickFormat(e => {
+                    if (e.getMonth() === 0) {
+                        return e.getFullYear();
+                    }
+                });
+
+            const xAxisCallTicks = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickSizeOuter([0])
+                .tickFormat(e => null);
+
+            if (vis.draws === 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+
+                vis.xAxisTicks
+                    .call(xAxisCallTicks.scale(x))
+                    .attr('transform', `translate(${0}, ${y(0)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${0}, ${y(0)})`)
+            } else {
+                if (pan) {
+                    vis.xAxis
+                        .attr('transform', `translate(${0}, ${y(yMin)})`)
+                        .call(xAxisCall.scale(x))
+
+                    vis.xAxisTicks
+                        .attr('transform', `translate(${0}, ${y(0)})`)
+                        .call(xAxisCallTicks.scale(x))
+
+                } else {
+                    if (zoomed) {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(yMin)})`)
+                            .call(xAxisCall.scale(x))
+
+                        vis.xAxisTicks
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(0)})`)
+                            .call(xAxisCallTicks.scale(x))
+                    } else {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(yMin)})`)
+                            .call(xAxisCall.scale(x))
+
+                        vis.xAxisTicks
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(0)})`)
+                            .call(xAxisCallTicks.scale(x))
+                    }
+                }
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = seismicApp ? 9 : 10;
+            const yAxisCall = d3.axisLeft()
+                .ticks(6)
+                .tickFormat(e => {
+                    return e + '%'
+                })
+
+            if (vis.draws === 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(1000)
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            const dateEnd = ' 10:44:57 GMT-0800 (Pacific Standard Time)';
+
+            // line for the big grey circle
+            vis.line1
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/1981')))
+                .attr('x2', x(nd('1/1/1984')))
+                .attr('y1', y(17))
+                .attr('y2', y(20))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.line2
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/2020')))
+                .attr('y1', y(vis.stickyLast + 3.7))
+                .attr('y2', y(vis.stickyLast))
+                .attr('x2', x(nd('10/1/2021')))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.line3
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/2020')))
+                .attr('y1', y(vis.flexLast + 2.5))
+                .attr('y2', y(vis.flexLast))
+                .attr('x2', x(nd('10/1/2021')))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.greyCircle
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('r', x(nd('12/1/1982')) - x(nd('1/1/1977')))
+                .attr('cy', y(11))
+                .attr('cx', x(nd('6/1/1977')))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.greyBox
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', x(nd('12/1/1983')))
+                .attr('y', y(22))
+                .attr('width', vis.title.node().getBBox().width * 1.1)
+                .attr('height', vis.title.node().getBBox().height * 2)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.title
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', x(nd('12/1/1983')) + vis.title.node().getBBox().width * .05)
+                .attr('y', y(22) + vis.title.node().getBBox().height + vis.title.node().getBBox().height / 4)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            const xPosSky = zoomed ? x(nd('1/1/2019')) : x(nd('3/1/2017'))
+            vis.skyBox
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', xPosSky)
+                .attr('y', y(vis.flexLast + 3))
+                .attr('width', vis.skyText.node().getBBox().width * 1.3)
+                .attr('height', vis.skyText.node().getBBox().height * 2)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.skyText
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', xPosSky + vis.skyText.node().getBBox().width * .16)
+                .attr('y', y(vis.flexLast + 3) + vis.skyText.node().getBBox().height + vis.skyText.node().getBBox().height / 4)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            const xPosBlue = zoomed ? x(nd('3/1/2019')) : x(nd('6/1/2017'))
+            vis.blueBox
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', xPosBlue)
+                .attr('y', y(8))
+                .attr('width', vis.blueText.node().getBBox().width * 1.3)
+                .attr('height', vis.blueText.node().getBBox().height * 2)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.blueText
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', xPosBlue + vis.blueText.node().getBBox().width * .16)
+                .attr('y', y(8) + vis.blueText.node().getBBox().height + vis.blueText.node().getBBox().height / 4)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            const radius = zoomed ? x(nd('12/1/1982')) - x(nd('10/1/1982')) : x(nd('12/1/1982')) - x(nd('8/1/1982'));
+            vis.blueDot
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('cx', x(nd('10/1/2021')))
+                .attr('cy', y(vis.stickyLast))
+                .attr('r', radius)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.skyDot
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('cx', x(nd('10/1/2021')))
+                .attr('cy', y(vis.flexLast))
+                .attr('r', radius)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            function nd(input) {
+                return new Date(String(input))
+            }
+
+            // for some reason the full width doesn't always work on initial load
+            if (vis.draws === 1) {
+                setTimeout(() => {
+                    vis.greyBox
+                        .transition()
+                        .duration(1000)
+                        .attr('width', vis.title.node().getBBox().width * 1.1)
+                        .attr('opacity', 1)
+
+                    vis.blueBox
+                        .transition()
+                        .duration(1000)
+                        .attr('width', vis.blueText.node().getBBox().width * 1.3)
+                        .attr('opacity', 1)
+
+                    vis.skyBox
+                        .transition()
+                        .duration(1000)
+                        .attr('width', vis.skyText.node().getBBox().width * 1.3)
+                        .attr('opacity', 1)
+
+                }, 500);
+            }
+        } // end redraw
+    } //end class
+
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+    class drawBars {
+        constructor(el, data, color, delay = 1) {
+            this.el = el;
+            this.data = data;
+            this.color = color;
+            this.initDelay = delay;
+            this.draws = 0;
+            this.initVis();
+        }
+
+        initVis() {
+            const vis = this;
+
+            vis.chartDiv = document.getElementById(vis.el);
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'g-bars')
+
+            vis.backgroundBox = vis.g.append('rect').attr('fill', LIGHTGREY)
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi')
+
+            vis.bars = vis.g.append('g')
+
+            vis.line = vis.g.append('polyline').attr('class', 'polyline');
+
+            vis.zeroLine = vis.g
+                .append('line')
+                .attr('class', 'zero-line')
+
+            this.redraw();
+        }
+
+        redraw() {
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.clientHeight;
+            const MARGIN = { top: 30, right: 0, bottom: 30, left: 0 };
+            const gWIDTH = width - (MARGIN.left + MARGIN.right);
+            const gHEIGHT = height - (MARGIN.top + MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", width)
+                .attr("height", height);
+
+            // SET G
+            vis.g.attr('width', gWIDTH)
+                .attr('height', gHEIGHT)
+                .attr('transform', 'translate(' + MARGIN.left + ',' + MARGIN.top + ')');
+
+            // X SCALE
+            let x = d3
+                .scaleBand()
+                .domain(vis.data.map(d => d.name))
+                .range([0, gWIDTH])
+                .paddingInner(.65)
+                .paddingOuter(.25)
+
+            // min, max
+            const dataMax = d3.max(vis.data, d => d.value);
+            const dataMin = d3.min(vis.data, d => d.value);
+
+            // Y SCALE
+            const maxVal = 21;
+            const minVal = -11;
+
+            let y = d3
+                .scaleLinear()
+                .range([gHEIGHT, 0])
+                .domain([minVal, maxVal])
+            // .nice();
+
+            // JOIN
+            const dots = vis.bars
+                .selectAll('circle')
+                .data(vis.data)
+
+            // EXIT
+            dots.exit().remove()
+
+            // UPDATE
+            dots
+                .transition()
+                .duration(500)
+                .attr('r', x.bandwidth() * .2)
+                .attr('cx', d => x(d.name) + x.bandwidth() / 2)
+                .attr('cy', d => y(d.value))
+
+            // ENTER
+            dots
+                .enter()
+                .append('circle')
+                .attr('fill', vis.color)
+                .attr('cx', d => x(d.name) + x.bandwidth() / 2)
+                .attr('cy', d => y(0))
+                .attr('r', 0)
+                .transition()
+                .duration(1000)
+                .delay(500 + vis.initDelay)
+                .attr('r', x.bandwidth() * .2)
+                .attr('cy', d => y(d.value))
+
+
+            // NUMERICAL LABELS
+            const moveDown = seismicApp ? 12 : smallLapTop ? 25 : iPad ? 25 : 25;
+            const moveUp = seismicApp ? -10 : smallLapTop ? -12 : iPad ? -15 : -15;
+
+            // JOIN
+            const numericalTextLabel = vis.g
+                .selectAll('.bar-num-labels')
+                .data(vis.data)
+
+            // EXIT
+            numericalTextLabel.exit().remove();
+
+            // UPDATE
+            numericalTextLabel
+                .transition()
+                .duration(500)
+                .attr('opacity', 1)
+                .attr('x', d => x(d.name) + x.bandwidth() / 2)
+                .attr('y', d => (y(d.value)))
+
+            // ENTER
+            numericalTextLabel
+                .enter()
+                .append('text')
+                .attr('class', 'bar-num-labels demi p-16')
+                .style('text-anchor', d => d.value < 0 ? 'end' : 'middle')
+                .attr('fill', vis.color)
+                .attr('x', d => x(d.name) + x.bandwidth() / 2)
+                .attr('y', d => (y(d.value)))
+                .attr('dy', d => d.value < 0 ? moveUp : moveDown)
+                .attr('dx', d => d.value < 0 ? 0 : 0)
+                .text(d => ((d.value).toFixed(1)).replaceAll('-', '—') + '%')
+                .attr('opacity', 0)
+                .transition()
+                .duration(1000)
+                .delay(1000 + vis.initDelay)
+                .attr('opacity', 1);
+
+            //*************************************
+            //*************************************
+            const y1 = vis.draws === 1 ? y(0) : y(vis.data[0].value);
+            const y2 = vis.draws === 1 ? y(0) : y(vis.data[1].value);
+            const y3 = vis.draws === 1 ? y(0) : y(vis.data[2].value);
+
+            vis.line
+                .attr('stroke', vis.color)
+                .attr('stroke-width', vis.draws === 1 ? 0 : 3)
+                .attr('fill', 'none')
+                .attr('points', d => `
+                ${x(vis.data[0].name) + x.bandwidth() / 2},${y1} 
+                ${x(vis.data[1].name) + x.bandwidth() / 2},${y2} 
+                ${x(vis.data[2].name) + x.bandwidth() / 2},${y3}`)
+                .transition()
+                .duration(vis.draws === 1 ? 1000 : 0)
+                .delay(vis.draws === 1 ? 500 + vis.initDelay : 0)
+                .attr('points', d => `
+                ${x(vis.data[0].name) + x.bandwidth() / 2},${y(vis.data[0].value)} 
+                ${x(vis.data[1].name) + x.bandwidth() / 2},${y(vis.data[1].value)} 
+                ${x(vis.data[2].name) + x.bandwidth() / 2},${y(vis.data[2].value)}`)
+                .attr('stroke-width', 3)
+
+
+            //*************************************
+            //*************************************
+            // X AXIS
+            const xAxisCall = d3
+                .axisBottom()
+                .ticks(0)
+
+            if (vis.draws === 1) {
+                vis.xAxis
+                    .attr('transform', `translate(${0}, ${y(minVal)})`)
+                    .attr('opacity', 0)
+                    .attr('width', 0)
+                    .transition()
+                    .delay(250)
+                    .duration(500)
+                    .attr('opacity', 1)
+                    .attr('width', vis.gWIDTH)
+                    .call(xAxisCall.scale(x).tickSizeOuter([0]));
+            } else {
+                vis.xAxis
+                    .transition()
+                    .duration(500)
+                    .attr('transform', `translate(${0}, ${y(minVal)})`)
+                    .attr('opacity', 1)
+                    .call(xAxisCall.scale(x).tickSizeOuter([0]));
+            }
+
+            const inset = gWIDTH * .03;
+            if (vis.draws <= 1) {
+                vis.zeroLine
+                    .attr('x1', inset)
+                    .attr('y1', y(0))
+                    .attr('x2', gWIDTH - inset)
+                    .attr('y2', y(0))
+                    .attr('stroke', 'rgba(39, 38, 38, 0.5)')
+                    .attr('stroke-width', 1)
+                    .attr('opacity', 0)
+                    .transition()
+                    .delay(100)
+                    .duration(500)
+                    .attr('opacity', 1)
+            } else {
+                vis.zeroLine
+                    .transition()
+                    .duration(500)
+                    .attr('x1', inset)
+                    .attr('y1', y(0))
+                    .attr('x2', gWIDTH - inset)
+                    .attr('y2', y(0))
+                    .attr('opacity', 1)
+            }
+
+            vis.backgroundBox
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('height', y(-11) - y(20))
+                .attr('width', gWIDTH)
+        }
+    }
+
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+    const dotData = [
+        { name: '2021', value: 4.3 },
+        { name: '2022', value: 3.5 },
+        { name: '2023', value: 2.7 },
+    ]
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+
+    const chart = new drawChart();
+    // const dots = new drawBars('chart-1', dotData, 'rgba(0, 95, 158, 1)', 0);
+
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        chart.wrangle(lowDate, highDate);
+        // dots.redraw();
+    }
+
+    // TOGGLE BUTTONS
+    function toggleLine() {
+        document.querySelector('#toggle-slider').style.left = '0%';
+        filled = false;
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, 1)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, 0.3)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, 0.3)';
+
+        redraw();
+    }
+
+    function toggleFill() {
+        document.querySelector('#toggle-slider').style.left = '50%';
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, .3)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, .6)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, .6)';
+
+        filled = true;
+        redraw();
+    }
+
+    function zoomIn() {
+        if (!zoomed) {
+            zoomed = true;
+            chart.wrangle(oldLowDate, oldHighDate);
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/scroll.svg') 5 5 , ew-resize`;
+        }
+    }
+
+    function zoomOut() {
+        if (zoomed) {
+            zoomed = false;
+
+            oldLowDate = lowDate;
+            oldHighDate = highDate;
+
+            chart.wrangle(); // EXTENT OF THE DATA ON THE X-AXIS (with default args)
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/cursor.svg') 5 5, crosshair`
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,1255 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+    <style>
+        .title-wrapper-2 {
+            display: grid;
+            grid-template-columns: 50% 44%;
+            column-gap: 5%;
+        }
+
+        .dot-1 {
+            background-color: rgba(0, 95, 158, 1);
+        }
+
+        .dot-2 {
+            background-color: #B42573;
+        }
+
+        .dot-3 {
+            background-color: #E3E3E3;
+            border-radius: 0;
+        }
+
+        .domain {
+            display: none;
+        }
+
+        .toggle-wrapper path {
+            transition: .5s fill ease-in-out;
+        }
+
+        .toggle-wrapper {
+            position: relative;
+            left: -6%;
+        }
+
+        .axis {
+            color: rgba(39, 38, 38, 0.5)
+        }
+
+        .x-axis .tick {
+            text-anchor: start;
+        }
+
+        .x-axis .tick:last-of-type {
+            text-anchor: middle;
+        }
+
+        /* #chart svg {
+            overflow: visible;
+        } */
+
+        .dash-line {
+            stroke-dasharray: 2 1;
+            stroke-width: 2px;
+            stroke: rgba(0, 0, 0, 0.671);
+        }
+
+        @media (max-width: 1700px) {
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1200px) {}
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div>
+                                <h1>
+                                    Lower-for-longer interest rates extend the cycle
+                                </h1>
+                                <h2>
+                                    History shows that U.S. long-term rates can remain low for extended periods
+                                </h2>
+                            </div>
+
+                            <div class='blurb'>
+                                This trend of continued low interest rate outlook has had an important impact on equity
+                                valuations by providing “cheap money” and extending long-term investors’ focal length by
+                                reducing the relative attraction of other asset classes. Increasingly, it would appear
+                                that equities are where investors need to be in order to pursue long-term growth.
+                            </div>
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="chart-ui-row">
+                                <div class="chart-title-wrapper">
+                                    <h3>U.S. long-term government bond yields (1870–2021)</h3>
+
+                                </div>
+
+                                <div style='display: flex;'>
+                                    <div class="toggle-wrapper">
+                                        <div class="p-btn-label p-12 ls-1p2 demi"
+                                            style="color: rgba(127, 127, 127, 1);">
+                                            LINE STYLE</div>
+                                        <toggle class="line-toggle-pill">
+                                            <div id="toggle-slider" class="w50" style='left: 0%;'></div>
+                                            <button onclick="toggleLine()" class="toggle-on">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="21.216" height="13.769"
+                                                    viewBox="0 0 21.216 13.769">
+                                                    <path id='line' style="fill:rgba(0,41,75, .9);"
+                                                        d="M3.591,19.279,9.956,12.9,14.2,17.147,23.216,7.006l-1.5-1.5L14.2,13.965,9.956,9.721,2,17.688Z"
+                                                        transform="translate(-2 -5.51)"></path>
+                                                </svg>
+                                            </button>
+                                            <button onclick="toggleFill()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="14"
+                                                    viewBox="0 0 27 14">
+                                                    <g transform="translate(-0.429 -8.335)">
+                                                        <path id='mountain' fill="rgba(0,41,75,0.3)" d="M9.5,0,19,14H0Z"
+                                                            transform="translate(8.429 8.335)"></path>
+                                                        <path id='mountain-2' fill="rgba(0, 95, 158, 0.3)"
+                                                            d="M7.5,0,15,10H0Z" transform="translate(0.429 12.335)">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </toggle>
+                                    </div>
+                                    <div class="zoom-btn-container">
+                                        <div class="p-btn-label">ZOOM</div>
+                                        <div class="zoom-btn">
+                                            <button id="zoom-plus" onclick="zoomIn()">+</button>
+                                            <button id="zoom-minus" onclick="zoomOut()">
+                                                <div style="transform: scaleX(1.6)">–</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </section>
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div id="chart"></div>
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <p>
+                                    Sources: Federal Reserve, FactSet, Robert Shiller, Refinitiv Datastream. Data for
+                                    1871–1961 represents average monthly U.S. long-term government bond yields compiled
+                                    by Robert Shiller. Data for 1962–2021 represents 10-year Treasury yields as of
+                                    December 31 each year within the period. Length of low rate periods above are
+                                    consecutive years with rates below 4%.
+                                </p>
+                                <p>
+                                    <span>
+                                        Investors should carefully consider investment objectives, risks, charges and
+                                        expenses. This and other important information is contained in the fund
+                                        prospectuses and summary prospectuses, which can be obtained from a financial
+                                        professional and should be read carefully before investing.
+                                    </span>
+                                </p>
+                                <p>
+                                    Statements attributed to an individual represent the opinions of that individual as
+                                    of the date published and do not necessarily reflect the opinions of Capital Group
+                                    or its affiliates. This information is intended to highlight issues and should not
+                                    be considered advice, an endorsement or a recommendation.
+                                </p>
+                                <p>
+                                    This content, developed by Capital Group, home of American Funds, should not be used
+                                    as a primary basis for investment decisions and is not intended to serve as
+                                    impartial investment or fiduciary advice.
+                                </p>
+                                <p>
+                                    All Capital Group trademarks mentioned are owned by The Capital Group Companies,
+                                    Inc., an affiliated company or fund. All other company and product names mentioned
+                                    are the property of their respective companies.
+                                </p>
+                                <p>
+                                    American Funds Distributors, Inc., member FINRA.
+                                </p>
+                                <p>
+                                    © 2022 Capital Group. All rights reserved.
+                                </p>
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+<script src="./data/longer.js"></script>
+
+<script>
+
+    // Gradients
+    const SAPPH = 'rgba(0, 95, 158, 1)';
+    const SAPPH50 = 'rgba(0, 95, 158, 0.5)';
+    const SAPPH0 = 'rgba(0, 95, 158, 0)';
+
+    const SKYBLUE = '#009CDC';
+    const SKY15 = 'rgba(0, 156, 220, .15)';
+    const SKY0 = 'rgba(0, 156, 220, 0)';
+
+    // const BONE = 'rgba(213, 208, 202, 1)';
+    const BONE50 = 'rgba(213, 208, 202, 0.30)';
+
+    const SAPPH_GRADIENT = 'url(#SAPPH-grad)';
+    const second_grad = 'url(#second-grad)';
+
+    let zoomed = false;
+    let filled = false;
+    let lowDate = null;
+    let highDate = null;
+
+    data.splice([365]);
+
+    data.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    const seismicApp = window.innerWidth < 1100;
+
+    const maxYear = d3.max(data, d => d.date).getFullYear();
+    const minYear = d3.min(data, d => d.date).getFullYear();
+    const middleOfData = (new Date((d3.min(data, d => d.date).getTime() + d3.max(data, d => d.date).getTime()) / 2));
+    const totalYearsInData = Math.round((maxYear - minYear));
+    const zoomWidth = Math.round(totalYearsInData / 3); // We arbitrarily zoom in to 3x, which shows us 1/3 of the data when zoomed
+    const halfZoom = Math.round(zoomWidth / 2); // this is the number of years above/below the midpoint when zoomed
+
+    const oneYear = 31536000000;
+
+    // set the dates for zooming into the middle of the data (when clicking zoom in before interacting with the chart)
+    let oldLowDate = new Date(String(middleOfData.getFullYear() - halfZoom));
+    let oldHighDate = new Date(String(middleOfData.getFullYear() + halfZoom));
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+
+    class drawChart {
+        constructor() {
+            this.draws = 0;
+            this.data = data;
+
+            setTimeout(() => {
+                this.initVis();
+            }, 200);
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg").attr('id', 'svg');
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'main-group')
+
+            vis.line1 = vis.g.append('line').attr('class', 'dash-line')
+            vis.line2 = vis.g.append('line').attr('class', 'dash-line')
+            vis.line3 = vis.g.append('line').attr('class', 'dash-line')
+            vis.line3a = vis.g.append('line').attr('class', 'dash-line')
+            vis.line4 = vis.g.append('line').attr('class', 'dash-line')
+
+            // ADD AREA
+            vis.greenSection1 = vis.g.append("path")
+                .attr('fill', second_grad);
+            vis.greenSection2 = vis.g.append("path")
+                .attr('fill', second_grad);
+            vis.greenSection3 = vis.g.append("path")
+                .attr('fill', second_grad);
+
+            // APPEND LINE
+            vis.blueLine = vis.g
+                .append('path')
+                .attr('stroke', SAPPH)
+                .attr('stroke-width', 2)
+                .attr('fill', 'none')
+
+            // ADD AREA
+            vis.blueArea = vis.g.append("path")
+                .attr('fill', SAPPH_GRADIENT);
+
+            vis.blueBox = vis.g.append('polygon').attr('class', 'blue-boxx').attr('fill', SAPPH)
+            vis.blueText = vis.g.append('text').attr('class', 'p-20 demi').text('1.5%').style('fill', 'white')
+
+            vis.dot1 = vis.g.append('circle').attr('class', 'naash-circle').attr('fill', 'black')
+            vis.dot2 = vis.g.append('circle').attr('class', 'naash-circle').attr('fill', 'black')
+            vis.dot3 = vis.g.append('circle').attr('class', 'naash-circle').attr('fill', 'black')
+            vis.dot4 = vis.g.append('circle').attr('class', 'naash-circle').attr('fill', 'black')
+
+            vis.text1a = vis.g.append('text').attr('class', 'p-18 bold').text('The Long Depression')
+            vis.text1b = vis.g.append('text').attr('class', 'p-18 bold').text('(1873 – 1879)')
+            vis.text2a = vis.g.append('text').attr('class', 'p-18 bold').text('The Great Depression')
+            vis.text2b = vis.g.append('text').attr('class', 'p-18 bold').text('(1929 – 1939)')
+            vis.text3a = vis.g.append('text').attr('class', 'p-18 bold').text('Global Financial Crisis')
+            vis.text3b = vis.g.append('text').attr('class', 'p-18 bold').text('(2007 – 2009)')
+            vis.text4a = vis.g.append('text').attr('class', 'p-18 bold').text('Coronavirus')
+            vis.text4b = vis.g.append('text').attr('class', 'p-18 bold').text('pandemic (2020 – )')
+
+            vis.text5a = vis.g.append('text').attr('class', 'p-32 bold').style('fill', '#00AEA9').text('31')
+            vis.text5b = vis.g.append('text').attr('class', 'p-20 demi').style('fill', '#00AEA9').text('years')
+            vis.text5c = vis.g.append('text').attr('class', 'p-20 demi').style('fill', '#00AEA9').text('of low rates')
+            vis.text6a = vis.g.append('text').attr('class', 'p-32 bold').style('fill', '#00AEA9').text('34')
+            vis.text6b = vis.g.append('text').attr('class', 'p-20 demi').style('fill', '#00AEA9').text('years')
+            vis.text6c = vis.g.append('text').attr('class', 'p-20 demi').style('fill', '#00AEA9').text('of low rates')
+            vis.text7a = vis.g.append('text').attr('class', 'p-32 bold').style('fill', '#00AEA9').text('14')
+            vis.text7b = vis.g.append('text').attr('class', 'p-20 demi').style('fill', '#00AEA9').text('years')
+            vis.text7c = vis.g.append('text').attr('class', 'p-20 demi').style('fill', '#00AEA9').text('of low rates')
+
+            // APPEND WHITE BOX TO COVER AREA WHEN CHART EXPANDS DURING ZOOM
+            vis.whiteBox = vis.svg
+                .append('rect')
+                .attr('fill', '#f8f8f8')
+                .attr('width', 25)
+                .attr('x', 0)
+                .attr('y', 0)
+
+            vis.textPct = vis.svg.append('text').attr('class', 'p-16 demi axis').attr('fill', 'rgba(39, 38, 38, 0.5)').text('%')
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi')
+
+            // APPEND X AXIS 
+            vis.xAxisTicks = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-18 demi axis-ticks')
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.svg
+                .append('g')
+                .style('text-anchor', 'end')
+                .attr('class', 'axis y-axis p-18 demi')
+
+            // DEFINE LINEAR GRADIENT
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'SAPPH-grad')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', .2)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', 0)
+                .attr('stop-color', SAPPH50);
+            vis.gradient
+                .append('stop')
+                .attr('offset', 1)
+                .attr('stop-color', SAPPH0);
+
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'second-grad')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', 0.5)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', '#00AEA9');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', '#00AEA910');
+
+            // FINALLY, APPEND A TOUCH LAYER TO BYPASS ALL OF OUR TEXT AND OTHER DIVS THAT HAVE BEEN APPENDED
+            vis.touchLayer = d3.select('#chart').append('div').attr('class', 'touch-layer').style('position', 'absolute');
+
+            this.wrangle();
+        }
+
+        wrangle(x1 = d3.min(this.data, d => d.date), x2 = d3.max(this.data, d => d.date)) {
+            const vis = this;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = 30;
+            vis.top = vis.height * .015;
+            vis.MARGIN = { top: vis.top, right: vis.width * .05, bottom: vis.bottom, left: seismicApp ? 20 : 45 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // X SCALE
+            vis.x = d3
+                .scaleTime()
+                .domain([x1, x2])
+                .range([0, vis.gWIDTH])
+
+            lowDate = x1;
+            highDate = x2;
+
+            // HANDLE CLICKS ///////////////////////////////////////////
+            const svgElement = document.querySelector('#chart svg')
+
+            let holding = false;
+            let clickOne = null;
+            let difference = 0;
+
+            vis.touchLayer.on("mousedown", handleStart);
+            vis.touchLayer.on("touchstart", handleStart);
+
+            // attach the mousemove and mouseup to the body in case one wonders off the svg (we use body)
+            vis.touchLayer.on("mousemove", handleMove).on("mouseup", handleEnd).on('mouseout', handleEnd)
+            vis.touchLayer.on("touchmove", handleMove).on("touchend", handleEnd).on("touchcancel", handleEnd)
+
+            function handleStart() {
+                if (zoomed) {
+                    clickOne = d3.mouse(svgElement)[0];
+                    holding = true;
+                }
+            }
+
+            // sometimes it's hard to drag your way all the way to the very end of the chart, but if you move the opposite way it works
+            let moveTrigger = 0;
+            const overflow = oneYear / 5;
+            function handleMove() {
+                if (zoomed && holding) {
+                    d3.event.preventDefault();
+
+                    const clickTwo = d3.mouse(svgElement)[0]
+                    const date1 = vis.x.invert(clickOne)
+                    const date2 = vis.x.invert(clickTwo)
+
+                    difference = ((date2 - date1));
+
+                    if (lowDate.getTime() - difference > d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        if (highDate.getTime() - difference < d3.max(vis.data, d => d.date).getTime() + overflow) {
+                            vis.x.domain([lowDate.getTime() - difference, highDate.getTime() - difference])
+                            vis.redraw(true)
+                        } else {
+                            moveTrigger += 1;
+                            if (moveTrigger === 30) {
+                                moveTrigger = 0;
+                                vis.x.domain([d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear, d3.max(vis.data, d => d.date).getTime() + overflow])
+                                vis.redraw(true)
+                            }
+                        }
+
+                    } else {
+                        moveTrigger += 1;
+                        if (moveTrigger === 30) {
+                            moveTrigger = 0;
+                            vis.x.domain([d3.min(vis.data, d => d.date).getTime() - overflow, d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear])
+                            vis.redraw(true)
+                        }
+                    }
+                }
+            }
+
+            function handleEnd() {
+                if (zoomed && holding) {
+                    if (lowDate.getTime() - difference < d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        lowDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow)
+                        highDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear)
+                    } else if (highDate.getTime() - difference > d3.max(vis.data, d => d.date).getTime() + overflow) {
+                        lowDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear)
+                        highDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow)
+                    } else {
+                        lowDate = new Date(lowDate.getTime() - difference)
+                        highDate = new Date(highDate.getTime() - difference)
+                    }
+                }
+                holding = false;
+            }
+
+            vis.redraw()
+        }
+
+        redraw(pan = false) {
+            const vis = this;
+
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            const desktop = window.innerWidth > 1400;
+            const smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            const seismicApp = window.innerWidth < 1100;
+
+            vis.draws += 1;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET SIZE FOR TOUCH LAYER
+            vis.touchLayer
+                .style("width", vis.width + 'px')
+                .style("height", vis.height + 'px')
+                .style("top", 0)
+                .attr("pointer-events", "all")
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            const x = vis.x;
+
+            let yMax = 16;
+            let yMin = -1;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            // ****************  LINE FUNCTIONS ****************************
+            const generateLine = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.value * 100));
+
+            // **************** END LINE FUNCTIONS ****************************
+            const generateArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(0))
+                .y0(d => y(d.value * 100))
+
+            const flatArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(0))
+                .y0(d => y(0))
+
+            // ////////////////////////////////////////////////////////////////
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.data.map(k => {
+                return { date: k.date, value: 0, sticky: 0 };
+            });
+
+            ////////////////// LINES 
+            if (vis.draws <= 1) {
+                vis.blueLine
+                    .attr('d', generateLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateLine(vis.data))
+            } else {
+                if (pan) {
+                    vis.blueLine
+                        .attr('d', generateLine(vis.data))
+
+                } else {
+                    vis.blueLine
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateLine(vis.data));
+                }
+            }
+
+            // AREA
+            const section1Area = vis.data.filter(d => Number(d.date.getFullYear()) > 1878 && Number(d.date.getFullYear()) < 1911);
+            const section2Area = vis.data.filter(d => Number(d.date.getFullYear()) > 1925 && Number(d.date.getFullYear()) < 1961);
+            const section3Area = vis.data.filter(d => Number(d.date.getFullYear()) > 2007 && Number(d.date.getFullYear()) < 2022);
+
+            if (vis.draws <= 1) {
+                // vis.blueArea
+                //     .attr('d', generateArea(startLine))
+                //     .attr('opacity', 0)
+                //     .transition()
+                //     .duration(1500)
+                //     .attr('opacity', 1)
+                //     .attr('d', generateArea(vis.data))
+
+                vis.greenSection1
+                    .attr('d', flatArea(section1Area))
+                    .attr('opacity', 0)
+                    .transition()
+                    .duration(1500)
+                    .attr('opacity', 1)
+                    .attr('d', generateArea(section1Area))
+
+                vis.greenSection2
+                    .attr('d', flatArea(section2Area))
+                    .attr('opacity', 0)
+                    .transition()
+                    .duration(1500)
+                    .attr('opacity', 1)
+                    .attr('d', generateArea(section2Area))
+
+                vis.greenSection3
+                    .attr('d', flatArea(section3Area))
+                    .attr('opacity', 0)
+                    .transition()
+                    .duration(1500)
+                    .attr('opacity', 1)
+                    .attr('d', generateArea(section3Area))
+
+            } else {
+                if (pan) {
+                    vis.blueArea
+                        .attr('d', generateArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+                    vis.greenSection1
+                        .attr('opacity', 1)
+                        .attr('d', generateArea(section1Area))
+
+                    vis.greenSection2
+                        .attr('opacity', 1)
+                        .attr('d', generateArea(section2Area))
+
+                    vis.greenSection3
+                        .attr('opacity', 1)
+                        .attr('d', generateArea(section3Area))
+                } else {
+                    vis.blueArea
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+                    vis.greenSection1
+                        .attr('opacity', 1)
+                        .transition()
+                        .duration(1000)
+                        .attr('d', generateArea(section1Area))
+
+                    vis.greenSection2
+                        .attr('opacity', 1)
+                        .transition()
+                        .duration(1000)
+                        .attr('d', generateArea(section2Area))
+
+                    vis.greenSection3
+                        .attr('opacity', 1)
+                        .transition()
+                        .duration(1000)
+                        .attr('d', generateArea(section3Area))
+                }
+            }
+
+            const tickVals = []
+            for (let i = 1870; i < 2011; i = i + 10) {
+                tickVals.push(new Date('Jan 1 ' + String(i) + ' 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            }
+            tickVals.push(new Date('Jan 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickSizeOuter([0])
+                .tickFormat(e => {
+                    if (e.getMonth() === 0) {
+                        return e.getFullYear();
+                    }
+                });
+
+            const xAxisCallTicks = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickSizeOuter([0])
+                .tickFormat(e => null);
+
+            if (vis.draws === 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${0}, ${y(yMin)})`)
+
+                vis.xAxisTicks
+                    .call(xAxisCallTicks.scale(x))
+                    .attr('transform', `translate(${0}, ${y(0)})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${0}, ${y(0)})`)
+            } else {
+                if (pan) {
+                    vis.xAxis
+                        .attr('transform', `translate(${0}, ${y(yMin)})`)
+                        .call(xAxisCall.scale(x))
+
+                    vis.xAxisTicks
+                        .attr('transform', `translate(${0}, ${y(0)})`)
+                        .call(xAxisCallTicks.scale(x))
+
+                } else {
+                    if (zoomed) {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(yMin)})`)
+                            .call(xAxisCall.scale(x))
+
+                        vis.xAxisTicks
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(0)})`)
+                            .call(xAxisCallTicks.scale(x))
+                    } else {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(yMin)})`)
+                            .call(xAxisCall.scale(x))
+
+                        vis.xAxisTicks
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${0}, ${y(0)})`)
+                            .call(xAxisCallTicks.scale(x))
+                    }
+                }
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = vis.width * .02;
+            const yAxisCall = d3.axisLeft()
+                .ticks(6)
+                .tickFormat((e, i, n) => {
+                    return n[i + 1] ? e : e + '';
+                })
+
+            if (vis.draws === 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset},${vis.MARGIN.top})`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(1000)
+                    .attr('transform', `translate(${xOffset},${vis.MARGIN.top})`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+
+            const dateEnd = ' 10:44:57 GMT-0800 (Pacific Standard Time)';
+
+            vis.line1
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/1873')))
+                .attr('x2', x(nd('1/1/1873')))
+                .attr('y1', vis.draws === 1 ? y(5.5) : y(13))
+                .attr('y2', y(5.5))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+                .delay(888 + 333)
+                .attr('y1', y(13))
+
+
+            vis.line2
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/1930')))
+                .attr('x2', x(nd('1/1/1930')))
+                .attr('y1', vis.draws === 1 ? y(3.4) : y(13))
+                .attr('y2', y(3.4))
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('y1', y(13))
+
+            vis.line3
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/1995')))
+                .attr('x2', x(nd('1/1/1995')))
+                .attr('y1', vis.draws === 1 ? y(3) : y(13))
+                .attr('y2', y(3))
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('y1', y(13))
+
+            vis.line3a
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', vis.draws === 1 ? x(nd('1/1/2008')) : x(nd('1/1/1995')))
+                .attr('x2', x(nd('1/1/2008')))
+                .attr('y1', y(3))
+                .attr('y2', y(3))
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(0)
+                .attr('x1', x(nd('1/1/1995')))
+
+
+            vis.line4
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x1', x(nd('1/1/2020')))
+                .attr('x2', x(nd('1/1/2020')))
+                .attr('y1', vis.draws === 1 ? y(1.1) : y(10))
+                .attr('y2', y(1.1))
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('y1', y(10))
+
+
+            const boxLeftEdge = x(nd('1/1/2020')) + 2
+            const moveDown = .6;
+            const boxTop = y(4.65 - moveDown)
+            const boxBot = y(3 - moveDown)
+            const pointBot = y(2.25 - moveDown)
+            const boxW = zoomed ? x(nd('1/1/2020')) - x(nd('1/1/2017')) : x(nd('1/1/2020')) - x(nd('1/1/2012'))
+            vis.blueBox
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('points', `
+                ${boxLeftEdge},${boxTop}
+                ${boxLeftEdge + boxW},${boxTop}
+                ${boxLeftEdge + boxW},${boxBot}
+                ${boxLeftEdge + boxW * .45},${boxBot}
+                ${boxLeftEdge + boxW * .15},${pointBot}
+                ${boxLeftEdge + boxW * .15},${boxBot}
+                ${boxLeftEdge},${boxBot}
+            `)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(500)
+                .attr('opacity', 1)
+
+            vis.blueText
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', boxLeftEdge + boxW / 2)
+                .attr('y', boxTop + Math.abs(boxTop - boxBot) / 2 + vis.blueText.node().getBBox().height * .25)
+                .attr('text-anchor', 'middle')
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(500)
+                .attr('opacity', 1)
+
+            const radius = zoomed ? x(nd('12/1/1982')) - x(nd('8/1/1982')) : x(nd('12/1/1982')) - x(nd('1/1/1982'));
+            vis.dot1
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('cx', x(nd('1/1/1873')))
+                .attr('cy', vis.draws === 1 ? y(0) : y(5.5))
+                .attr('r', radius)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+                .attr('cy', y(5.5))
+
+            vis.dot2
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('cx', x(nd('1/1/1930')))
+                .attr('cy', vis.draws === 1 ? y(0) : y(3.5))
+                .attr('r', radius)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+                .attr('cy', y(3.5))
+
+            vis.dot3
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('cx', x(nd('6/1/2008')))
+                .attr('cy', vis.draws === 1 ? y(0) : y(3))
+                .attr('r', radius)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+                .attr('cy', y(3))
+
+            vis.dot4
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('cx', x(nd('1/1/2020')))
+                .attr('cy', vis.draws === 1 ? y(0) : y(1.1))
+                .attr('r', radius)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+                .attr('cy', y(1.1))
+
+
+            function nd(input) {
+                return new Date(String(input))
+            }
+
+            /////////////////////////////////////
+            vis.textPct
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', y(16))
+                .attr('dy', vis.MARGIN.top + vis.textPct.node().getBBox().height / 4)
+                .attr('x', vis.width * .0155)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            /////////////////////////////////////
+            const oneY = y(14)
+            vis.text1a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', oneY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', x(nd('1/1/1873')))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            vis.text1b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', oneY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', x(nd('1/1/1873')))
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            /////////////////////////////////////
+            const twoY = y(14)
+            const twoX = x(nd('1/1/1930'));
+            vis.text2a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', twoY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', twoX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            vis.text2b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', twoY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', twoX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            /////////////////////////////////////
+            const threeY = y(14)
+            const threeX = x(nd('1/1/1995'));
+            vis.text3a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', threeY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', threeX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            vis.text3b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', threeY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', threeX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            /////////////////////////////////////
+            const fourY = y(11)
+            const fourX = zoomed ? x(nd('1/1/2015')) : x(nd('1/1/2005'));
+            vis.text4a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', fourY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', fourX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            vis.text4b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', fourY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', fourX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .delay(888 + 333)
+                .attr('opacity', 1)
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // green text
+            const moveRight = vis.text5a.node().getBBox().width * 1.25;
+            const fiveY = y(6)
+            const fiveX = x(nd('1/1/1889'));
+            vis.text5a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', fiveY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', fiveX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.text5b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', fiveY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', fiveX)
+                .attr('dx', moveRight * .96)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.text5c
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', fiveY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', fiveX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+
+            /////////////////////////////////////
+            const sixY = y(5)
+            const sixX = x(nd('1/1/1938'));
+            vis.text6a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', sixY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', sixX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.text6b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', sixY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', sixX + moveRight)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.text6c
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', sixY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', sixX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+
+            /////////////////////////////////////
+            const sevenY = y(5)
+            const sevenX = zoomed ? x(nd('6/1/2012')) : x(nd('1/1/2008'));
+            vis.text7a
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', sevenY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', sevenX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.text7b
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', sevenY)
+                .attr('dy', -vis.text1a.node().getBBox().height * .55)
+                .attr('x', sevenX + moveRight * .98)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            vis.text7c
+                .transition()
+                .delay(0)
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('y', sevenY)
+                .attr('dy', vis.text1a.node().getBBox().height * .55)
+                .attr('x', sevenX)
+                .attr('opacity', vis.draws === 1 ? 0 : 1)
+                .transition()
+                .duration(vis.draws === 1 ? 1500 : 0)
+                .attr('opacity', 1)
+
+            /////////////////
+            vis.whiteBox
+                .attr('height', vis.height)
+                .attr('width', vis.gWIDTH * .018)
+        } // end redraw
+    } //end class
+
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+
+    const chart = new drawChart();
+
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        chart.wrangle(lowDate, highDate);
+    }
+
+    // TOGGLE BUTTONS
+    function toggleLine() {
+        document.querySelector('#toggle-slider').style.left = '0%';
+        filled = false;
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, 1)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, 0.3)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, 0.3)';
+
+        redraw();
+    }
+
+    function toggleFill() {
+        document.querySelector('#toggle-slider').style.left = '50%';
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, .3)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, .6)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, .6)';
+
+        filled = true;
+        redraw();
+    }
+
+    function zoomIn() {
+        if (!zoomed) {
+            zoomed = true;
+            chart.wrangle(oldLowDate, oldHighDate);
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/scroll.svg') 5 5 , ew-resize`;
+        }
+    }
+
+    function zoomOut() {
+        if (zoomed) {
+            zoomed = false;
+
+            oldLowDate = lowDate;
+            oldHighDate = highDate;
+
+            chart.wrangle(); // EXTENT OF THE DATA ON THE X-AXIS (with default args)
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/cursor.svg') 5 5, crosshair`
+        }
+    }
+</script>
+
+</html>

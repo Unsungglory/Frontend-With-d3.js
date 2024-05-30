@@ -1,0 +1,2659 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- Jquery -->
+    <!-- <script src="./engine/js/jquery-3.4.1.min.js" type="text/javascript"></script> -->
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+    <style>
+        svg tspan {
+            font-family: inherit;
+        }
+
+        .toggle-wrapper path {
+            transition: .5s fill ease-in-out;
+        }
+
+        .legend-wrapper-a {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1%;
+        }
+
+        h3 {
+            margin-bottom: 0;
+        }
+
+        .legend-item {
+            line-height: 26px;
+        }
+
+        .chart-wrapper-a {
+            height: 85%;
+        }
+
+        .domain {
+            display: none;
+        }
+
+        .tick {
+            font-weight: 700;
+            font-size: clamp(10px, 1vw, 16px);
+            color: rgba(4, 5, 4, 0.5);
+        }
+
+        .zoom-btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .move-btn,
+        .zoom-btn {
+            /* height: 30px; */
+            border-radius: 20px;
+            width: 102px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            overflow: hidden;
+        }
+
+        .zoom-spacer {
+            display: none;
+        }
+
+        #move-left,
+        #move-right,
+        #zoom-plus,
+        #zoom-minus {
+            font-size: 18px;
+            background-color: rgba(0, 41, 75, 0.1);
+            color: rgba(0, 41, 75, 1);
+            padding-bottom: 1px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s;
+            user-select: none;
+            -webkit-user-select: none;
+            /* Safari */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* IE10+/Edge */
+        }
+
+        #zoom-plus {
+            margin-right: 1.5px;
+        }
+
+        #zoom-minus {
+            margin-left: 1.5px;
+        }
+
+        .zoom-btn:hover {
+            cursor: pointer;
+        }
+
+        #zoom-plus:hover,
+        #zoom-minus:hover {
+            background-color: rgba(0, 41, 75, 0.15);
+        }
+
+        .zoom-in {
+            display: flex;
+            width: 30px;
+            height: 30px;
+            background-color: #f2f2f2;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: url('imgs/cg-zoom-in.svg') center no-repeat;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: opacity 0.2s ease-in-out;
+            z-index: 0;
+            transform: scale(1.3);
+        }
+
+        .zoom-in:hover {
+            opacity: 1;
+        }
+
+        .zoom-in-b {
+            display: flex;
+            width: 30px;
+            height: 30px;
+            background-color: #f2f2f2;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: url('imgs/cg-zoom-in.svg') center no-repeat;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .zoom-in-b:hover {
+            opacity: 1;
+        }
+
+        .zoom-out {
+            display: flex;
+            width: 30px;
+            height: 30px;
+            background-color: #f2f2f2;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: url('imgs/cg-zoom-out.svg') center no-repeat;
+            z-index: 0;
+            transform: scale(1.3);
+        }
+
+        .zoom-out-b {
+            display: flex;
+            width: 30px;
+            height: 30px;
+            background-color: #f2f2f2;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: url('imgs/cg-zoom-out.svg') center no-repeat;
+            z-index: 420;
+        }
+
+        .toggle-contaiener {
+            display: flex;
+            height: fit-content;
+            justify-content: inherit;
+        }
+
+        .toggle-wrapper,
+        .zoom-btn-container {
+            margin-left: 30px;
+        }
+
+        .p-btn-label {
+            align-self: center;
+            margin-right: 8px;
+            width: max-content;
+        }
+
+        .chart-text-right {
+            display: flex;
+            flex-direction: column;
+            margin-top: 8%;
+        }
+
+        .chart-text-list {
+            line-height: 1.5;
+            padding: 0;
+            padding-left: 6%;
+        }
+
+        toggle {
+            min-width: 117px;
+        }
+
+        #disclosure-wrapper {
+            left: -1%;
+            width: 102%;
+        }
+
+        .share-class-toggle {
+            min-width: 245px;
+        }
+
+        .line-toggle-pill #share-class-toggle-slider {
+            width: 26%;
+            left: 24%;
+            background-color: rgba(0, 41, 75, 0.11);
+            border-radius: 20px;
+            height: 100%;
+            position: absolute;
+            z-index: 0;
+            transition: all .4s ease-in-out;
+        }
+
+        .toggle-label {
+            align-self: center;
+            margin-right: 10px;
+        }
+
+        .grey-num {
+            color: #A49E99;
+        }
+
+        .event-title {
+            display: flex;
+            transition: all .3s ease-in-out;
+        }
+
+        .info-icon {
+            border-radius: 50%;
+            border: 2px solid black;
+            width: clamp(12px, 1.5vw, 22px);
+            height: clamp(12px, 1.5vw, 22px);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+            margin-left: clamp(4px, 0.55vw, 10px);
+            transition: .3s all ease-in-out;
+            color: black;
+        }
+
+        .event-info-mid {
+            margin: 5px 0;
+        }
+
+        .event-info-bot {
+            display: flex;
+        }
+
+        .event-bot-left {
+            margin-right: 15%;
+            white-space: nowrap;
+        }
+
+        .event-bot-right {
+            white-space: nowrap;
+        }
+
+        .event-info-area {
+            text-align: left;
+            transition: all .3s ease-in-out;
+        }
+
+        .event-info-area:hover {
+            cursor: pointer;
+        }
+
+        .event-info-area:hover .info-top {
+            color: #005F9E;
+        }
+
+        .event-info-area:hover .info-top .info-icon {
+            border-color: #005F9E;
+        }
+
+        .touch-layer {
+            pointer-events: none;
+        }
+
+        .event-box {
+            transition: fill .3s ease-in-out;
+        }
+
+        .event-box:hover {
+            fill: #adadad;
+            opacity: 0.4;
+            cursor: pointer;
+        }
+
+        .popup {
+            position: absolute;
+            transition: all .3s ease-in-out;
+            top: 35%;
+            left: 20%;
+            display: flex;
+            flex-direction: column;
+            max-width: 655px;
+            padding: 35px;
+            background-color: white;
+            box-shadow: 3px 15px 30px #0000004D;
+            z-index: 4;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .popup-top {
+            margin-bottom: 5%;
+        }
+
+        .popup-charts-container {
+            display: grid;
+            grid-template-columns: repeat(3, 29%);
+            gap: 5%;
+            text-align: center;
+        }
+
+        .popup-legend-row {
+            margin-bottom: 3%;
+        }
+
+        .popup-legend-title {
+            margin-bottom: 1%;
+        }
+
+        .popup-bot {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1%;
+            align-items: end;
+            margin-top: 3%;
+        }
+
+        #popup-chart-01,
+        #popup-chart-02,
+        #popup-chart-03 {
+            min-height: 140px;
+        }
+
+        .popup-close-icon {
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            left: 95%;
+            top: 4%;
+            cursor: pointer;
+        }
+
+        .active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .event-box {
+            fill: #e3e3e3;
+            opacity: 0.5;
+        }
+
+        .info-top {
+            color: black;
+        }
+
+        .info-top .info-icon {
+            border-color: black;
+        }
+
+        .event-box.active {
+            fill: #ADADAD;
+            opacity: 0.4;
+        }
+
+        .info-top.active {
+            color: #005F9E;
+        }
+
+        .info-top.active .info-icon {
+            border-color: #005F9E;
+        }
+
+        #popup-bm {
+            left: 12.5%;
+        }
+
+        #popup-dotcom {
+            left: 43%;
+        }
+
+        #popup-bm::after,
+        #popup-dotcom::after {
+            content: "";
+            position: absolute;
+            top: 58%;
+            left: -6.5%;
+            border: solid 27px transparent;
+            border-right-color: #fff;
+            border-bottom-width: 16px;
+            border-right-width: 18px;
+            border-top-width: 16px;
+            pointer-events: none;
+        }
+
+        #popup-grtrec {
+            left: 25%;
+        }
+
+        #popup-covid {
+            top: 39%;
+            left: 54.5%;
+        }
+
+        #popup-grtrec::after,
+        #popup-covid::after {
+            content: "";
+            position: absolute;
+            top: 58%;
+            left: 100%;
+            border: solid 27px transparent;
+            border-left-color: #fff;
+            border-bottom-width: 16px;
+            border-left-width: 18px;
+            border-top-width: 16px;
+            pointer-events: none;
+        }
+
+        .af-label {
+            font-weight: bold;
+        }
+
+        #content-padding {
+            overflow-x: hidden;
+        }
+
+        .info-container {
+            display: flex;
+            position: relative;
+            align-items: center;
+            width: max-content;
+            transition: .3s all ease-in-out;
+        }
+
+        .info-container:hover {
+            color: #005F9E;
+            cursor: pointer;
+        }
+
+        .info-container:hover .info-icon {
+            color: #005F9E;
+            border-color: #005F9E;
+        }
+
+        .info-top.active .info-icon {
+            color: #005F9E;
+        }
+
+        .title-wrapper-2 {
+            display: grid;
+            grid-template-columns: 47% 48%;
+            column-gap: 5%;
+            margin-bottom: 1%;
+        }
+
+        .title-right {
+            position: relative;
+            display: flex;
+            flex-flow: column;
+        }
+
+        .event-dot,
+        .event-line {
+            fill: #707070;
+            stroke: #707070;
+            stroke-width: 1px;
+        }
+
+        .event-info-container {
+            position: absolute;
+
+        }
+
+        #event-info-area-4 {
+            width: 240px;
+        }
+
+        .active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .margin-0 {
+            margin: 0;
+        }
+
+        .rtns-btn {
+            text-align: center;
+            border: 1px solid #707070;
+            border-radius: 16px;
+            cursor: pointer;
+            padding: 1% 3%;
+            margin-top: 3%;
+            align-self: flex-end;
+            background-color: transparent;
+            transition: all .3s;
+        }
+
+        .rtns-btn:hover {
+            background-color: #ffffff;
+        }
+
+        .top-disc-holder {
+            width: 115ch;
+        }
+
+        @media (max-width: 1368px) {
+
+
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1100px) {}
+
+        #debug-panel {
+            min-width: 30%;
+            min-height: 30%;
+            background-color: white;
+            padding: 4%;
+            position: fixed;
+            z-index: 99;
+            opacity: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+                        <!-- TEST DEBUG PANEL -->
+                        <div id="debug-panel" class="p-16">
+
+                        </div>
+                        <!-- END DEBUG TEST -->
+                        <!-- Black monday pop  -->
+                        <div class="popup" id='popup-bm'>
+                            <img class="popup-close-icon" onclick="togglePopup('bm')"
+                                src="./engine/imgs/cg-close-icon-black.svg" />
+                            <div class="popup-top">
+                                <div class="p-20 ls-p15">
+                                    <span class="bold">Black Monday</span> (8/25/87–12/4/87)
+                                </div>
+                                <div class="p-16 ls-p45">Overheated markets spurred drastic movements exacerbated by
+                                    programmatic trading.</div>
+                            </div>
+                            <div class="popup-legend-row">
+                                <div class="popup-legend-title p-16 demi ls-p45">Total percentage loss from high to low
+                                </div>
+                                <div class="legend-wrapper">
+                                    <div class="legend-item">
+                                        <div class="legend-dot bone"></div>
+                                        <span class="p-12">S&P 500 Index</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot terq"></div>
+                                        <span class="p-12">Peer category blended average<sup>2</sup></span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot blue"></div>
+                                        <span class="p-12">American Funds average<sup>1</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="popup-charts-container">
+
+                                <div class="p-16 ls-p45 demi">Domestic</div>
+                                <div class="p-16 ls-p45 demi">Global</div>
+                                <div class="p-16 ls-p45 demi">Int’l</div>
+
+
+                                <div id="popup-chart-01-bm"></div>
+                                <div id="popup-chart-02-bm"></div>
+                                <div id="popup-chart-03-bm"></div>
+
+                            </div>
+
+                            <div class="popup-bot">
+                                <div>
+                                    <div class="high-label demi p-16">High 8/25/87</div>
+                                    <div class="index-high-val p-28 ls-np7">$16,792</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-high-val p-28 ls-np7 bold p-blue">$16,062</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                                <div>
+                                    <div class="low-label demi p-16">Low 12/4/87</div>
+                                    <div class="index-low-val p-28 ls-np7">$11,285</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-low-val p-28 ls-np7 bold p-blue">$11,445</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Dotcom pop -->
+                        <div class="popup" id='popup-dotcom'>
+                            <img class="popup-close-icon" onclick="togglePopup('dotcom')"
+                                src="./engine/imgs/cg-close-icon-black.svg" />
+                            <div class="popup-top">
+                                <div class="p-20 ls-p15">
+                                    <span class="bold">Dot-com Crisis</span> (3/24/00–10/9/02)
+                                </div>
+                                <div class="p-16 ls-p45">A largely sector-driven downturn, the steep rise and extreme
+                                    valuations in technology stocks drove a sudden correction in the market.</div>
+                            </div>
+                            <div class="popup-legend-row">
+                                <div class="popup-legend-title p-16 demi ls-p45">Total percentage loss from high to low
+                                </div>
+                                <div class="legend-wrapper">
+                                    <div class="legend-item">
+                                        <div class="legend-dot bone"></div>
+                                        <span class="p-12">S&P 500 Index</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot terq"></div>
+                                        <span class="p-12">Peer category blended average<sup>2</sup></span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot blue"></div>
+                                        <span class="p-12">American Funds average<sup>1</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="popup-charts-container">
+
+                                <div class="p-16 ls-p45 demi">Domestic</div>
+                                <div class="p-16 ls-p45 demi">Global</div>
+                                <div class="p-16 ls-p45 demi">Int’l</div>
+
+
+                                <div id="popup-chart-01-dotcom"></div>
+                                <div id="popup-chart-02-dotcom"></div>
+                                <div id="popup-chart-03-dotcom"></div>
+
+
+                            </div>
+
+                            <div class="popup-bot">
+                                <div>
+                                    <div class="high-label demi p-16">High 3/24/00</div>
+                                    <div class="index-high-val p-28 ls-np7">$106,520</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-high-val p-28 ls-np7 bold p-blue">$89,954</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                                <div>
+                                    <div class="low-label demi p-16">Low 10/9/02</div>
+                                    <div class="index-low-val p-28 ls-np7">$56,054</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-low-val p-28 ls-np7 bold p-blue">$64,512</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Great Recession pop -->
+                        <div class="popup" id='popup-grtrec'>
+                            <img class="popup-close-icon" onclick="togglePopup('grtrec')"
+                                src="./engine/imgs/cg-close-icon-black.svg" />
+                            <div class="popup-top">
+                                <div class="p-20 ls-p15">
+                                    <span class="bold">Great Recession</span> (10/9/07–3/9/09)
+                                </div>
+                                <div class="p-16 ls-p45">The largest and most widespread market downturn in 65 years was
+                                    driven by a variety of factors, including deregulation in the financial industry,
+                                    extreme leverage and strains on liquidity, leaving investors with nowhere to hide
+                                    throughout global markets.</div>
+                            </div>
+                            <div class="popup-legend-row">
+                                <div class="popup-legend-title p-16 demi ls-p45">Total percentage loss from high to low
+                                </div>
+                                <div class="legend-wrapper">
+                                    <div class="legend-item">
+                                        <div class="legend-dot bone"></div>
+                                        <span class="p-12">S&P 500 Index</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot terq"></div>
+                                        <span class="p-12">Peer category blended average<sup>2</sup></span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot blue"></div>
+                                        <span class="p-12">American Funds average<sup>1</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="popup-charts-container">
+
+                                <div class="p-16 ls-p45 demi">Domestic</div>
+                                <div class="p-16 ls-p45 demi">Global</div>
+                                <div class="p-16 ls-p45 demi">Int’l</div>
+
+
+                                <div id="popup-chart-01-grtrec"></div>
+                                <div id="popup-chart-02-grtrec"></div>
+                                <div id="popup-chart-03-grtrec"></div>
+
+
+                            </div>
+
+                            <div class="popup-bot">
+                                <div>
+                                    <div class="high-label demi p-16">High 10/9/07</div>
+                                    <div class="index-high-val p-28 ls-np7">$123,694</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-high-val p-28 ls-np7 bold p-blue">$149,037</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                                <div>
+                                    <div class="low-label demi p-16">Low 3/9/09</div>
+                                    <div class="index-low-val p-28 ls-np7">$55,353</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-low-val p-28 ls-np7 bold p-blue">$72,234</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Covid pop -->
+                        <div class="popup" id='popup-covid'>
+                            <img class="popup-close-icon" onclick="togglePopup('covid')"
+                                src="./engine/imgs/cg-close-icon-black.svg" />
+                            <div class="popup-top">
+                                <div class="p-20 ls-p15">
+                                    <span class="bold">COVID-19 Pandemic</span> (2/19/20 - 3/23/20)
+                                </div>
+                                <div class="p-16 ls-p45">Markets experienced severe downdrafts brought on by the spread
+                                    of the novel coronavirus (COVID-19) and ensuing shutdowns.</div>
+                            </div>
+                            <div class="popup-legend-row">
+                                <div class="popup-legend-title p-16 demi ls-p45">Total percentage loss from high to low
+                                </div>
+                                <div class="legend-wrapper">
+                                    <div class="legend-item">
+                                        <div class="legend-dot bone"></div>
+                                        <span class="p-12">S&P 500 Index</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot terq"></div>
+                                        <span class="p-12">Peer category blended average<sup>2</sup></span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-dot blue"></div>
+                                        <span class="p-12">American Funds average<sup>1</sup></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="popup-charts-container">
+
+                                <div class="p-16 ls-p45 demi">Domestic</div>
+                                <div class="p-16 ls-p45 demi">Global</div>
+                                <div class="p-16 ls-p45 demi">Int’l</div>
+
+
+                                <div id="popup-chart-01-covid"></div>
+                                <div id="popup-chart-02-covid"></div>
+                                <div id="popup-chart-03-covid"></div>
+
+
+                            </div>
+
+                            <div class="popup-bot">
+                                <div>
+                                    <div class="high-label demi p-16">High 2/19/20</div>
+                                    <div class="index-high-val p-28 ls-np7">$348,102</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-high-val p-28 ls-np7 bold p-blue">$403,904</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                                <div>
+                                    <div class="low-label demi p-16">Low 3/23/20</div>
+                                    <div class="index-low-val p-28 ls-np7">$230,477</div>
+                                    <div class="fund-name p-12">S&P 500 Index</div>
+                                </div>
+                                <div>
+                                    <div class="af-low-val p-28 ls-np7 bold p-blue">$275,596</div>
+                                    <div class="fund-name p-12">American Funds</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div class="title-left">
+                                <h1>
+                                    We held up better during major bear markets
+                                </h1>
+                                <div class="p-20 bold" style="color: #A39E99; max-width: 90ch;">
+                                    Rather than chasing the last dollar of return as markets rise, we focus on
+                                    preserving
+                                    wealth when markets drop by taking a risk-sensitive approach
+                                </div>
+                            </div>
+                            <div class="title-right">
+                                <h3 class='p-20 bold lh-1p1 top-disc margin-0 active'>
+                                    Figures shown are past results for Class F-2 shares and are not predictive of
+                                    results in future periods. Current and future results may be lower or higher than
+                                    those shown. Prices and returns will vary, so investors may lose money. Investing
+                                    for short periods makes losses more likely. For current information and month-end
+                                    results, visit <span class="p-blue"
+                                        onclick="window.open('https://capitalgroup.com')"
+                                        style='text-decoration: underline; cursor: pointer;'>capitalgroup.com</span>.
+                                </h3>
+                                <button class="rtns-btn p-14 p-demin demi" style='letter-spacing: .06em;'
+                                    onclick="goTo('five-02.html')">
+                                    BEAR MARKET RESULTS
+                                </button>
+                            </div>
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+
+                            <!-- chart title & legend area -->
+                            <div class="p-16 bold ls-p24" style="margin-top: 1%;">
+                                Hypothetical $10,000 investment in the S&P 500 Index versus an equal-weighted blended
+                                average of seven U.S. equity American Funds<sup>1</sup>
+                            </div>
+                            <div class="p-16 ls-p24"> The investment was rebalanced monthly, net of all expenses.</div>
+                            <section class="legend-wrapper-a">
+
+                                <div class="chart-title-wrapper">
+
+                                    <div class="legend-wrapper">
+                                        <div class="legend-item">
+                                            <div class="legend-dot bone"></div>
+                                            <span class='p-16'>S&P 500 Index</span>
+                                        </div>
+                                        <div class="legend-item">
+                                            <div class="legend-dot blue"></div>
+                                            <span class='p-16'>American Funds average</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="toggle-contaiener">
+
+                                    <div class="toggle-wrapper">
+                                        <div class='p-btn-label p-12 ls-1p2 demi'
+                                            style="color: rgba(127, 127, 127, 1);">LINE STYLE</div>
+
+                                        <toggle class="line-toggle-pill">
+                                            <div id="toggle-slider" class='w50' style="left: 0%;"></div>
+                                            <button onclick="toggleLine()" class='toggle-on'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="21.216" height="13.769"
+                                                    viewBox="0 0 21.216 13.769">
+                                                    <path id='line' style='fill:rgba(0,41,75, 1);'
+                                                        d="M3.591,19.279,9.956,12.9,14.2,17.147,23.216,7.006l-1.5-1.5L14.2,13.965,9.956,9.721,2,17.688Z"
+                                                        transform="translate(-2 -5.51)" />
+                                                </svg>
+                                            </button>
+                                            <button onclick="toggleFill()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="14"
+                                                    viewBox="0 0 27 14">
+                                                    <g transform="translate(-0.429 -8.335)">
+                                                        <path id='mountain' fill='rgba(0,41,75,0.3)' d="M9.5,0,19,14H0Z"
+                                                            transform="translate(8.429 8.335)" />
+                                                        <path id='mountain-2' fill="rgba(0, 95, 158, 0.3)"
+                                                            d="M7.5,0,15,10H0Z" transform="translate(0.429 12.335)" />
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </toggle>
+                                    </div>
+
+                                    <div class='zoom-btn-container'>
+                                        <div class='p-btn-label p-12 ls-1p2 demi'
+                                            style="color: rgba(127, 127, 127, 1);">ZOOM</div>
+                                        <div class='zoom-btn'>
+                                            <button id='zoom-plus' onclick="zoomIn()">+</button>
+                                            <button id='zoom-minus' onclick='zoomOut()'>
+                                                <div style='transform: scaleX(1.6)'>–</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </section>
+                            <!-- end chart title & legend area -->
+
+                            <!-- chart -->
+                            <section class="chart-wrapper-a">
+                                <div id="chart"></div>
+                            </section>
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                <sup>1</sup> The equity American Funds in these analyses include, for domestic: AMCAP
+                                Fund,
+                                American Mutual Fund, Fundamental Investors, The Growth Fund of America, The Investment
+                                Company of America, New Economy Fund and Washington Mutual Investors Fund; for global:
+                                American Funds Global Insight Fund, New Perspective Fund, The New World Fund and Capital
+                                World Growth and Income Fund; and for international: American Funds International
+                                Vantage Fund and EuroPacific Growth Fund.
+                                <br><br>
+                                <sup>2</sup> The peer category blended averages represent equal-weighted blended
+                                averages of each
+                                fund’s respective Morningstar U.S. Active Fund category average, as follows — for
+                                domestic; U.S. Active Fund Large Blend, Growth and Value; for global, U.S. Active Fund
+                                World Large Stock and U.S. Active Fund Diversified Emerging Markets categories; for
+                                international, only the U.S. Active Fund Foreign Large Growth category is used. There
+                                may be funds within these categories that outpaced or lagged their category average
+                                and/or the American Funds.
+                                <br><br>
+                                Capital Group calculations based on Capital Group and Morningstar data, as of 12/31/20.
+                                All comparisons are with each fund’s primary or secondary benchmarks as disclosed in the
+                                fund’s most recent prospectus. Please see the “Bear Market Returns” and “Annual Results
+                                for 10-Year Rolling Periods” sections for a list of each fund’s respective index and
+                                Morningstar U.S. Active Fund category, as well as the individual returns for all 20
+                                equity-focused American Funds during these periods. Investment results assume all
+                                distributions are reinvested.
+                                <br><br>
+                                American Funds Global Insight Fund and American Funds International Vantage Fund began
+                                investment operations on April 1, 2011, but were only available to a limited number of
+                                investors. Now available on the American Funds platform, the reorganized funds have
+                                adopted the results and financial history of the original funds.
+                                <br><br>
+                                Line chart detail: The line chart uses a logarithmic scale to display the relative
+                                changes in the market downturns since 1986.
+                                <br><br>
+                                Inset Bar Chart Details: Domestic total percentage loss from market high to low for the
+                                S&P 500 as well as equal-weighted blended averages for both the seven U.S. equity
+                                American funds and their respective peer category averages<sup>2</sup>. Global: Both the
+                                American
+                                Funds and their respective peer category averages are equal-weighted blended averages.
+                                Index returns represent each American Funds’ respective indexes. International: Only
+                                EuroPacific Growth Fund and its respective index and peer category average are included,
+                                as it was the only international equity American Fund available during these periods.
+                                Exhibit Details: Black Monday: American Funds average includes only New Perspective Fund
+                                and EuroPacific Growth Fund, as Capital World Growth and Income Fund and New World Fund
+                                were unavailable for investment.
+                                <br><br>
+                                The $10,000 hypothetical investment in the line chart is based on daily returns. The S&P
+                                500 values are calculated using the total return index, which includes dividends. The
+                                equal-weighted blended average of the seven U.S. equity-focused American Funds includes
+                                AMCAP Fund, American Mutual Fund, Fundamental Investors, The Growth Fund of America, The
+                                Investment Company of America, The New Economy Fund, Washington Mutual Investors Fund.
+                                The investment was rebalanced monthly.
+                                <br><br>
+                                Dates shown for market highs and lows are based on the price return of the unmanaged S&P
+                                500 Index, which does not include reinvested dividends. The total percentage loss from
+                                high to low shown for the index, Morningstar active category blended averages and
+                                American Funds averages are calculated using these dates and based on total returns,
+                                which include reinvested dividends.
+                                <br><br>
+                                For each of the bear markets shown, the Days to Recovery for the S&P 500 Index and
+                                American Funds equal-weighted blended average reflect the number of calendar days
+                                (including weekends and holidays) between the stated market low and the next time the
+                                value of the investments for each met or surpassed the value set at the pre-downturn
+                                market high.
+                                <br><br>
+                                Investment results assume all distributions are reinvested and reflect applicable fees
+                                and expenses. When applicable, results reflect fee waivers and/or expense
+                                reimbursements, without which they would have been lower. Please see <span
+                                    class="p-blue" onclick="window.open('https://capitalgroup.com')"
+                                    style='font-weight: 700; font-size: inherit; text-decoration: underline; cursor: pointer;'>capitalgroup.com</span>
+                                for more information.
+                                <br><br>
+                                This content, developed by Capital Group, home of American Funds, should not be used as
+                                a primary basis for investment decisions and is not intended to serve as impartial
+                                investment or fiduciary advice.
+                                <br><br>
+                                Investors should carefully consider investment objectives, risks, charges and expenses.
+                                This and other important information is contained in the fund prospectuses and summary
+                                prospectuses, which can be obtained from a financial professional and should be read
+                                carefully before investing.
+                                <br><br>
+                                Investing outside the United States involves risks, such as currency fluctuations,
+                                periods of illiquidity and price volatility, as more fully described in the prospectus.
+                                Small company stocks entail additional risks, and they can fluctuate in price more than
+                                larger company stocks.
+                                <br><br>
+                                All Capital Group trademarks mentioned are owned by The Capital Group Companies, Inc.,
+                                an affiliated company or fund. All other company and product names mentioned are the
+                                property of their respective companies.
+                                <br><br>
+                                American Funds Distributors, Inc., member FINRA.
+                                <br><br>
+                                © 2022 Capital Group. All rights reserved.
+                                <br><br>
+                                © 2022 Morningstar, Inc. All rights reserved. The information contained herein: (1) is
+                                proprietary to Morningstar and/or its content providers; (2) may not be copied or
+                                distributed; and (3) is not warranted to be accurate, complete or timely. Neither
+                                Morningstar nor its content providers are responsible for any damages or losses arising
+                                from any use of this information. Past performance is no guarantee of future results.
+                                <br><br>
+                                MSCI has not approved, reviewed or produced this report, makes no express or implied
+                                warranties or representations and is not liable whatsoever for any data in the report.
+                                You may not redistribute the MSCI data or use it as a basis for other indices or
+                                investment products.
+                                <br><br>
+                                Standard & Poor’s 500 Composite Index (“Index”) is a product of S&P Dow Jones Indices
+                                LLC and/or its affiliates and has been licensed for use by Capital Group. Copyright ©
+                                2022 S&P Dow Jones Indices LLC, a division of S&P Global, and/or its affiliates. All
+                                rights reserved. Redistribution or reproduction in whole or in part is prohibited
+                                without written permission of S&P Dow Jones Indices LLC.
+                                <br><br>
+                                Standard & Poor’s 500 Composite Index is a market capitalization-weighted index based on
+                                the results of approximately 500 widely held common stocks. This index is unmanaged, and
+                                its results include reinvested dividends and/or distributions but do not reflect the
+                                effect of sales charges, commissions, account fees, expenses or U.S. federal income
+                                taxes.
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+
+<script src='./data/wr05.js'></script>
+<script src="engine/js/d3.min.js"></script>
+<script>
+    // // some debuging stuff
+    // let panel = document.getElementById('debug-panel');
+
+    // document.addEventListener('keydown', (e) => {
+    //     console.log(e.shiftKey, e.keyCode)
+    //     if (e.shiftKey && e.keyCode === 90) {
+    //         if (panel.style.opacity == 0) {
+    //             panel.style.opacity = 1;
+    //         } else {
+    //             panel.style.opacity = 0;
+    //         }
+
+    //     }
+    // })
+
+    // window.addEventListener('error', (e) => {
+    //     let line = document.createElement('div');
+    //     line.innerHTML = `<div>
+    //         <p><span class='bold'>msg:</span> ${e.message}</p>
+    //         <p><span class='bold'>src:</span> ${e.filename}</p>
+    //         <p><span class='bold'>line num:</span> ${e.lineno}</p>
+    //         <p><span class='bold'>col num:</span> ${e.colno}</p>
+    //         <p><span class='bold'>err:</span> ${e.error}</p>
+    //         </div>`
+    //     panel.appendChild(line);
+    // })
+
+    // end debug stuff
+</script>
+<script>
+    const BLUE = 'rgba(0, 95, 155, 1)';
+    const BLUE50 = 'rgba(0, 95, 155, .32)';
+    const BLUE0 = 'rgba(0, 95, 155, 0)';
+
+    const BLUE_GRADIENT = 'url(#BLUE-grad)';
+
+    // const BONE = 'rgba(213, 208, 202, 1)';
+    const BONE50 = 'rgba(213, 208, 202, 0.65)';
+    const BONE0 = 'rgba(213, 208, 202, 0)';
+
+    const BONE_GRADIENT = 'url(#BONE-grad)';
+
+    // SHARE CLASS
+    let currentShareClass = 'shareClassF2';
+
+    const shortScreen = window.innerHeight <= 830;
+
+    let zoomed = false;
+    let filled = false;
+    let lowDate = null;
+    let highDate = null;
+
+    data[currentShareClass].data.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    // data2.forEach(el => {
+    //     el.date = new Date(el.date)
+    // });
+
+    let iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+    let desktop = window.innerWidth > 1400;
+    let smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+    let seismicApp = window.innerWidth < 1100;
+
+
+    const maxYear = d3.max(data[currentShareClass].data, d => d.date).getFullYear();
+    const minYear = d3.min(data[currentShareClass].data, d => d.date).getFullYear();
+    const middleOfData = (new Date((d3.min(data[currentShareClass].data, d => d.date).getTime() + d3.max(data[currentShareClass].data, d => d.date).getTime()) / 2));
+    const totalYearsInData = Math.round((maxYear - minYear));
+    const zoomWidth = Math.round(totalYearsInData / 3); // We arbitrarily zoom in to 3x, which shows us 1/3 of the data when zoomed
+    const halfZoom = Math.round(zoomWidth / 2); // this is the number of years above/below the midpoint when zoomed
+
+    const oneYear = 31536000000;
+
+    // set the dates for zooming into the middle of the data (when clicking zoom in before interacting with the chart)
+    let oldLowDate = new Date(String(middleOfData.getFullYear() - halfZoom));
+    let oldHighDate = new Date(String(middleOfData.getFullYear() + halfZoom));
+
+    // line text positions
+    const amfMaxVal = d3.max(data[currentShareClass].data, d => d.amf);
+    const spMaxVal = d3.max(data[currentShareClass].data, d => d.sp);
+
+    const lineYear = new Date('Fri Jul 31 2021 17:00:00 GMT-0700 (Pacific Daylight Time)');
+    const secondLineYearPos = new Date('Apr 31 2022 17:00:00 GMT-0700 (Pacific Daylight Time)');
+    const secondLineYearPosZoomed = new Date('Oct 31 2021 17:00:00 GMT-0700 (Pacific Daylight Time)');
+
+    const labelXpos = new Date('Aug 01 2021 11:11:41 GMT-0700 (Pacific Daylight Time)');
+
+
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+
+    class drawChart {
+        constructor() {
+            this.draws = 0;
+            this.data = data[currentShareClass].data;
+            // this.data2 = data2;
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg").attr('id', 'g-line');
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'g3')
+
+
+            // ADD AREA
+            vis.amfArea = vis.g.append("path")
+                .attr('fill', BLUE_GRADIENT)
+                .style('pointer-events', 'none');
+            vis.spArea = vis.g.append("path")
+                .attr('fill', BONE_GRADIENT)
+                .style('pointer-events', 'none');
+
+            // EVENT BOXES
+            vis.bmEventBox = vis.g.append("rect")
+                .attr('fill', '#E3E3E3')
+                .attr('opacity', '0.5')
+                .attr('class', 'event-box')
+                .attr('id', 'event-bm');
+            vis.dotcomEventBox = vis.g.append("rect")
+                .attr('fill', '#E3E3E3')
+                .attr('opacity', '0.5')
+                .attr('class', 'event-box')
+                .attr('id', 'event-dotcom');
+            vis.grtRecEventBox = vis.g.append("rect")
+                .attr('fill', '#E3E3E3')
+                .attr('opacity', '0.5')
+                .attr('class', 'event-box')
+                .attr('id', 'event-grtrec');
+            vis.covidEventBox = vis.g.append("rect")
+                .attr('fill', '#E3E3E3')
+                .attr('opacity', '0.5')
+                .attr('class', 'event-box')
+                .attr('id', 'event-covid');
+
+            // APPEND LINE
+            vis.afLine = vis.g
+                .append('path')
+                .attr('stroke', '#005F9E')
+                .attr('stroke-width', 1.5)
+                .attr('fill', 'none')
+                .style('pointer-events', 'none')
+
+            vis.spLine = vis.g
+                .append('path')
+                .attr('stroke', '#A49E99')
+                .attr('stroke-width', 1.5)
+                .attr('fill', 'none')
+                .style('pointer-events', 'none')
+
+            vis.zeroLine = vis.g
+                .append('line')
+                .attr('class', 'zero-line')
+
+            // EVENT DOTS
+            vis.bmEventDot = vis.g.append('circle');
+            vis.dotcomEventDot = vis.g.append('circle');
+            vis.grtRecEventDot = vis.g.append('circle');
+            vis.covidEventDot = vis.g.append('circle');
+
+            // EVENT LINES
+            vis.bmEventLine = vis.g.append('line');
+            vis.dotcomEventLine = vis.g.append('line');
+            vis.grtRecEventLine = vis.g.append('line');
+            vis.covidEventLine = vis.g.append('line');
+
+            ////////////////
+            vis.afEndVal = vis.g.append('text').attr('class', 'p-20 bold ls-np45').attr('fill', '#2E5497');
+            vis.indexEndVal = vis.g.append('text').attr('class', 'p-20 bold ls-np45').attr('fill', '#7E7E7E');
+
+            vis.endValTextAra = d3.select(vis.chartDiv)
+                .append("div")
+                .attr('id', 'end-val-text')
+                .html(`
+                    <div class="end-val-info">
+                        <div class="p-12 ls-p1" style="color:#363636;">Ending value <br> As of 12/31/20</div>
+                    </div> 
+                 `);
+
+            vis.lineGroup = vis.svg.append('g').attr('class', 'lines');
+
+            // APPEND WHITE BOX TO COVER AREA WHEN CHART EXPANDS DURING ZOOM
+            vis.whiteBox = vis.svg
+                .append('rect')
+                .attr('fill', 'white')
+                .attr('width', 25)
+                .attr('x', 0)
+                .attr('y', 0)
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis')
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'start')
+                .attr('class', 'axis y-axis')
+
+            // DEFINE LINEAR GRADIENT
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'BONE-grad')
+                .attr('x1', 0)
+                .attr('x2', 0)
+                .attr('y1', 0.5)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', BONE50);
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', BONE0);
+
+            // DEFINE LINEAR GRADIENT
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'BLUE-grad')
+                .attr('x1', 0)
+                .attr('y1', 0.2)
+                .attr('x2', 0)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', BLUE50);
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', BLUE0);
+            // FINALLY, APPEND A TOUCH LAYER TO BYPASS ALL OF OUR TEXT AND OTHER DIVS THAT HAVE BEEN APPENDED
+            vis.touchLayer = d3.select('#chart').append('div').attr('class', 'touch-layer').style('position', 'absolute');
+
+
+            // EVENT INFO AREAS 
+            vis.bmInfoArea = d3.select(vis.chartDiv)
+                .append("div")
+                .attr('class', 'event-info-container')
+                .attr('id', 'event-info-area-1')
+                .style('text-align', 'center')
+                .html(`
+                    <div class="event-info-area" id="info-bm">
+                        <div class="info-top" id="event-info-bm">
+                            <div class="event-title p-20 ls-p15 bold">
+                                Black Monday
+                                <div class="info-icon p-16">i</div>
+                            </div>
+                            <div class="event-date p-20 ls-p15"> (8/25/87–12/4/87)</div>
+                        </div>
+                        <div class="event-info-mid p-16 ls-p45">
+                            Days to recovery
+                        </div>
+                        <div class="event-info-bot">
+                            <div class="event-bot-left">
+                                <div class="p-28 ls-np7 grey-num">528</div>
+                                <div class="p-12">S&P 500 Index</div>
+                            </div>
+                            <div class="event-bot-right">
+                                <div class="p-28 ls-np7 bold p-blue">497</div>
+                                <div class="p-12">American Funds</div>
+                            </div>
+                        </div>
+                    </div> 
+                 `);
+            vis.dotcomInfoArea = d3.select(vis.chartDiv)
+                .append("div")
+                .attr('class', 'event-info-container')
+                .attr('id', 'event-info-area-2')
+                .style('text-align', 'center')
+                .html(`
+                    <div class="event-info-area" id="info-bm">
+                        <div class="info-top" id="event-info-dotcom">
+                            <div class="event-title p-20 ls-p15 bold">
+                                Dot-com Crisis 
+                                <div class="info-icon p-16">i</div>
+                            </div>
+                            <div class="event-date p-20 ls-p15"> 3/24/00–10/9/02</div>
+                        </div>
+                        <div class="event-info-mid p-16 ls-p45">
+                            Days to recovery
+                        </div>
+                        <div class="event-info-bot">
+                            <div class="event-bot-left">
+                                <div class="p-28 ls-np7 grey-num">1,475</div>
+                                <div class="p-12">S&P 500 Index</div>
+                            </div>
+                            <div class="event-bot-right">
+                                <div class="p-28 ls-np7 bold p-blue">418</div>
+                                <div class="p-12">American Funds</div>
+                            </div>
+                        </div>
+                    </div> 
+                 `);
+            vis.grtRecInfoArea = d3.select(vis.chartDiv)
+                .append("div")
+                .attr('class', 'event-info-container')
+                .attr('id', 'event-info-area-3')
+                .style('text-align', 'center')
+                .html(`
+                    <div class="event-info-area" id="info-bm">
+                        <div class="info-top" id="event-info-grtrec">
+                            <div class="event-title p-20 ls-p15 bold">
+                                Great Recession 
+                                <div class="info-icon p-16">i</div>
+                            </div>
+                            <div class="event-date p-20 ls-p15"> 10/9/07–3/9/09</div>
+                        </div>
+                        <div class="event-info-mid p-16 ls-p45">
+                            Days to recovery
+                        </div>
+                        <div class="event-info-bot">
+                            <div class="event-bot-left">
+                                <div class="p-28 ls-np7 grey-num">1,120</div>
+                                <div class="p-12">S&P 500 Index</div>
+                            </div>
+                            <div class="event-bot-right">
+                                <div class="p-28 ls-np7 bold p-blue">1,102</div>
+                                <div class="p-12">American Funds</div>
+                            </div>
+                        </div>
+                    </div> 
+                 `);
+
+            vis.covidInfoArea = d3.select(vis.chartDiv)
+                .append("div")
+                .attr('class', 'event-info-container')
+                .attr('id', 'event-info-area-4')
+                .style('text-align', 'center')
+                .html(`
+                    <div class="event-info-area" id="info-bm">
+                        <div class="info-top" id="event-info-covid">
+                            <div class="event-title p-20 ls-p15 bold">
+                                Covid - 19 Pandemic 
+                                <div class="info-icon p-16">i</div>
+                            </div>
+                            <div class="event-date p-20 ls-p15"> 02/19/20–3/23/20</div>
+                        </div>
+                        <div class="event-info-mid p-16 ls-p45">
+                            Days to recovery
+                        </div>
+                        <div class="event-info-bot">
+                            <div class="event-bot-left">
+                                <div class="p-28 ls-np7 grey-num">140</div>
+                                <div class="p-12">S&P 500 Index</div>
+                            </div>
+                            <div class="event-bot-right">
+                                <div class="p-28 ls-np7 bold p-blue">147</div>
+                                <div class="p-12">American Funds</div>
+                            </div>
+                        </div>
+                    </div> 
+                 `);
+
+            this.wrangle();
+        }
+
+        wrangle(x1 = d3.min(this.data, d => d.date), x2 = d3.max(this.data, d => d.date)) {
+            const vis = this;
+
+            vis.data = data[currentShareClass].data;
+            vis.data.forEach(el => {
+                el.date = new Date(el.date)
+            });
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = document.getElementById('chart').parentElement.clientHeight;
+            vis.bottom = 40;
+            vis.top = 30;
+            vis.MARGIN = { top: vis.top, right: vis.width * .022, bottom: vis.bottom, left: seismicApp ? 20 : 60 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // X SCALE
+            vis.x = d3
+                .scaleTime()
+                .domain([x1, x2])
+                .range([0, vis.gWIDTH * .95])
+
+            lowDate = x1;
+            highDate = x2;
+
+            // HANDLE CLICKS ///////////////////////////////////////////
+            const svgElement = document.querySelector('#chart svg')
+
+            let holding = false;
+            let clickOne = null;
+            let difference = 0;
+
+            vis.touchLayer.style('pointer-events', zoomed ? 'all' : 'none')
+            vis.touchLayer.on("mousedown", handleStart);
+            vis.touchLayer.on("touchstart", handleStart);
+
+            // attach the mousemove and mouseup to the body in case one wonders off the svg (we use body)
+            vis.touchLayer.on("mousemove", handleMove).on("mouseup", handleEnd).on('mouseout', handleEnd)
+            vis.touchLayer.on("touchmove", handleMove).on("touchend", handleEnd).on("touchcancel", handleEnd)
+
+            function handleStart() {
+                if (zoomed) {
+                    clickOne = d3.mouse(svgElement)[0];
+                    holding = true;
+                }
+            }
+
+            // sometimes it's hard to drag your way all the way to the very end of the chart, but if you move the opposite way it works
+            let moveTrigger = 0;
+            const overflow = oneYear / 5;
+            function handleMove() {
+                if (zoomed && holding) {
+                    d3.event.preventDefault();
+
+                    const clickTwo = d3.mouse(svgElement)[0]
+                    const date1 = vis.x.invert(clickOne)
+                    const date2 = vis.x.invert(clickTwo)
+
+                    difference = ((date2 - date1));
+
+                    if (lowDate.getTime() - difference > d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        if (highDate.getTime() - difference < d3.max(vis.data, d => d.date).getTime() + overflow) {
+                            vis.x.domain([lowDate.getTime() - difference, highDate.getTime() - difference])
+                            vis.redraw(true)
+                        } else {
+                            moveTrigger += 1;
+                            if (moveTrigger === 30) {
+                                moveTrigger = 0;
+                                vis.x.domain([d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear, d3.max(vis.data, d => d.date).getTime() + overflow])
+                                vis.redraw(true)
+                            }
+                        }
+
+                    } else {
+                        moveTrigger += 1;
+                        if (moveTrigger === 30) {
+                            moveTrigger = 0;
+                            vis.x.domain([d3.min(vis.data, d => d.date).getTime() - overflow, d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear])
+                            vis.redraw(true)
+                        }
+                    }
+                }
+            }
+
+            function handleEnd() {
+                if (zoomed && holding) {
+                    if (lowDate.getTime() - difference < d3.min(vis.data, d => d.date).getTime() - overflow) {
+                        lowDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow)
+                        highDate = new Date(d3.min(vis.data, d => d.date).getTime() - overflow + zoomWidth * oneYear)
+                    } else if (highDate.getTime() - difference > d3.max(vis.data, d => d.date).getTime() + overflow) {
+                        lowDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow - zoomWidth * oneYear)
+                        highDate = new Date(d3.max(vis.data, d => d.date).getTime() + overflow)
+                    } else {
+                        lowDate = new Date(lowDate.getTime() - difference)
+                        highDate = new Date(highDate.getTime() - difference)
+                    }
+                }
+                holding = false;
+            }
+
+            vis.redraw()
+        }
+
+        redraw(pan = false) {
+            const vis = this;
+
+            iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+            desktop = window.innerWidth > 1400;
+            smallLapTop = window.innerWidth < 1400 && window.innerHeight < 1000 && window.innerHeight > 750;
+            seismicApp = window.innerWidth < 1100;
+
+            vis.draws += 1;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET SIZE FOR TOUCH LAYER
+            vis.touchLayer
+                .style("width", vis.width + 'px')
+                .style("height", vis.height + 'px')
+                .style("top", 0)
+                .attr("pointer-events", "all")
+
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            const x = vis.x;
+
+            let yMax = 500000;
+            let yMin = 10000;
+
+            const y = d3.scaleLog()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            // ****************  LINE FUNCTIONS ****************************
+            const generateLine = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.ica));
+
+            const generateAMFline = d3.line()
+                .x(d => x(d.date))
+                .y(d => {
+                    if (d.af < yMin) {
+                        return y(yMin)
+                    } else {
+                        return y(d.af)
+                    }
+                });
+
+            const generateSPline = d3.line()
+                .x(d => x(d.date))
+                .y(d => {
+                    if (d.sp < yMin) {
+                        return y(yMin)
+                    } else {
+                        return y(d.sp)
+                    }
+                });
+            // **************** END LINE FUNCTIONS ****************************
+
+            const amfArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(yMin))
+                .y0(d => y(d.af))
+
+            const spArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(yMin))
+                .y0(d => y(d.sp))
+            // ////////////////////////////////////////////////////////////////
+
+            const flatArea = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y2(yMin))
+                .y0(d => y2(yMin))
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.data.map(k => {
+                return { date: k.date, ica: yMin };
+            });
+
+            const ICAHEIGHT = 1800000;
+            const AMFheight = 1250000;
+            const GFAheight = 5000000;
+            const spHeight = 700000
+
+
+            ////////////////// EVENT BOXES
+
+            // black monday
+            const bmStartDate = new Date('Sun Aug 25 1987 16:00:00 GMT-0800 (Pacific Standard Time)');
+            const bmEndDate = new Date('Sun Feb 04 1988 16:00:00 GMT-0800 (Pacific Standard Time)');
+            vis.bmEventBox
+                .attr('y', y(yMax))
+                .attr('height', vis.gHEIGHT)
+                .on("mouseover", d => { handleMouseOverEventArea('bm') })
+                .on("mouseout", d => { handleMouseOutEventArea('bm') })
+                .on("click", d => { togglePopup('bm') })
+                .on("touch", d => { togglePopup('bm') })
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', x(bmStartDate))
+                .attr('width', x(bmEndDate) - x(bmStartDate))
+
+            // dotcom crisis
+            const dotcomStartDate = new Date('Sun Mar 24 2000 16:00:00 GMT-0800 (Pacific Standard Time)');
+            const dotcomEndDate = new Date('Sun Oct 09 2002 16:00:00 GMT-0800 (Pacific Standard Time)');
+            vis.dotcomEventBox
+                .attr('y', y(yMax))
+                .attr('height', vis.gHEIGHT)
+                .on("mouseover", d => { handleMouseOverEventArea('dotcom') })
+                .on("mouseout", d => { handleMouseOutEventArea('dotcom') })
+                .on("click", d => { togglePopup('dotcom') })
+                .on("touch", d => { togglePopup('dotcom') })
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', x(dotcomStartDate))
+                .attr('width', x(dotcomEndDate) - x(dotcomStartDate))
+            // great recession
+            const grtRecStartDate = new Date('Sun Oct 09 2007 16:00:00 GMT-0800 (Pacific Standard Time)');
+            const grtRecEndDate = new Date('Sun Mar 09 2009 16:00:00 GMT-0800 (Pacific Standard Time)');
+            vis.grtRecEventBox
+                .attr('y', y(yMax))
+                .attr('height', vis.gHEIGHT)
+                .on("mouseover", d => { handleMouseOverEventArea('grtrec') })
+                .on("mouseout", d => { handleMouseOutEventArea('grtrec') })
+                .on("click", d => { togglePopup('grtrec') })
+                .on("touch", d => { togglePopup('grtrec') })
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', x(grtRecStartDate))
+                .attr('width', x(grtRecEndDate) - x(grtRecStartDate))
+            // covid-19 pandemic
+            const covidStartDate = new Date('Sun Feb 19 2020 16:00:00 GMT-0800 (Pacific Standard Time)');
+            const covidEndDate = new Date('Sun May 23 2020 16:00:00 GMT-0800 (Pacific Standard Time)');
+            vis.covidEventBox
+                .attr('y', y(yMax))
+                .attr('height', vis.gHEIGHT)
+                .on("mouseover", d => { handleMouseOverEventArea('covid') })
+                .on("mouseout", d => { handleMouseOutEventArea('covid') })
+                .on("click", d => { togglePopup('covid') })
+                .on("touch", d => { togglePopup('covid') })
+                .transition()
+                .duration(vis.draws === 1 || pan ? 0 : 1000)
+                .attr('x', x(covidStartDate))
+                .attr('width', x(covidEndDate) - x(covidStartDate))
+
+            ////////////////////////////////////////////
+            //////////////////////////////////////////////
+            ////////////////// EVENT INFO AREA
+            vis.bmInfoArea
+                .style('opacity', vis.draws <= 1 ? 0 : 1)
+                .style('top', y(200000) + vis.MARGIN.top + 'px')
+                .on("mouseover", d => { handleMouseOverEventArea('bm') })
+                .on("mouseout", d => { handleMouseOutEventArea('bm') })
+                .on("click", d => { togglePopup('bm') })
+                .on("touch", d => { togglePopup('bm') })
+                .style('left', x(bmEndDate) + vis.MARGIN.left + 40 + 'px')
+                .transition()
+                .delay(2000)
+                .duration(800)
+                .style('opacity', 1);
+
+            const dotcomAreaWidth = vis.dotcomInfoArea.node().clientWidth;
+            vis.dotcomInfoArea
+                .style('opacity', vis.draws <= 1 ? 0 : 1)
+                .style('left', x(dotcomStartDate) - dotcomAreaWidth - 15 + vis.MARGIN.left + 'px')
+                .style('top', y(450000) + vis.MARGIN.top + 'px')
+                .on("mouseover", d => { handleMouseOverEventArea('dotcom') })
+                .on("mouseout", d => { handleMouseOutEventArea('dotcom') })
+                .on("click", d => { togglePopup('dotcom') })
+                .on("touch", d => { togglePopup('dotcom') })
+                .transition()
+                .delay(2000)
+                .duration(800)
+                .style('opacity', 1);
+
+            const grtRecInfoAreaWidth = vis.grtRecInfoArea.node().clientWidth;
+            vis.grtRecInfoArea
+                .style('opacity', vis.draws <= 1 ? 0 : 1)
+                .style('left', smallLapTop || iPad ? x(grtRecStartDate) - grtRecInfoAreaWidth + vis.MARGIN.left + 'px' : x(grtRecEndDate) + 40 + vis.MARGIN.left + 'px')
+                .style('top', y(55000) + vis.MARGIN.top + 'px')
+                .on("mouseover", d => { handleMouseOverEventArea('grtrec') })
+                .on("mouseout", d => { handleMouseOutEventArea('grtrec') })
+                .on("click", d => { togglePopup('grtrec') })
+                .on("touch", d => { togglePopup('grtrec') })
+                .transition()
+                .delay(2000)
+                .duration(800)
+                .style('opacity', 1);
+
+            const covidAreaWidth = vis.covidInfoArea.node().clientWidth;
+            vis.covidInfoArea
+                .style('opacity', vis.draws <= 1 ? 0 : 1)
+                .style('left', x(covidStartDate) - covidAreaWidth - 0 + vis.MARGIN.left + 'px')
+                .style('top', y(130000) + vis.MARGIN.top + 'px')
+                .on("mouseover", d => { handleMouseOverEventArea('covid') })
+                .on("mouseout", d => { handleMouseOutEventArea('covid') })
+                .on("click", d => { togglePopup('covid') })
+                .on("touch", d => { togglePopup('covid') })
+                .transition()
+                .delay(2000)
+                .duration(800)
+                .style('opacity', 1);
+
+            ////////////////// EVENT DOTS & LINES 
+            const covidLineOffset = iPad || smallLapTop ? 50 : 35;
+            if (vis.draws <= 1) {
+                vis.bmEventDot
+                    .attr('class', 'event-dot')
+                    .attr('r', 0)
+                    .attr('cx', x(bmEndDate) - 8)
+                    .attr('cy', y(110000))
+                    .style('opacity', 0)
+                    .transition()
+                    .delay(400)
+                    .duration(800)
+                    .style('opacity', 1)
+                    .attr('r', 3)
+
+                vis.dotcomEventDot
+                    .attr('class', 'event-dot')
+                    .attr('r', 0)
+                    .attr('cx', x(dotcomStartDate) + 8)
+                    .attr('cy', y(255000))
+                    .style('opacity', 0)
+                    .transition()
+                    .delay(400)
+                    .duration(800)
+                    .style('opacity', 1)
+                    .attr('r', 3)
+
+                vis.grtRecEventDot
+                    .attr('class', 'event-dot')
+                    .attr('r', 0)
+                    .attr('cx', smallLapTop || iPad ? x(grtRecStartDate) + 8 : x(grtRecEndDate) - 8)
+                    .attr('cy', y(37500))
+                    .style('opacity', 0)
+                    .transition()
+                    .delay(400)
+                    .duration(800)
+                    .style('opacity', 1)
+                    .attr('r', 3)
+
+                vis.covidEventDot
+                    .attr('class', 'event-dot')
+                    .attr('r', 0)
+                    .attr('cx', x(covidStartDate) + 6)
+                    .attr('cy', y(85000))
+                    .style('opacity', 0)
+                    .transition()
+                    .delay(400)
+                    .duration(800)
+                    .style('opacity', 1)
+                    .attr('r', 3)
+
+                vis.bmEventLine
+                    .attr('class', 'event-line')
+                    .attr('x1', x(bmEndDate) - 8)
+                    .attr('y1', y(110000))
+                    .attr('x2', x(bmEndDate) - 8)
+                    .attr('y2', y(110000))
+                    .transition()
+                    .delay(1200)
+                    .duration(800)
+                    .attr('x2', x(bmEndDate) + 35)
+
+                vis.dotcomEventLine
+                    .attr('class', 'event-line')
+                    .attr('x1', x(dotcomStartDate) + 8)
+                    .attr('y1', y(255000))
+                    .attr('x2', x(dotcomStartDate) + 8)
+                    .attr('y2', y(255000))
+                    .transition()
+                    .delay(1200)
+                    .duration(800)
+                    .attr('x2', x(dotcomStartDate) - 35)
+
+                vis.grtRecEventLine
+                    .attr('class', 'event-line')
+                    .attr('x1', smallLapTop || iPad ? x(grtRecStartDate) + 8 : x(grtRecEndDate) - 8)
+                    .attr('y1', y(37500))
+                    .attr('x2', smallLapTop || iPad ? x(grtRecStartDate) + 8 : x(grtRecEndDate) - 8)
+                    .attr('y2', y(37500))
+                    .transition()
+                    .delay(1200)
+                    .duration(800)
+                    .attr('x2', smallLapTop || iPad ? x(grtRecStartDate) - 8 : x(grtRecEndDate) + 35)
+
+                vis.covidEventLine
+                    .attr('class', 'event-line')
+                    .attr('x1', x(covidStartDate) + 6)
+                    .attr('y1', y(85000))
+                    .attr('x2', x(covidStartDate) + 6)
+                    .attr('y2', y(85000))
+                    .transition()
+                    .delay(1200)
+                    .duration(800)
+                    .attr('x2', x(covidStartDate) - covidLineOffset)
+            } else {
+                vis.bmEventDot
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('r', 3)
+                    .attr('cx', x(bmEndDate) - 8)
+                    .attr('cy', y(110000))
+                    .style('opacity', 1)
+
+                vis.dotcomEventDot
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('r', 3)
+                    .attr('cx', x(dotcomStartDate) + 8)
+                    .attr('cy', y(255000))
+                    .style('opacity', 1)
+
+                vis.grtRecEventDot
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('r', 3)
+                    .attr('cx', smallLapTop || iPad ? x(grtRecStartDate) + 8 : x(grtRecEndDate) - 8)
+                    .attr('cy', y(37500))
+                    .style('opacity', 1)
+
+                vis.covidEventDot
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('r', 3)
+                    .attr('cx', x(covidStartDate) + 6)
+                    .attr('cy', y(85000))
+                    .style('opacity', 1)
+
+                vis.bmEventLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x1', x(bmEndDate) - 8)
+                    .attr('y1', y(110000))
+                    .attr('x2', x(bmEndDate) + 35)
+                    .attr('y2', y(110000))
+                vis.dotcomEventLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x1', x(dotcomStartDate) + 8)
+                    .attr('y1', y(255000))
+                    .attr('x2', x(dotcomStartDate) - 35)
+                    .attr('y2', y(255000))
+                vis.grtRecEventLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x1', smallLapTop || iPad ? x(grtRecStartDate) + 8 : x(grtRecEndDate) - 8)
+                    .attr('y1', y(37500))
+                    .attr('x2', smallLapTop || iPad ? x(grtRecStartDate) - 8 : x(grtRecEndDate) + 35)
+                    .attr('y2', y(37500))
+                vis.covidEventLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x1', x(covidStartDate) + 6)
+                    .attr('y1', y(85000))
+                    .attr('x2', x(covidStartDate) - covidLineOffset)
+                    .attr('y2', y(85000))
+            }
+
+
+            ////////////////// LINES 
+            if (vis.draws <= 1) {
+
+                vis.afLine
+                    .attr('d', generateLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateAMFline(vis.data))
+                vis.spLine
+                    .attr('d', generateLine(startLine))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', generateSPline(vis.data))
+
+
+                // vis.amfLabel = vis.g
+                //     .append("foreignObject")
+                //     .attr("width", 135)
+                //     .attr("height", 95)
+                //     .attr('y', d => y(AMFheight))
+                //     .attr('x', x(labelXpos))
+                //     .attr('id', 'text-label-4')
+                //     .style('text-align', 'center')
+                // // .html("<div class='text-label p-16 p-dark-raspberry'><div> AMF (R6) </div> <div class='demi'> $1,436,922 </div></div>")
+
+                // vis.spLabel = vis.g
+                //     .append("foreignObject")
+                //     .attr("width", 135)
+                //     .attr("height", 95)
+                //     .attr('y', d => y(spHeight))
+                //     .attr('x', x(labelXpos))
+                //     .attr('id', 'text-label-6')
+                //     .style('text-align', 'center')
+                // // .html("<div class='text-label p-16' style='color: #7D716E'><div> S&P 500 </div> <div class='demi'>$1,280,481 </div></div>")
+            } else {
+                if (pan) {
+
+                    vis.afLine
+                        .attr('d', generateAMFline(vis.data))
+
+                    vis.spLine
+                        .attr('d', generateSPline(vis.data))
+
+                    // vis.amfLabel
+                    //     .attr('y', d => y(AMFheight))
+                    //     .attr('x', x(labelXpos))
+
+                    // vis.spLabel
+                    //     .attr('y', d => y(spHeight))
+                    //     .attr('x', x(labelXpos))
+                } else {
+
+                    vis.afLine
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateAMFline(vis.data))
+
+                    vis.spLine
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', generateSPline(vis.data))
+
+                    // vis.amfLabel
+                    //     .transition()
+                    //     .duration(1000)
+                    //     .delay(0)
+                    //     .attr('y', d => y(AMFheight))
+                    //     .attr('x', x(labelXpos))
+
+                    // vis.spLabel
+                    //     .transition()
+                    //     .duration(1000)
+                    //     .delay(0)
+                    //     .attr('y', d => y(spHeight))
+                    //     .attr('x', x(labelXpos))
+                }
+            }
+
+            // BLUE AREA
+            if (vis.draws <= 1) {
+                vis.amfArea
+                    .attr('d', amfArea(vis.data))
+                    .attr('opacity', 0)
+
+                vis.spArea
+                    .attr('d', spArea(vis.data))
+                    .attr('opacity', 0)
+            } else {
+                if (pan) {
+                    vis.amfArea
+                        .attr('d', amfArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+                    vis.spArea
+                        .attr('d', spArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+                } else {
+                    vis.amfArea
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', amfArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+                    vis.spArea
+                        .transition()
+                        .duration(1000)
+                        .delay(0)
+                        .attr('d', spArea(vis.data))
+                        .attr('opacity', filled ? 1 : 0);
+
+
+                }
+            }
+
+
+            const tickVals = [
+                // new Date('Jan 1 1986 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 1990 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 1995 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 2000 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 2005 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 2010 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 2015 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+                // new Date('Jan 1 2020 16:00:21 GMT-0700 (Pacific Daylight Time)'),
+            ]
+            for (let i = 1985; i < 2021; i = i + 5) {
+                tickVals.push(new Date('Jan 1 ' + String(i) + ' 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            }
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickPadding(0)
+                .tickSizeOuter([0])
+                .tickFormat(e => {
+                    if (e.getMonth() === 0) {
+                        // this is gross but if I feed it a new date of jan 1 1986 it gets placed offset from the end even though the lowest date in the data is 1986...
+                        return e.getFullYear() == 1985 ? 1986 : e.getFullYear();
+                    }
+                });
+
+            if (vis.draws <= 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(${vis.MARGIN.left}, ${y(yMin) + 20})`)
+                    .transition()
+                    .duration(2500)
+                    .delay(100)
+                    .attr('transform', `translate(${vis.MARGIN.left}, ${y(yMin) + 20})`)
+            } else {
+                if (pan) {
+                    vis.xAxis
+                        .attr('transform', `translate(${vis.MARGIN.left}, ${y(yMin) + 20})`)
+                        .call(xAxisCall.scale(x))
+
+                } else {
+                    if (zoomed) {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${vis.MARGIN.left}, ${y(yMin) + 20})`)
+                            .call(xAxisCall.scale(x))
+                    } else {
+                        vis.xAxis
+                            .transition()
+                            .delay(0)
+                            .duration(1000)
+                            .attr('transform', `translate(${vis.MARGIN.left}, ${y(yMin) + 20})`)
+                            .call(xAxisCall.scale(x))
+                    }
+                }
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = seismicApp ? 9 : 10;
+            let yTickVals = [
+                320000,
+                160000,
+                80000,
+                40000,
+                20000,
+                10000
+            ]
+            const formatComma = d3.format(',');
+            const yAxisCall = d3.axisLeft()
+                .tickValues(yTickVals)
+                .ticks(5)
+                .tickFormat(e => e === 320000 ? '$' + formatComma(e) : formatComma(e))
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(1000)
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            ///////////////// APPENDING TEXT
+            const minusMove = -10
+            const plusMove = seismicApp ? 15 : 20;
+            const yMove = seismicApp ? 15 : smallLapTop ? 20 : iPad ? 0 : 0;
+            const textXoffset = seismicApp ? 28 : smallLapTop ? 15 : iPad ? 15 : 0;
+            const afEndPoint = vis.data[vis.data.length - 1].af;
+            const indexEndPoint = vis.data[vis.data.length - 1].sp;
+            const textAreaPoint = d3.min([afEndPoint, indexEndPoint]);
+
+            // vis.afEndVal = vis.g.append('text');
+            // vis.indexEndVal = vis.g.append('text');
+            // vis.endValTextAra
+
+            if (vis.draws <= 1) {
+
+                vis.zeroLine
+                    .attr('x1', 0)
+                    .attr('y1', y(yMin))
+                    .attr('x2', vis.gWIDTH)
+                    .attr('y2', y(yMin))
+                    .attr('stroke', 'rgba(0,0,0,0.4)')
+                    .attr('stroke-width', 1)
+                    .attr('opacity', 0)
+                    .transition()
+                    .delay(800)
+                    .duration(1200)
+                    .attr('opacity', 1)
+
+                vis.endValTextAra
+                    .attr('x', x(new Date('Mar 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)')))
+                    .attr('y', y(textAreaPoint) + 20)
+
+                vis.afEndVal
+                    .attr('x', x(new Date('Mar 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)')))
+                    .attr('y', y(afEndPoint))
+                    .text(afEndPoint.toLocaleString('en-us', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                    }))
+
+                vis.indexEndVal
+                    .attr('x', x(new Date('Mar 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)')))
+                    .attr('y', y(indexEndPoint - 40000))
+                    .text(indexEndPoint.toLocaleString('en-us', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                    }))
+            } else {
+                window.setTimeout(() => {
+                    vis.endValTextAra
+                        .transition()
+                        .duration(800)
+                        .attr('x', x(new Date('Mar 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)')))
+                        .attr('y', y(textAreaPoint) + 20)
+                }, 200)
+
+                vis.zeroLine
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x1', 0)
+                    .attr('y1', y(yMin))
+                    .attr('x2', vis.gWIDTH)
+                    .attr('y2', y(yMin))
+                    .attr('opacity', 1)
+
+                vis.afEndVal
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x', x(new Date('Mar 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)')))
+                    .attr('y', y(afEndPoint))
+                    .text(afEndPoint.toLocaleString('en-us', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                    }))
+
+                vis.indexEndVal
+                    .transition()
+                    .duration(pan ? 0 : 1000)
+                    .attr('x', x(new Date('Mar 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)')))
+                    .attr('y', y(indexEndPoint - 40000))
+                    .text(indexEndPoint.toLocaleString('en-us', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                    }))
+
+            }
+
+            // function fadeUp(el) {
+            //     if (vis.draws === 1) {
+            //         el.attr('opacity', 0)
+            //             .transition()
+            //             .duration(1500)
+            //             .attr('opacity', 1)
+            //     }
+            // }
+
+            // if (!document.querySelector('.chart-wrapper-a').style.maxHeight) {
+            //     const pageH = document.getElementById('main-page-content').clientHeight;
+            //     const elH = document.getElementById('g-line').clientHeight;
+
+            //     console.log(pageH, elH, elH / pageH)
+
+            //     d3.select('.chart-wrapper-a')
+            //         .attr('style', `max-height: ${elH / pageH * 100}%;`);
+            // }
+
+        } // end redraw
+    } //end class
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+    class drawBars {
+        constructor(element, data) {
+            this.data = data
+            this.element = element
+            this.draws = 0;
+            this.keys = ['index', 'peer', 'af'],
+                this.draws = 1;
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById(vis.element);
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'g-bar-chart')
+
+            // ADD BARS
+            vis.bars = vis.g
+                .append('g')
+                .attr('class', 'bars')
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis')
+
+            // ADD LABELS
+            vis.labels = vis.g.append('g')
+
+            this.redraw();
+        }
+
+        redraw(newData = null) {
+            const vis = this;
+
+            vis.draws += 1;
+            if (newData !== null) vis.data = newData;
+
+            const iPad = window.innerWidth < 1400 && window.innerHeight > 1000;
+
+            // Extract the width and height that was computed by CSS.
+            // const pchartWidth = vis.data.length === 5 ? document.querySelector('#chart-container-2').clientWidth : document.querySelector('#chart-container').clientWidth;
+            // const defaultSize = vis.data.length === 4 ? .20 : .33;
+            // const bigBox = vis.data.length === 4 ? .40 : .44;
+            // const smallBox = vis.data.length === 4 ? .15 : .28;
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.clientHeight;
+            const bottom = 10;
+            const top = 10;
+            const MARGIN = { top: top, right: 0, bottom: bottom, left: 0 };
+            const gWIDTH = width - (MARGIN.left + MARGIN.right);
+            const gHEIGHT = height - (MARGIN.top + MARGIN.bottom);
+
+            const narrow = window.innerWidth <= 1500;
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", width)
+                .attr("height", height)
+
+
+            // SET G
+            vis.g.attr('width', gWIDTH)
+                .attr('height', gHEIGHT)
+                .attr('transform', 'translate(' + MARGIN.left + ',' + MARGIN.top + ')');
+
+            let x = d3
+                .scaleBand()
+                .domain(vis.keys)
+                .range([0, gWIDTH])
+                .padding(.1)
+
+            const yMax = window.innerWidth < 1100 ? 17 : 14;
+            // Y SCALE
+            let y = d3
+                .scaleLinear()
+                .range([gHEIGHT, 0])
+                .domain([-65, 1]);
+            // .nice();
+
+
+            //////////////////////// BARS /////////////////////////////
+
+            ////////////// INDEX bars
+            // JOIN
+            vis.rects = vis.bars.selectAll('.index-bar')
+                .data([vis.data])
+            // console.log(vis.data)
+            // EXIT
+            vis.rects.exit().remove();
+            // UPDATE
+            vis.rects
+                .transition()
+                .duration(1200)
+                .attr('width', x.bandwidth())
+                .attr('x', d => x('index'))
+                .attr('y', d => y(Math.max(0, d.index * 100)))
+                .attr('height', d => Math.abs(y(d.index * 100) - y(0)));
+
+            // ENTER
+            vis.rects
+                .enter()
+                .append('rect')
+                .attr('class', '.index-bar')
+                .attr('fill', (d, i) => '#A49E99')
+                .attr('height', 0)
+                .attr('x', d => x('index'))
+                .attr('width', x.bandwidth())
+                .attr("y", d => y(0))
+                .transition()
+                .duration(1000)
+                // .delay((d, i) => globalCounter * 200)
+                .attr('width', x.bandwidth())
+                .attr('x', d => x('index'))
+                .attr('y', d => y(Math.max(0, d.index * 100)))
+                .attr('height', d => Math.abs(y(d.index * 100) - y(0)));
+
+            vis.peers = vis.bars.selectAll('.peer-bar')
+                .data([vis.data])
+            // console.log(vis.data)
+            // EXIT
+            vis.peers.exit().remove();
+            // UPDATE
+            vis.peers
+                .transition()
+                .duration(1200)
+                .attr('width', x.bandwidth())
+                .attr('x', d => x('peer'))
+                .attr('y', d => y(Math.max(0, d.peer * 100)))
+                .attr('height', d => Math.abs(y(d.peer * 100) - y(0)));
+            // ENTER
+            vis.peers
+                .enter()
+                .append('rect')
+                .attr('class', 'peer-bar')
+                .attr('fill', (d, i) => '#00AEA9')
+                .attr('height', 0)
+                .attr('x', d => x('peer'))
+                .attr('width', x.bandwidth())
+                .attr("y", d => y(0))
+                .transition()
+                .duration(1000)
+                // .delay((d, i) => globalCounter * 200)
+                .attr('width', x.bandwidth())
+                .attr('x', d => x('peer'))
+                .attr('y', d => y(Math.max(0, d.peer * 100)))
+                .attr('height', d => Math.abs(y(d.peer * 100) - y(0)));
+
+            vis.afs = vis.bars.selectAll('.af-bar')
+                .data([vis.data])
+            // console.log(vis.data)
+            // EXIT
+            vis.afs.exit().remove();
+            // UPDATE
+            vis.afs
+                .transition()
+                .duration(1200)
+                .attr('width', x.bandwidth())
+                .attr('x', d => x('af'))
+                .attr('y', d => y(Math.max(0, d.af * 100)))
+                .attr('height', d => Math.abs(y(d.af * 100) - y(0)));
+            // ENTER
+            vis.afs
+                .enter()
+                .append('rect')
+                .attr('class', 'af-bar')
+                .attr('fill', (d, i) => '#005F9E')
+                .attr('height', 0)
+                .attr('x', d => x('af'))
+                .attr('width', x.bandwidth())
+                .attr("y", d => y(0))
+                .transition()
+                .duration(1000)
+                .attr('width', x.bandwidth())
+                .attr('x', d => x('af'))
+                .attr('y', d => y(Math.max(0, d.af * 100)))
+                .attr('height', d => Math.abs(y(d.af * 100) - y(0)));
+
+            //////////////// BAR LABELS
+            vis.indexLabel = vis.labels.selectAll('.index-label')
+                .data([vis.data]);
+
+            vis.indexLabel.exit().remove();
+
+            vis.indexLabel
+                .attr('x', d => x('index') + x.bandwidth() * .1)
+                .attr('y', d => Math.abs(y(d.index * 100) - y(0)) + 20)
+                .text(d => (d.index * 100).toFixed(1))
+
+            vis.indexLabel
+                .enter()
+                .append('text')
+                .attr('class', 'index-label')
+                .attr('x', d => x('index') + x.bandwidth() * .1)
+                .attr('y', d => Math.abs(y(d.index * 100) - y(0)) + 20)
+                .text(d => (d.index * 100).toFixed(1))
+
+            vis.peerLabel = vis.labels.selectAll('.peer-label')
+                .data([vis.data]);
+
+            vis.peerLabel.exit().remove();
+
+            vis.peerLabel
+                .attr('x', d => x('peer') + x.bandwidth() * .1)
+                .attr('y', d => Math.abs(y(d.peer * 100) - y(0)) + 20)
+                .text(d => (d.peer * 100).toFixed(1))
+
+            vis.peerLabel
+                .enter()
+                .append('text')
+                .attr('class', 'peer-label')
+                .attr('x', d => x('peer') + x.bandwidth() * .1)
+                .attr('y', d => Math.abs(y(d.peer * 100) - y(0)) + 20)
+                .text(d => (d.peer * 100).toFixed(1))
+
+            vis.afLabel = vis.labels.selectAll('.af-label')
+                .data([vis.data]);
+
+            vis.afLabel.exit().remove();
+
+            vis.afLabel
+                .attr('x', d => x('af') + x.bandwidth() * .1)
+                .attr('y', d => Math.abs(y(d.af * 100) - y(0)) + 20)
+                .text(d => (d.af * 100).toFixed(1))
+
+            vis.afLabel
+                .enter()
+                .append('text')
+                .attr('class', 'af-label')
+                .attr('x', d => x('af') + x.bandwidth() * .1)
+                .attr('y', d => Math.abs(y(d.af * 100) - y(0)) + 20)
+                .text(d => (d.af * 100).toFixed(1))
+
+
+            // console.log(vis.chartDiv.parentElement.parentElement)
+        }
+    }
+
+    const chart = new drawChart();
+
+    const bmDom = new drawBars('popup-chart-01-bm', data[currentShareClass].eventData.blMonday.domestic);
+    const bmGlobal = new drawBars('popup-chart-02-bm', data[currentShareClass].eventData.blMonday.global);
+    const bmInt = new drawBars('popup-chart-03-bm', data[currentShareClass].eventData.blMonday.int);
+
+    const dotComDom = new drawBars('popup-chart-01-dotcom', data[currentShareClass].eventData.dotcom.domestic);
+    const dotComGlobal = new drawBars('popup-chart-02-dotcom', data[currentShareClass].eventData.dotcom.global);
+    const dotComInt = new drawBars('popup-chart-03-dotcom', data[currentShareClass].eventData.dotcom.int);
+
+    const grtrecDom = new drawBars('popup-chart-01-grtrec', data[currentShareClass].eventData.grtRecession.domestic);
+    const grtrecGlobal = new drawBars('popup-chart-02-grtrec', data[currentShareClass].eventData.grtRecession.global);
+    const grtrecInt = new drawBars('popup-chart-03-grtrec', data[currentShareClass].eventData.grtRecession.int);
+
+    const covidDom = new drawBars('popup-chart-01-covid', data[currentShareClass].eventData.covid.domestic);
+    const covidGlobal = new drawBars('popup-chart-02-covid', data[currentShareClass].eventData.covid.global);
+    const covidInt = new drawBars('popup-chart-03-covid', data[currentShareClass].eventData.covid.int);
+
+    window.addEventListener("resize", () => {
+        window.setTimeout(() => {
+            redraw()
+        }, 10)
+    });
+
+    function redraw() {
+        chart.wrangle(lowDate, highDate);
+
+        bmDom.redraw(data[currentShareClass].eventData.blMonday.domestic)
+        bmGlobal.redraw(data[currentShareClass].eventData.blMonday.global)
+        bmInt.redraw(data[currentShareClass].eventData.blMonday.int)
+
+        dotComDom.redraw(data[currentShareClass].eventData.dotcom.domestic)
+        dotComGlobal.redraw(data[currentShareClass].eventData.dotcom.global)
+        dotComInt.redraw(data[currentShareClass].eventData.dotcom.int)
+
+        grtrecDom.redraw(data[currentShareClass].eventData.grtRecession.domestic)
+        grtrecGlobal.redraw(data[currentShareClass].eventData.grtRecession.global)
+        grtrecInt.redraw(data[currentShareClass].eventData.grtRecession.int)
+
+        covidDom.redraw(data[currentShareClass].eventData.covid.domestic)
+        covidGlobal.redraw(data[currentShareClass].eventData.covid.global)
+        covidInt.redraw(data[currentShareClass].eventData.covid.int)
+    }
+
+    // TOGGLE BUTTONS
+    function toggleLine() {
+        document.querySelector('#toggle-slider').style.left = '0%';
+        filled = false;
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, 1)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, 0.3)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, 0.3)';
+
+        redraw();
+    }
+
+    function toggleFill() {
+        document.querySelector('#toggle-slider').style.left = '50%';
+
+        document.getElementById('line').style.fill = 'rgba(0, 41, 75, .3)';
+        document.getElementById('mountain').style.fill = 'rgba(0, 41, 75, .6)';
+        document.getElementById('mountain-2').style.fill = 'rgba(0, 95, 158, .6)';
+
+        filled = true;
+        redraw();
+    }
+
+    function zoomIn() {
+        if (!zoomed) {
+            zoomed = true;
+            chart.wrangle(oldLowDate, oldHighDate);
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/scroll.svg') 5 5 , ew-resize`;
+        }
+    }
+
+    function zoomOut() {
+        if (zoomed) {
+            zoomed = false;
+
+            oldLowDate = lowDate;
+            oldHighDate = highDate;
+
+            chart.wrangle(); // EXTENT OF THE DATA ON THE X-AXIS (with default args)
+            document.querySelector('#chart').style.cursor = `url('./engine/imgs/cursor.svg') 5 5, crosshair`
+        }
+    }
+
+    function handleMouseOverEventArea(eventName) {
+        const eventId = `event-${eventName}`;
+        const infoId = `event-info-${eventName}`
+        let eventBox = document.getElementById(eventId);
+        let eventInfo = document.getElementById(infoId);
+
+        eventBox.style.fill = '#ADADAD';
+        eventBox.style.opacity = 0.4;
+
+        eventInfo.style.color = '#005F9E';
+        eventInfo.getElementsByClassName('info-icon')[0].style.borderColor = '#005F9E';
+        eventInfo.getElementsByClassName('info-icon')[0].style.color = '#005F9E';
+    }
+
+    function handleMouseOutEventArea(eventName) {
+        const eventId = `event-${eventName}`;
+        const infoId = `event-info-${eventName}`
+        let eventBox = document.getElementById(eventId);
+        let eventInfo = document.getElementById(infoId);
+        if (!eventBox.classList.contains('active')) {
+            eventBox.style.fill = '#e3e3e3';
+            eventBox.style.opacity = 0.5;
+
+            eventInfo.style.color = 'black';
+            eventInfo.getElementsByClassName('info-icon')[0].style.borderColor = 'black';
+            eventInfo.getElementsByClassName('info-icon')[0].style.color = 'black';
+        }
+    }
+
+    function togglePopup(eventName) {
+        const popup = document.getElementById(`popup-${eventName}`);
+        const eventId = `event-${eventName}`;
+        const infoId = `event-info-${eventName}`
+        let eventBox = document.getElementById(eventId);
+        let eventInfo = document.getElementById(infoId);
+
+        eventBox.classList.toggle('active');
+        eventInfo.classList.toggle('active');
+        popup.classList.toggle('active');
+
+        handleMouseOutEventArea(eventName);
+    }
+
+    function setPopUpHighLowVals() {
+        let bmData = data[currentShareClass].eventData.blMonday;
+        let dotcomData = data[currentShareClass].eventData.dotcom;
+        let grtRecData = data[currentShareClass].eventData.grtRecession;
+        let covidData = data[currentShareClass].eventData.covid;
+        const bmPopup = document.getElementById('popup-bm');
+        const dotcomPopup = document.getElementById('popup-dotcom');
+        const grtRecPopup = document.getElementById('popup-grtrec');
+        const covidPopup = document.getElementById('popup-covid');
+
+        bmPopup.querySelector('.index-high-val').innerHTML = '$' + parseFloat(bmData.spHigh.toFixed(0)).toLocaleString();
+        bmPopup.querySelector('.af-high-val').innerHTML = '$' + parseFloat(bmData.afHigh.toFixed(0)).toLocaleString();
+        bmPopup.querySelector('.index-low-val').innerHTML = '$' + parseFloat(bmData.spLow.toFixed(0)).toLocaleString();
+        bmPopup.querySelector('.af-low-val').innerHTML = '$' + parseFloat(bmData.afLow.toFixed(0)).toLocaleString();
+
+        dotcomPopup.querySelector('.index-high-val').innerHTML = '$' + parseFloat(dotcomData.spHigh.toFixed(0)).toLocaleString();
+        dotcomPopup.querySelector('.af-high-val').innerHTML = '$' + parseFloat(dotcomData.afHigh.toFixed(0)).toLocaleString();
+        dotcomPopup.querySelector('.index-low-val').innerHTML = '$' + parseFloat(dotcomData.spLow.toFixed(0)).toLocaleString();
+        dotcomPopup.querySelector('.af-low-val').innerHTML = '$' + parseFloat(dotcomData.afLow.toFixed(0)).toLocaleString();
+
+        grtRecPopup.querySelector('.index-high-val').innerHTML = '$' + parseFloat(grtRecData.spHigh.toFixed(0)).toLocaleString();
+        grtRecPopup.querySelector('.af-high-val').innerHTML = '$' + parseFloat(grtRecData.afHigh.toFixed(0)).toLocaleString();
+        grtRecPopup.querySelector('.index-low-val').innerHTML = '$' + parseFloat(grtRecData.spLow.toFixed(0)).toLocaleString();
+        grtRecPopup.querySelector('.af-low-val').innerHTML = '$' + parseFloat(grtRecData.afLow.toFixed(0)).toLocaleString();
+
+        covidPopup.querySelector('.index-high-val').innerHTML = '$' + parseFloat(covidData.spHigh.toFixed(0)).toLocaleString();
+        covidPopup.querySelector('.af-high-val').innerHTML = '$' + parseFloat(covidData.afHigh.toFixed(0)).toLocaleString();
+        covidPopup.querySelector('.index-low-val').innerHTML = '$' + parseFloat(covidData.spLow.toFixed(0)).toLocaleString();
+        covidPopup.querySelector('.af-low-val').innerHTML = '$' + parseFloat(covidData.afLow.toFixed(0)).toLocaleString();
+    }
+
+    function goTo(url) {
+
+        const page = document.getElementById('content-area');
+
+        page.style.opacity = 1;
+        page.style.animation = `fade-out .3s ease-in-out 0s forwards`;
+
+        setTimeout(() => {
+            window.location.href = url
+        }, 200);
+    }
+
+
+</script>
+
+</html>

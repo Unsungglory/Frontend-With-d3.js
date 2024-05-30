@@ -1,0 +1,3381 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+    <style>
+        .img-holder {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            padding: 1%;
+            cursor: pointer;
+            transition: .3s opacity ease-in-out;
+        }
+
+        .img-holder img {
+            margin-right: 4px;
+        }
+
+        .quote-pic {
+            position: relative;
+        }
+
+        .quote-pic img {
+            cursor: pointer;
+        }
+
+        .popup {
+            top: 100%;
+            padding: 4%;
+            width: 90%;
+            margin-left: -30%;
+            letter-spacing: -.15px;
+            opacity: 0;
+            max-width: 620px;
+        }
+
+
+
+        #main-grid {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            grid-template-columns: 20% 76%;
+            column-gap: 4%;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: clamp(12px, 1.25vw, 20px);
+            line-height: clamp(18px, 1.35vw, 25px);
+            cursor: pointer;
+            -webkit-text-stroke: medium;
+            -webkit-text-stroke-color: transparent;
+            transition: .3s all ease-in-out;
+            margin-bottom: 8%;
+            /* height: 4%; */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .li-active {
+            /* font-weight: bold; */
+            -webkit-text-stroke-color: #005F9E;
+            color: #005F9E;
+            letter-spacing: 1.1px;
+        }
+
+        .content-01-header {
+            font-size: clamp(25px, 4.8vw, 70px);
+            letter-spacing: -1.09px;
+            font-weight: 900;
+            width: 70%;
+            width: 23ch;
+            line-height: 1.1em;
+        }
+
+        div#content-02 {
+            height: 25%;
+            height: 94%;
+            display: flex;
+            flex-flow: column;
+            flex-grow: 1;
+        }
+
+        .content-01-text-row,
+        .content-02-text-row,
+        .content-03-text-row {
+            font-size: clamp(12px, 1.4vw, 26px);
+            line-height: clamp(9px, 2.04vw, 33px);
+            /* flex-grow: .8; */
+            /* width: 91%; */
+        }
+
+        .content-01-bottom {
+            display: grid;
+            grid-template-columns: 29% auto 29% auto 29%;
+            grid-template-columns: 35% 10% 35%;
+            padding-bottom: 3%;
+            padding-left: 3%;
+        }
+
+        .content-01-card {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0px 15px 30px #0000001A;
+            padding: 8% 7%;
+            text-align: center;
+            border: 2px solid rgba(0, 41, 75, 0);
+            transition: border .3s ease-in-out;
+        }
+
+        .content-01-card:hover {
+            border: 2px solid rgba(0, 41, 75, 1);
+        }
+
+        .content-01-card-title {
+            color: #6F6F6F;
+            letter-spacing: 1.35px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .content-01-card-val {
+            font-size: clamp(70px, 7.5vw, 120px);
+            letter-spacing: -.05em;
+            color: #363636;
+            opacity: .87;
+            line-height: 1.35em;
+        }
+
+        .content-01-card-text {
+            line-height: 1.25;
+        }
+
+        .text-blue {
+            color: #005F9E;
+        }
+
+        .content-01-space {
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: #6F6F6F;
+            text-align: center;
+            align-self: center;
+        }
+
+        .content-02-bottom-title {
+            letter-spacing: 0.23px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            height: 90%;
+        }
+
+        .content-02-bottom {
+            flex-grow: 1;
+            display: flex;
+            flex-flow: column;
+            padding-bottom: 4%;
+            height: 100%;
+            padding-top: 2%;
+        }
+
+        .flex-row {
+            display: flex;
+            margin-bottom: 60px;
+        }
+
+        .content-02-bottom-card {
+            max-width: 1447px;
+            box-shadow: 0px 15px 30px #0000001A;
+            padding: 20px;
+            height: 310px;
+            border: 2px solid transparent;
+            transition: .3s all ease-in-out;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+
+        }
+
+        .content-02-bottom-card:hover {
+            border-color: #00294B;
+        }
+
+
+        .box-row {
+            min-width: 600px;
+            display: grid;
+            grid-template-columns: .3fr .5fr .75fr 1fr 1fr;
+            text-align: center;
+            margin-bottom: 5px;
+            height: 50%;
+        }
+
+        .box-row p {
+            font-size: 15px;
+            letter-spacing: 0.01px;
+            line-height: 23px;
+            color: #363636;
+            align-self: center;
+            text-align: left;
+        }
+
+        .box {
+            justify-content: flex-end;
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            height: 100%;
+            background-color: #005F9E;
+            justify-content: center;
+        }
+
+        .terq-box,
+        .box-1 {
+            justify-content: center;
+            padding-right: 0;
+        }
+
+        .terq-box {
+            background-color: #00AEA9;
+        }
+
+        .subtext {
+            font-size: 20px;
+        }
+
+        .box-1 {
+            flex-grow: 2;
+        }
+
+        .box-2 {
+            flex-grow: 3;
+        }
+
+        .box-3 {
+            flex-grow: 4;
+        }
+
+        .box-4 {
+            flex-grow: 5;
+        }
+
+
+        .content {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1;
+        }
+
+        div#content-01 {
+            height: 93%;
+            display: flex;
+            flex-flow: column;
+            flex-grow: 1;
+        }
+
+        .col-02 {
+            position: relative;
+            height: 100%;
+        }
+
+
+
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            align-items: flex-end;
+            height: 70%;
+        }
+
+        .arrow-img {
+            margin-bottom: 110%;
+            width: clamp(30px, 2vw, 100px);
+            padding: 5%;
+            padding-left: 20%;
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        /* .multi-person-icon {
+            width: 90px;
+            margin-top: 22px;
+        } */
+
+        .span-col-4 {
+            grid-column: 2/5;
+        }
+
+        .content-03-bottom {
+            height: 100%;
+        }
+
+        #content-03-quote {
+            display: grid;
+            grid-template-columns: 25% 75%;
+            width: 65%;
+        }
+
+        #content-03-quote .p-50 {
+            line-height: .7;
+        }
+
+        #content-03 {
+            height: 100%;
+        }
+
+        .fund-component {
+            background-color: white;
+            position: relative;
+            box-shadow: 0px 3px 6px #00000029;
+            opacity: .2;
+            pointer-events: none;
+            transition: .3s all ease-in-out;
+            user-select: none;
+            -moz-user-select: none;
+            display: flex;
+            z-index: 1;
+            align-items: center;
+            width: 50%;
+            color: black;
+            height: clamp(25px, 2.5vw, 50px);
+            padding: 3%;
+
+            height: 0;
+            padding: 0;
+            margin-bottom: 0;
+            overflow: hidden;
+            transition: .5s all ease-in-out;
+        }
+
+        .li-active .fund-component {
+            height: clamp(25px, 2.5vw, 50px);
+            padding: 3%;
+            margin-bottom: 6%;
+        }
+
+        .fund-component:hover #forward-arrow {
+            margin-left: 20%;
+        }
+
+
+        .fund-component .fund-square {
+            padding: 10%;
+            margin-right: 11%;
+        }
+
+        .fund-component #forward-arrow {
+            margin-left: 15%;
+            filter: contrast(0.5);
+            transition: .3s all ease-in-out;
+            position: relative;
+            left: 0;
+            height: 70%;
+        }
+
+        .quote-pic img {
+            cursor: pointer;
+        }
+
+        .collapse {
+            -webkit-text-stroke-color: transparent;
+            letter-spacing: 0.01em;
+            overflow: hidden;
+            position: relative;
+            left: 14%;
+            display: flex;
+            height: fit-content;
+            flex-flow: column;
+            justify-content: space-between;
+            transition: .5s all ease-in-out;
+            cursor: default;
+            margin-top: 1px;
+        }
+
+        .li-active .collapse {
+            /* height: 15%; */
+            overflow: visible;
+        }
+
+        /* 
+        .li-active .collapse:nth-of-type(2) {
+            height: 28%;
+        } */
+
+        .li-text {
+            margin-bottom: 0;
+            transition: .5s margin-bottom ease-in-out;
+        }
+
+        .li-active .li-text {
+            margin-bottom: 7%;
+        }
+
+        .collapse .actionable {
+            display: flex;
+            height: 0;
+            cursor: pointer;
+            align-items: center;
+            margin-bottom: 0;
+            overflow: hidden;
+            transition: .5s all ease-in-out;
+        }
+
+        .li-active .actionable {
+            height: clamp(20px, 2vw, 34px);
+            margin-bottom: 2px;
+        }
+
+        .outter-circle {
+            padding: 7%;
+            padding: 2%;
+            padding: 4px;
+            margin-right: 3.5%;
+            border-radius: 100%;
+            background: transparent linear-gradient(180deg, #009CDC 0%, #20B07E 53%, #004C46 100%) 0% 0% no-repeat padding-box;
+            position: relative;
+        }
+
+        .inner-circle {
+            background: white;
+            height: clamp(7px, 0.9vw, 14px);
+            width: clamp(7px, 0.9vw, 14px);
+            top: 0;
+            left: 0;
+            border-radius: 100%;
+            display: flex;
+            box-shadow: 0px 0px 0px 2px white;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .two-up {
+            display: grid;
+            grid-template-columns: 10% auto;
+            column-gap: 2%;
+            margin-top: 6%;
+            align-items: center;
+        }
+
+        .grey-block {
+            background-color: rgba(111, 111, 111, .5);
+            padding: 3% 5%;
+            margin-top: 6%;
+        }
+
+        .sub-title,
+        .side-section,
+        .inner-deamon,
+        .fade {
+            opacity: 0;
+            pointer-events: none;
+            transition: .5s all ease-in-out;
+        }
+
+        .title-wrapper-2 {
+            grid-template-columns: 54% 46%;
+            column-gap: 0%;
+            z-index: 6;
+        }
+
+        .quote-pic {
+            margin-top: 0;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        #content-01 toggle {
+            min-width: 380px;
+        }
+
+        button toggle {
+            cursor: pointer;
+        }
+
+        #chart,
+        #chart-1,
+        #chart-2,
+        #chart-3 {
+            transition: .3s all ease-in-out;
+        }
+
+        .info-window {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: .5s all ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+            background-color: rgba(0, 0, 0, 0.25);
+            z-index: 5;
+        }
+
+        .inner-window {
+            position: relative;
+            width: 35%;
+            max-width: 600px;
+            height: 60%;
+            max-height: 600px;
+            top: 20%;
+            left: 20%;
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.16);
+            border-top: solid 5px rgba(0, 156, 220, 1);
+            border-top-width: clamp(2px, .5vw, 6px);
+            padding: 2%;
+            padding-bottom: 2.5%;
+            display: flex;
+            flex-flow: column;
+        }
+
+        .close-hover {
+            position: absolute;
+            z-index: 4;
+            right: 3%;
+            top: 2%;
+            transform: scale(1);
+            font-size: clamp(12px, 1.7vw, 20px);
+            font-weight: 900;
+            -webkit-text-stroke: thin;
+            transition: .3s all ease-in-out;
+            cursor: pointer;
+            pointer-events: none;
+            user-select: none;
+            -moz-user-select: none;
+        }
+
+        .close-hover:hover {
+            transform: scale(1.1);
+        }
+
+        .active .close-hover {
+            pointer-events: all;
+        }
+
+        .toggle-slider {
+            background-color: rgba(0, 41, 75, 0.11);
+            border-radius: 20px;
+            height: 100%;
+            left: -1px;
+            position: absolute;
+            z-index: 0;
+            transition: all .4s ease-in-out;
+        }
+
+        toggle {
+            min-width: 165px;
+        }
+
+        .active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 5;
+        }
+
+        .outer-ring {
+            border-radius: 100%;
+            border: rgba(0, 156, 220, 1) 3px solid;
+            border-width: clamp(2px, 2vw, 4.5px);
+            width: clamp(10px, 3vw, 40px);
+            height: clamp(10px, 3vw, 40px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 0px;
+            color: rgba(0, 156, 220, 1);
+            margin: auto;
+        }
+
+        #main-grid svg {
+            pointer-events: none;
+        }
+
+        .x-axis .domain {
+            opacity: .4;
+        }
+
+        #chart-1 {
+            height: 97%;
+        }
+
+        #chart-1 svg {
+            overflow: visible;
+        }
+
+        .rtns-btn {
+            text-align: center;
+            border: 1px solid #707070;
+            border-radius: 21px;
+            cursor: pointer;
+            padding: 1.5% 2.25%;
+            margin-top: 3%;
+            align-self: flex-end;
+            background-color: transparent;
+            transition: all .3s;
+            white-space: nowrap;
+            transition: .3s background-color ease-in-out;
+        }
+
+        .rtns-btn:hover {
+            background-color: #005a7e07;
+        }
+
+        /* .myx .tick:first-of-type {
+            text-anchor: start;
+        }
+
+        .myx .tick:last-of-type {
+            text-anchor: end;
+        } */
+
+        .dash-line {
+            stroke-dasharray: 3 3;
+            stroke: black;
+            stroke-width: 1.5;
+        }
+
+        .green-line {
+            stroke: #00A199;
+            stroke-width: 1.4;
+        }
+
+        .br {
+            border-right: 1px solid rgb(194, 194, 194);
+        }
+
+        .bb {
+            border-bottom: 1px solid rgb(194, 194, 194);
+        }
+
+        #chart-3 .p-20.demi {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .df-b {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #A5A5A5;
+            width: 20%;
+            letter-spacing: -.8;
+            position: relative;
+        }
+
+        .num {
+            position: absolute;
+            right: 5%;
+        }
+
+        .g-circle {
+            background-color: #00AEA9;
+            border-radius: 50px;
+            position: absolute;
+            left: 101%;
+            width: clamp(10px, 1vw, 16px);
+            height: clamp(10px, 1vw, 16px);
+            margin-left: clamp(-8px, -1vw, -5px);
+            z-index: 1;
+        }
+
+        .g-line {
+            background-color: #00AEA9;
+            position: absolute;
+            left: 101%;
+            height: 2px;
+            width: 200%;
+            z-index: 1;
+        }
+
+        .regular-num {
+            opacity: 1;
+        }
+
+        .smaller-screen-num,
+        .grey-el {
+            opacity: 0;
+        }
+
+        @media (max-width: 1700px) {
+
+            .regular-num {
+                opacity: 0;
+            }
+
+            .smaller-screen-num,
+            .grey-el {
+                opacity: 1;
+            }
+
+            .two-up {
+                margin-top: 5%;
+            }
+
+            .grey-block {
+                margin-top: 5%;
+            }
+
+            .popup {
+                margin-left: -38%;
+            }
+
+            @media (max-height: 770px) {}
+        }
+
+        @media (max-width: 1300px) {
+            #content-01 toggle {
+                min-width: 360px;
+            }
+        }
+
+        .collapse .sma:hover {
+            background-color: white;
+        }
+
+        .fund-component #forward-arrow {
+            margin-left: 9%;
+        }
+
+        .fund-component:hover #forward-arrow {
+            margin-left: 12%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id='info-window' class='info-window' onclick="closeBox()">
+                <div class='inner-window'>
+                    <div class="close-hover" id="close-hover-2" onclick="closeBox()">
+                        ✕
+                    </div>
+                    <div class="outer-ring p-18 bold">
+                        i
+                    </div>
+                    <div class='p-20 center lh-30' style='margin-top: 3%;'>
+                        Lower-for-longer interest rates extend the cycle.
+                        <br>
+                        Dividends are more important than ever.
+                        <br>
+                        Dividend opportunities abound in global markets.
+                    </div>
+
+                    <div
+                        style='margin-top: 9%; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;'>
+
+                        <div>
+                            <div class='p-18 bold'>
+                                Implication
+                            </div>
+                            <div class='p-16'>
+                                Investors may continue to face difficulty meeting income requirements through
+                                traditional
+                                fixed
+                                income allocations.
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class='p-18 bold'>
+                                Implementation idea
+                            </div>
+                            <div class='p-16'>
+                                Investors using balanced portfolio strategies should consider replacing some combination
+                                of both equities and fixed income with strategies that emphasize dividend income and/or
+                                conservation of principal.
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class='p-18 bold'>
+                                Consider for whom?
+                            </div>
+                            <div class='p-16'>
+                                60/40 investors looking for alternative strategies to generate
+                                income and increase downside resilience.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+
+                    <section id="content-area">
+
+                        <!-- content title -->
+                        <div class="title-wrapper-2">
+                            <div>
+                                <h1 style='width: 25ch'>
+                                    Dividends and quality for income and/or resilience
+                                </h1>
+
+                                <div class="pr" style='margin-top: 3%'>
+                                    <div class='pr sub-title active'>
+                                        <div class='p-24 bold'>
+                                            Capital Income Builder
+                                        </div>
+                                        <div class='p-24' style='margin-top: .5%;'>
+                                            Seeking companies with sustainable dividend characteristics
+                                        </div>
+                                    </div>
+
+                                    <div class='pa sub-title'>
+                                        <div class='p-24 bold'>
+                                            Capital Group Washington Mutual Investors Strategy
+                                        </div>
+                                    </div>
+
+                                    <div class='pa sub-title'>
+                                        <div class='p-24 bold'>
+                                            International Growth and Income Fund
+                                        </div>
+                                    </div>
+
+                                    <div class='pa sub-title'>
+                                        <div class='p-24 bold'>
+                                            Success in distribution
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='pr'>
+                                <div class='quote-pic side-section active'>
+                                    <img src="./img/Winnie Kwan.png" alt="profile pic" onmouseover="showPic()"
+                                        onmouseout="hidePic()" onclick="clickPic()">
+                                    <div class='p-20 normal ls-p1'>
+                                        <div class="lh-25 em p-18">
+                                            “Companies that have a track record of growing dividends consistently
+                                            demonstrate the ability to allocate capital efficiently between growing
+                                            their
+                                            business and returning capital to shareholders. Growing dividend stream
+                                            backed
+                                            by strong free cash flow and healthy balance sheets add to the resilience of
+                                            these companies.”
+                                        </div>
+                                        <div class='bold' style='margin-top: .75%;'>
+                                            Winnie Kwan, <span class='em normal'>
+                                                portfolio manager, Capital Income Builder
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="popup up-pu p-20" onclick="hidePopup(this)">
+                                        <span class='demi'>Winnie Kwan</span>
+                                        is an equity portfolio manager at Capital Group. She has 25 years of investment
+                                        experience and has been with Capital Group for 22 years. Earlier in her career,
+                                        as an equity investment analyst at Capital, she covered global exchanges, Asian
+                                        utilities and small-cap companies. Prior to joining Capital, Winnie worked with
+                                        Morgan Stanley in London, Hong Kong and Singapore. She holds both master’s and
+                                        bachelor’s degrees in economics from Trinity College at the University of
+                                        Cambridge. She also holds the Chartered Financial Analyst® designation. Winnie
+                                        is based in Hong Kong.
+                                    </div>
+                                </div>
+
+                                <div class='side-section pa p-20'>
+                                    Washington Mutual Investors Strategy’s portfolio managers and analysts funnel
+                                    companies through a strict eligibility list to find companies that show potential
+                                    for income and resilience.
+                                </div>
+
+                                <div class='side-section pa p-20 bold 1h-1p1'>
+                                    Figures shown are past results for Class F-2 shares and are not predictive of
+                                    results
+                                    in future periods. Current and future results may be lower or higher than those
+                                    shown.
+                                    Prices and returns will vary, so investors may lose money. Investing for short
+                                    periods
+                                    makes losses more likely. For current information and month-end results, visit <span
+                                        class="p-blue" onclick="window.open('https://capitalgroup.com')"
+                                        style='font-weight: 900; font-size: inherit; text-decoration: underline; cursor: pointer;'>capitalgroup.com</span>.
+                                </div>
+
+                                <div class='side-section pa p-20' style='display: flex;
+                                flex-direction: column;
+                                width: 98%;
+                                height: 100%;'>
+                                    <div class='p-20 bold lh-1p1'>
+                                        Figures shown are past results for Class F-2 shares and are not predictive of
+                                        results
+                                        in future periods. Current and future results may be lower or higher than those
+                                        shown. Prices and returns will vary, so investors may lose money. Investing for
+                                        short
+                                        periods makes losses more likely. For current information and month-end results,
+                                        visit <span class="p-blue" onclick="window.open('https://capitalgroup.com')"
+                                            style='font-weight: 900; font-size: inherit; text-decoration: underline; cursor: pointer;'>capitalgroup.com</span>.
+                                    </div>
+
+                                    <button class="rtns-btn p-14 p-demin demi" style="letter-spacing: .06em;"
+                                        onclick="goTo('five-03.html')">
+                                        VIEW ROLLING PERIOD RESULTS
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- end content title -->
+
+                        <div id="main-page-content">
+                            <div id='main-grid'>
+                                <div class="col-01">
+                                    <ul>
+                                        <li class="item li-active" onclick="switchContent('content-01', this)">
+                                            <div class='li-text' style='display: flex;'>
+                                                <div class='wsnw' style='margin-right: 2%;'>
+                                                    01 —
+                                                </div>
+                                                <div>
+                                                    Capital Income Builder
+                                                </div>
+                                            </div>
+                                            <div class='collapse'>
+                                                <div class="fund-component p-16">
+                                                    <div class="fund-square" style="background-color: #008EAA;"></div>
+                                                    CIB
+                                                    <img id="forward-arrow" class="footer-btn"
+                                                        src="./engine/imgs/arrow-right-thicker.svg" alt="right-arrow">
+                                                </div>
+                                                <div class='actionable' onclick='showOverlay(0)'>
+                                                    <div class="outter-circle">
+                                                        <div class="inner-circle">
+                                                            <div style="margin: 0; color: #20B07E; position: relative;
+                                                            left: .2px; top: .6px" class="p-14 bold">i</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='p-16 p-black normal'>
+                                                        Actionable Insights
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item" onclick="switchContent('content-02', this)">
+                                            <div class='li-text' style="display: flex;">
+                                                <div class='wsnw' style='margin-right: 2%;'>
+                                                    02 —
+                                                </div>
+                                                <div>
+                                                    Capital Group Washington Mutual Investors Strategy
+                                                </div>
+                                            </div>
+                                            <div class='collapse'>
+                                                <div class="fund-component p-16">
+                                                    <div class="fund-square" style="background-color: #0057B8;"></div>
+                                                    WMIF
+                                                    <img id="forward-arrow" class="footer-btn"
+                                                        src="./engine/imgs/arrow-right-thicker.svg" alt="right-arrow">
+                                                </div>
+                                                <div class="fund-component p-16 sma">
+                                                    <div class="fund-square" style="background-color: #6F6F6F;"></div>
+                                                    CGUSIG
+                                                    <img id="forward-arrow" class="footer-btn"
+                                                        src="./engine/imgs/arrow-right-thicker.svg" alt="right-arrow">
+                                                </div>
+                                                <div class='actionable' onclick='showOverlay(1)'>
+                                                    <div class="outter-circle">
+                                                        <div class="inner-circle">
+                                                            <div style="margin: 0; color: #20B07E; position: relative;
+                                                            left: .2px; top: .6px" class="p-14 bold">i</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='p-16 p-black normal'>
+                                                        Actionable Insights
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="item" onclick="switchContent('content-03', this)">
+                                            <div class='li-text' style='display: flex'>
+                                                <div class='wsnw' style='margin-right: 2%;'>
+                                                    03 —
+                                                </div>
+                                                <div>
+                                                    International Growth and Income Fund
+                                                </div>
+                                            </div>
+                                            <div class='collapse'>
+                                                <div class="fund-component p-16">
+                                                    <div class="fund-square" style="background-color: #0057B8;"></div>
+                                                    IGI
+                                                    <img id="forward-arrow" class="footer-btn"
+                                                        src="./engine/imgs/arrow-right-thicker.svg" alt="right-arrow">
+                                                </div>
+
+                                                <div class='actionable' onclick='showOverlay(2)'>
+                                                    <div class="outter-circle">
+                                                        <div class="inner-circle">
+                                                            <div style="margin: 0; color: #20B07E; position: relative;
+                                                            left: .2px; top: .6px" class="p-14 bold">i</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='p-16 p-black normal'>
+                                                        Actionable Insights
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!-- <li class="item" onclick="switchContent('content-04', this)">
+                                            04 — Success in distribution
+                                        </li> -->
+
+                                    </ul>
+                                </div>
+                                <div class="col-02">
+
+                                    <div id="content-01" class="content active" style='width: 100%; height: 95%;'>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <div class='pr'>
+                                                <div class="p-16 demi pa inner-deamon active">
+                                                    Examples of top holdings
+                                                    <div class='normal'>
+                                                        (As of December 31, 2021)<sup>1</sup>
+                                                    </div>
+                                                </div>
+                                                <div class='p-16 demi inner-deamon'>
+                                                    Capital Income Builder versus 10-year U.S. Treasury and MSCI All
+                                                    Country World Index
+                                                    <div class='normal'>
+                                                        (4/1/88–12/31/21)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="toggle-wrapper">
+                                                <div class="p-btn-label p-12 ls-1p2 demi"
+                                                    style="color: rgba(127, 127, 127, 1);">VIEW</div>
+
+                                                <toggle class="line-toggle-pill" style='display: grid;
+                                                grid-template-columns: 54% 46%;
+                                                grid-template-columns: 50% 50%;'>
+                                                    <div id="toggle-slider" style="width: 50%; left: 0%;"></div>
+                                                    <button onclick="toggleYourFace(0)" class="toggle-on">
+                                                        HOLDINGS YIELDS
+                                                    </button>
+                                                    <button onclick="toggleYourFace(1)">
+                                                        FUND YIELDS
+                                                    </button>
+                                                </toggle>
+                                            </div>
+                                        </div>
+
+                                        <div class="pr" style='height: 100%;'>
+                                            <div id='chart' class='' style='top:2%'></div>
+                                            <div id='chart-1' class='' style='top:2%; opacity: 0'>
+                                                <div class="legend-wrapper fade active">
+                                                    <div class="legend-item">
+                                                        <div class="legend-dot ocean"
+                                                            style="background-color: rgba(159, 20, 96, 1);">
+                                                        </div>
+                                                        <span class='p-16'>10-year Treasury</span>
+                                                    </div>
+                                                    <div class="legend-item">
+                                                        <div class="legend-dot light-grey"
+                                                            style="background-color: rgba(0, 141, 214, 1);"></div>
+                                                        <span class='p-16'>CIB net SEC yield</span>
+                                                    </div>
+                                                    <div class="legend-item">
+                                                        <div class="legend-dot light-grey"
+                                                            style="background-color: rgba(0, 95, 158, 1);"></div>
+                                                        <span class='p-16'>CIB 12-month yield</span>
+                                                    </div>
+                                                    <div class="legend-item">
+                                                        <div class="legend-dot light-grey"
+                                                            style="background-color: rgba(0, 161, 153, 1);"></div>
+                                                        <span class='p-16'>MSCI ACWI</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="content-02" class="content" style='width: 100%;'>
+                                        <div style='display: grid; grid-template-columns: 1fr 1fr; height: 99%;'>
+
+                                            <div class='pa p-14' style='top: unset; bottom: 0%; left: -31.5%;'>
+                                                Figures as of December 2021.
+                                                <br><br>
+                                                †Based on the Capital Group Washington Mutual Composite
+                                                representative account.
+                                            </div>
+                                            <div>
+                                                <div class="p-22 demi">
+                                                    Many are called, few are chosen
+                                                </div>
+                                                <div style='position: relative; height: 100%; width: 100%'>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 732.098 486.5"
+                                                        style='
+                                                        position: absolute;
+                                                        width: 92%;
+                                                        top: 0;
+                                                        height: 80%;
+                                                    '>
+                                                        <g id="Group_11849" data-name="Group 11849"
+                                                            transform="translate(-413.001 -466)">
+                                                            <rect id="Rectangle_5014" data-name="Rectangle 5014"
+                                                                width="217.266" height="125.14"
+                                                                transform="translate(669.917 827.36)" fill="#005f9e" />
+                                                            <path id="body-chart-brown"
+                                                                d="M1769.3-10885.463h732.1L2357.06-10693.27H1914.039Z"
+                                                                transform="translate(-1356.299 11351.463)"
+                                                                fill="#009cdc" />
+                                                            <path id="body-chart-green"
+                                                                d="M1915.879-10682.15l109.485,156.865H2240.7l108.852-156.865Z"
+                                                                transform="translate(-1353.041 11346.782)"
+                                                                fill="#004c46" />
+                                                            <text id="_1_4" data-name="1/4"
+                                                                transform="translate(755 895.495)" fill="#fff"
+                                                                font-size="40" font-weight="700">
+                                                                <tspan x="-12.18" y="0">1/4</tspan>
+                                                            </text>
+                                                            <text id="_675" data-name="675"
+                                                                transform="translate(776.241 721.603)" fill="#fff"
+                                                                font-size="41" font-weight="700">
+                                                                <tspan x="-37.515" y="0">728</tspan>
+                                                            </text>
+                                                            <text id="_2_800" data-name="2,800"
+                                                                transform="translate(776.105 545.738)" fill="#fff"
+                                                                font-size="41" font-weight="700">
+                                                                <tspan x="-55.35" y="0">2,400</tspan>
+                                                            </text>
+                                                            <text id="Headline_6" data-name="Headline 6"
+                                                                transform="translate(573.902 560.795)" fill="#fff"
+                                                                font-size="18" font-weight="500"
+                                                                letter-spacing="0.008em">
+                                                                <tspan x="0" y="14">companies (approximately)
+                                                                    were listed on the </tspan>
+                                                                <tspan x="90" y="36">New York Stock Exchange
+                                                                </tspan>
+                                                            </text>
+                                                            <text id="Headline_6-2" data-name="Headline 6"
+                                                                transform="translate(644.075 736.659)" fill="#fff"
+                                                                font-size="18" font-weight="500"
+                                                                letter-spacing="0.008em">
+                                                                <tspan x="20" y="14">met the strategy’s rigorous
+                                                                </tspan>
+                                                                <tspan x="50" y="36">investment standard </tspan>
+                                                                <tspan x="62" y="58">(the “eligible list”)</tspan>
+                                                            </text>
+                                                            <text id="Headline_6-3" data-name="Headline 6"
+                                                                transform="translate(699.297 903.5)" fill="#fff"
+                                                                font-size="18" font-weight="500"
+                                                                letter-spacing="0.008em">
+                                                                <tspan x="10" y="14">of those stocks </tspan>
+                                                                <tspan x="34" y="36">were held</tspan>
+                                                                <tspan y="36" font-size="10.499" baseline-shift="6">†
+                                                                </tspan>
+                                                            </text>
+                                                            <text id="Approximately"
+                                                                transform="translate(775.148 854.901)" fill="#fff"
+                                                                font-size="18" font-weight="500">
+                                                                <tspan x="-61.632" y="0">Approximately</tspan>
+                                                            </text>
+                                                        </g>
+                                                    </svg>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class=''>
+                                                <div class="p-22 demi">
+                                                    Most companies on the eligible list must:
+                                                </div>
+
+                                                <div class='two-up'>
+                                                    <div class='pr'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                                                            <g id="Group_11038" data-name="Group 11038"
+                                                                transform="translate(-1131 -489)">
+                                                                <path id="Path_5252" data-name="Path 5252"
+                                                                    d="M11.617,21.154,5.454,14.991,3.4,17.045l8.217,8.217L29.225,7.654,27.171,5.6Z"
+                                                                    transform="translate(1140.281 499.31)" />
+                                                                <g id="Ellipse_214" data-name="Ellipse 214"
+                                                                    transform="translate(1131 489)" fill="none"
+                                                                    stroke="#000" stroke-width="3">
+                                                                    <circle cx="25" cy="25" r="25" stroke="none" />
+                                                                    <circle cx="25" cy="25" r="23.5" fill="none" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div class='p-20'>
+                                                        Be based in the United States and listed on the New York Stock
+                                                        Exchange
+                                                    </div>
+                                                </div>
+
+                                                <div class='two-up'>
+                                                    <div class='pr'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                                                            <g id="Group_11038" data-name="Group 11038"
+                                                                transform="translate(-1131 -489)">
+                                                                <path id="Path_5252" data-name="Path 5252"
+                                                                    d="M11.617,21.154,5.454,14.991,3.4,17.045l8.217,8.217L29.225,7.654,27.171,5.6Z"
+                                                                    transform="translate(1140.281 499.31)" />
+                                                                <g id="Ellipse_214" data-name="Ellipse 214"
+                                                                    transform="translate(1131 489)" fill="none"
+                                                                    stroke="#000" stroke-width="3">
+                                                                    <circle cx="25" cy="25" r="25" stroke="none" />
+                                                                    <circle cx="25" cy="25" r="23.5" fill="none" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div class='p-20'>
+                                                        Have at least 50% more current assets than current liabilities,
+                                                        or bonds rated investment-grade (BBB/Baa and above) or
+                                                        higher<sup>2</sup>
+                                                    </div>
+                                                </div>
+
+                                                <div class='two-up'>
+                                                    <div class='pr'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                                                            <g id="Group_11038" data-name="Group 11038"
+                                                                transform="translate(-1131 -489)">
+                                                                <path id="Path_5252" data-name="Path 5252"
+                                                                    d="M11.617,21.154,5.454,14.991,3.4,17.045l8.217,8.217L29.225,7.654,27.171,5.6Z"
+                                                                    transform="translate(1140.281 499.31)" />
+                                                                <g id="Ellipse_214" data-name="Ellipse 214"
+                                                                    transform="translate(1131 489)" fill="none"
+                                                                    stroke="#000" stroke-width="3">
+                                                                    <circle cx="25" cy="25" r="25" stroke="none" />
+                                                                    <circle cx="25" cy="25" r="23.5" fill="none" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div class='p-20'>
+                                                        Have fully earned dividends in at least four of the past five
+                                                        years and have a lengthy dividend history
+                                                    </div>
+                                                </div>
+
+                                                <div class='two-up'>
+                                                    <div class='pr'>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                                                            <g id="Group_11038" data-name="Group 11038"
+                                                                transform="translate(-1131 -489)">
+                                                                <path id="Path_5252" data-name="Path 5252"
+                                                                    d="M11.617,21.154,5.454,14.991,3.4,17.045l8.217,8.217L29.225,7.654,27.171,5.6Z"
+                                                                    transform="translate(1140.281 499.31)" />
+                                                                <g id="Ellipse_214" data-name="Ellipse 214"
+                                                                    transform="translate(1131 489)" fill="none"
+                                                                    stroke="#000" stroke-width="3">
+                                                                    <circle cx="25" cy="25" r="25" stroke="none" />
+                                                                    <circle cx="25" cy="25" r="23.5" fill="none" />
+                                                                </g>
+                                                            </g>
+                                                        </svg>
+                                                    </div>
+
+                                                    <div class='p-20'>
+                                                        Not derive the majority of revenue from alcohol or tobacco
+                                                        products
+                                                    </div>
+                                                </div>
+
+                                                <div class='grey-block p-white p-20 bold'>
+                                                    Washington Mutual Investors Strategy is available through the
+                                                    Capital Group U.S. Income and Growth<sup>SM</sup> SMA and Washington
+                                                    Mutual
+                                                    Investors Fund.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="content-03" class="content" style='width: 100%; height: 89%;'>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <div class="pr">
+                                                <div class="p-16 title-section fade active">
+                                                    <div>
+                                                        <!-- <div class='demi pr'>
+                                                            <div class='pa fade active title-1'>
+                                                                Capital Group International Vantage Strategy: a 34-year
+                                                                legacy
+                                                                of
+                                                                success
+                                                            </div>
+                                                            <div class='fade title-1'>
+                                                                Capital Group International Vantage Strategy: a 34-year
+                                                                legacy of success
+                                                            </div>
+                                                        </div> -->
+                                                        <div class='normal'>
+                                                            <div class='pr'>
+                                                                <div class='fade active sub-1 bold 1h-1p1'>
+                                                                    Hypothetical value of $10,000 invested on October 1,
+                                                                    2008
+                                                                </div>
+                                                                <div class='fade sub-1 pa'>
+                                                                    Hypothetical value of $10,000 invested on January 1,
+                                                                    1987 (net)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="legend-wrapper pr" style='margin-top: 1%;'>
+                                                        <div class='active fade towers pa' style='display: flex'>
+                                                            <div class="legend-item">
+                                                                <div class="legend-dot ocean"
+                                                                    style="background-color: #084E8A;">
+                                                                </div>
+                                                                <span class='p-16'>
+                                                                    International Growth and Income
+                                                                    Fund
+                                                                </span>
+                                                            </div>
+                                                            <div class="legend-item">
+                                                                <div class="legend-dot light-grey"
+                                                                    style="background-color: #B0A8A3;"></div>
+                                                                <span class='p-16'>MSCI All Country World Index (ACWI)
+                                                                    ex USA Index</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class='fade towers' style='display: flex'>
+                                                            <div class="legend-item">
+                                                                <div class="legend-dot ocean"
+                                                                    style="background-color: #084E8A;">
+                                                                </div>
+                                                                <span class='p-16'>
+                                                                    International Growth and Income
+                                                                    Fund
+                                                                </span>
+                                                            </div>
+                                                            <div class="legend-item">
+                                                                <div class="legend-dot light-grey"
+                                                                    style="background-color: #B0A8A3;"></div>
+                                                                <span class='p-16'>MSCI All Country World Index (ACWI)
+                                                                    ex USA Index</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-16 title-section fade pa">
+                                                    <div class='demi pr' style='white-space: nowrap;'>
+                                                        <div class='title-2 fade active pa'>
+                                                            Average rolling excess returns (%) versus MSCI EAFE
+                                                            (1/1/87–12/31/20) (gross)<sup>3</sup>
+                                                        </div>
+                                                        <div class='title-2 fade'>
+                                                            Average rolling excess returns (%) versus MSCI EAFE
+                                                            (1/1/87–12/31/20) (net)<sup>4</sup>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="legend-wrapper" style='margin-top: 1%;'>
+                                                        <div class="legend-item">
+                                                            <div class="legend-dot ocean"
+                                                                style="background-color: #084E8A;">
+                                                            </div>
+                                                            <span class='p-16'>1-year rolling</span>
+                                                        </div>
+                                                        <div class="legend-item">
+                                                            <div class="legend-dot light-grey"
+                                                                style="background-color: #66C7DC;"></div>
+                                                            <span class='p-16'>3-year rolling</span>
+                                                        </div>
+                                                        <div class="legend-item">
+                                                            <div class="legend-dot light-grey"
+                                                                style="background-color: #0F7D64;"></div>
+                                                            <span class='p-16'>5-year rolling</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- <div style='display: flex;'>
+                                                <div class="toggle-wrapper" style='position: relative;
+                                                left: -6%;'>
+                                                    <div class="p-btn-label p-12 ls-1p2 demi"
+                                                        style="color: rgba(127, 127, 127, 1);">VIEW</div>
+
+                                                    <toggle class="line-toggle-pill" style="display: grid;
+                                                    grid-template-columns: 50% 50%;">
+                                                        <div id="toggle-slider-2" class='toggle-slider'
+                                                            style="width: 50%; left: 0%;"></div>
+                                                        <button onclick="grossNetToggle(0)" class="toggle-on">
+                                                            GROSS
+                                                        </button>
+                                                        <button onclick="grossNetToggle(1)" class="">
+                                                            NET
+                                                        </button>
+                                                    </toggle>
+                                                </div>
+                                                <div class="toggle-wrapper">
+                                                    <toggle class="line-toggle-pill" style="display: grid;
+                                                    grid-template-columns: 50% 50%; min-width: 230px;">
+                                                        <div id="toggle-slider-3" class='toggle-slider'
+                                                            style="width: 50%; left: 0%;"></div>
+                                                        <button onclick="toggleThree(0)" class="toggle-on">
+                                                            SUCCESS
+                                                        </button>
+                                                        <button onclick="toggleThree(1)" class="">
+                                                            RESILIENCY
+                                                        </button>
+                                                    </toggle>
+                                                </div>
+                                            </div> -->
+                                        </div>
+
+                                        <div class='pr' style='height: 95%;'>
+                                            <div id='chart-2'>
+                                                <div class='p-14' style="position: absolute; bottom: 0; left: 0">
+                                                    *Results reflect dividends net of withholding taxes.
+                                                </div>
+                                            </div>
+                                            <div id='chart-3' class='' style="opacity: 0; height: 96%;">
+                                                <div style='display: grid; 
+                                                    grid-template-columns: 1fr 1fr 1fr; 
+                                                    margin-top: 2%;
+                                                    grid-template-rows: 4% 60% 36%;
+                                                    height: 100%;'>
+                                                    <div class='p-20 demi'>
+                                                        Index return &lt; 0%
+                                                    </div>
+                                                    <div class='p-20 demi'>
+                                                        Index return 0%–15%
+                                                    </div>
+                                                    <div class='p-20 demi'>
+                                                        Index return 15%+
+                                                    </div>
+
+                                                    <div id='bars-1' class='br bb'></div>
+                                                    <div id='bars-2' class='br bb'></div>
+                                                    <div class='bb'></div>
+
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div id='bars-3'></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id='content-04' class="content" style='width: 100%;
+                                    height: 92%;'>
+                                        <div class='p-16 demi'>
+                                            Class F-2 shares, net of all expenses
+                                        </div>
+                                        <div class="legend-wrapper" style='margin-top: 0.5%;'>
+                                            <div class="legend-item">
+                                                <div class="legend-dot ocean" style="background-color: #A49E99;">
+                                                </div>
+                                                <span class='p-16'>Index</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <div class="legend-dot light-grey" style="background-color: #00AEA9;">
+                                                </div>
+                                                <span class='p-16'>Peer category average</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <div class="legend-dot light-grey" style="background-color: #005F9E;">
+                                                </div>
+                                                <span class='p-16'>American Funds</span>
+                                            </div>
+                                        </div>
+                                        <div id='chart-4' class='' style='height: 96%'>
+                                            <div style='
+                                                display: grid; 
+                                                grid-template-columns: 30% 68%;
+                                                grid-template-rows: 13% 11% 11% 3% 11% 11% 5% 13% 11% 11%;
+                                                column-gap: 2%;
+                                                align-items: center;
+                                                height: 85%;
+                                                margin-top: 0%;                              
+                                                row-gap: 1.2%;
+                                            '>
+
+                                                <div class='p-22 demi' style='grid-column: 1/3; letter-spacing: -.3;'>
+                                                    Ending value of a hypothetical $100,000 initial investment made on
+                                                    December 31, 1999 through December 31, 2020
+                                                </div>
+
+                                                <div class='p-18'>S&P 500</div>
+                                                <div style='display: flex; height: 100%;'>
+                                                    <div class='df-b p-24 demi' style='width: 13.4%;'>
+                                                        <div class='regular-num num' style='right: 7%'>
+                                                            $138,440
+                                                        </div>
+                                                        <div class='smaller-screen-num num'
+                                                            style='left: 125%; right: unset; z-index: 2; background-color: #D9D9D9; padding-left: 3px;'>
+                                                            $138,440
+                                                        </div>
+                                                        <div class='g-circle grey-el'
+                                                            style='background-color: #A5A5A5;'></div>
+                                                        <div class='g-line grey-el'
+                                                            style='background-color: #A5A5A5; width: 50%;'></div>
+                                                    </div>
+                                                    <div style='background-color: #D9D9D9; width: 86.6%;'></div>
+                                                </div>
+
+                                                <div class='p-18'>Washington Mutual Investors Fund</div>
+                                                <div style='display: flex; height: 100%; position: relative;
+                                                align-items: center;' class='p-white'>
+                                                    <div class='df-b p-24 demi'
+                                                        style='background-color:#00AEA9; width: 3.3%; height: 100%;'>
+                                                        <div class='num'
+                                                            style="left: 200%; right: unset; z-index: 2; background-color: #005F9E; padding-left: 3px;">
+                                                            $34,131
+                                                        </div>
+                                                        <div class='g-circle'></div>
+                                                        <div class='g-line'></div>
+                                                    </div>
+                                                    <div style='background-color: #005F9E; width: 77.9%; height: 100%;     display: flex;
+                                                    align-items: center;' class="pr">
+                                                        <div class='num p-24 demi' style='right: 2%;'>
+                                                            $834,642
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div style='grid-column: 1/3;'></div>
+
+                                                <div class='p-18'>70%/30% MSCI ACWI/Bloomberg<br> U.S. Aggregate Index
+                                                </div>
+                                                <div style='display: flex; height: 100%;'>
+                                                    <div class='df-b p-24 demi' style='width: 27.2%;'>
+                                                        <div class='num'>
+                                                            $280,125
+                                                        </div>
+                                                    </div>
+                                                    <div style='background-color: #D9D9D9; width: 72.8%;'></div>
+                                                </div>
+
+                                                <div class='p-18'>Capital Income Builder</div>
+                                                <div style='display: flex; height: 100%; position: relative;
+                                                align-items: center;' class='p-white'>
+                                                    <div class='df-b p-24 demi'
+                                                        style='background-color:#00AEA9; width: 40.7%; height: 100%;'>
+                                                        <div class='num' style="right:3%; z-index: 1;">
+                                                            $418,521
+                                                        </div>
+                                                    </div>
+                                                    <div style='background-color: #005F9E; width: 59.3%; height: 100%;     display: flex;
+                                                    align-items: center;' class="pr">
+                                                        <div class='num p-24 demi' style='right: 2%;'>
+                                                            $1,027,488
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div style='grid-column: 1/3;'></div>
+
+                                                <div class='p-22 demi' style='grid-column: 1/3; letter-spacing: -.3;'>
+                                                    Ending value of a hypothetical $100,000
+                                                    initial investment made on April 4, 2011 (fund inception) December
+                                                    31, 2020
+                                                </div>
+
+                                                <div class='p-18'>MSCI EAFE Index</div>
+                                                <div style='display: flex; height: 100%;'>
+                                                    <div class='df-b p-24 demi' style='width: 46.4%;'>
+                                                        <div class='num'>
+                                                            $476,743
+                                                        </div>
+                                                    </div>
+                                                    <div style='background-color: #D9D9D9; width: 53.6%;'></div>
+                                                </div>
+
+                                                <div class='p-18'>Capital Group International<br> Vantage Strategy</div>
+                                                <div style='display: flex; height: 100%; position: relative;
+                                                align-items: center;' class='p-white'>
+                                                    <div class='df-b p-24 demi'
+                                                        style='background-color:#00AEA9; width: 56.8%; height: 100%;'>
+                                                        <div class='num' style="right: 2.5%; z-index: 1;">
+                                                            $583,733
+                                                        </div>
+                                                    </div>
+                                                    <div style='background-color: #005F9E; width: 1.5%; height: 100%;     display: flex;
+                                                    align-items: center;' class="pr">
+                                                        <div class='num p-24 demi'
+                                                            style='right: unset; left: 155%; color: #005F9E;'>
+                                                            $591,181
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- disclosure content -->
+                        <div id="disclosure-wrapper">
+                            <sup>1</sup> Companies shown are among the top 25 equity holdings by weight in Capital
+                            Income
+                            Builder (Broadcom, Crown Castle International, Philip Morris International, Microsoft,
+                            Gilead
+                            Sciences, Raytheon Technologies, Toronto-Dominion Bank, British American Tobacco, Zurich,
+                            JPMorgan Chase, VICI Properties, TSMC, Comcast, Amgen, AbbVie, CME Group, TC Energy, PNC
+                            Financial Services Group, Vale, Canadian Natural Resources, Chevron, Nestlé, Munich RE,
+                            Digital
+                            Realty Trust, PepsiCo) as of December 31, 2021.
+                            <br><br>
+                            <sup>2</sup> Bond ratings, which typically range from AAA/Aaa (highest) to D (lowest), are
+                            assigned by
+                            credit rating agencies, such as Standard & Poor's, Moody's and/or Fitch, as an indication of
+                            an issuer's creditworthiness.
+                            <br><br>
+                            Investing outside the United States involves risks, such as currency fluctuations, periods
+                            of
+                            illiquidity and price volatility. These risks may be heightened in connection with
+                            investments
+                            in developing countries.
+                            <br><br>
+                            Sources for CIB charts: Capital Group, Morningstar. Source for WMIF chart: Capital Group.
+                            Source for IGI chart: Capital Group. As of
+                            December 31, 2021.
+
+                            <br><br>
+                            MSCI All Country World Index is a free float-adjusted market capitalization weighted index
+                            that is designed to measure equity market results in the global developed and emerging
+                            markets, consisting of more than 40 developed and
+                            emerging market country indexes. Results reflect dividends gross of withholding taxes
+                            through December 31, 2000, and dividends net of withholding taxes thereafter.
+                            <br><br>
+                            MSCI EAFE (Europe, Australasia, Far East) Index is a free float-adjusted market
+                            capitalization weighted index that is designed to measure developed equity market results,
+                            excluding the United States and Canada. Results reflect
+                            dividends net of withholding taxes.
+                            <br><br>
+                            MSCI has not approved, reviewed or produced this report, makes no express or implied
+                            warranties or representations and is not liable whatsoever for any data represented. You
+                            may not redistribute MSCI data or use it as a basis for other indices or investment
+                            products.
+                            <br><br>
+                            Investors cannot invest directly in an index.
+                            <br><br>
+                            <span>
+                                Investors should carefully consider investment objectives, risks, charges and expenses.
+                                This
+                                and other important information is contained in the fund prospectuses and summary
+                                prospectuses, which can be
+                                obtained from a financial professional and should be read carefully before investing.
+                            </span>
+
+                            <br><br>
+                            Statements attributed to an individual represent the opinions of that individual as of the
+                            date published and do not necessarily reflect the opinions of Capital Group or its
+                            affiliates. This information is intended to highlight issues and
+                            should not be considered advice, an endorsement or a recommendation.
+                            <br><br>
+                            This content, developed by Capital Group, home of American Funds, should not be used as a
+                            primary basis for investment decisions and is not intended to serve as impartial investment
+                            or fiduciary advice.
+                            <br><br>
+                            All Capital Group trademarks mentioned are owned by The Capital Group Companies, Inc., an
+                            affiliated company or fund. All other company and product names mentioned are the property
+                            of their respective companies.
+                            <br><br>
+                            American Funds Distributors, Inc., member FINRA.
+                            <br><br>
+                            © 2022 Capital Group. All rights reserved
+                        </div>
+
+                        <!-- end disclosure content -->
+        </div>
+        </section>
+
+        </section>
+        </section>
+    </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+<script src="./engine/js/d3.min.js"></script>
+<script src="./data/four3b.js"></script>
+<script src="./data/four3c.js"></script>
+
+<script>
+    function showPic() {
+        document.querySelector('.popup').style.opacity = 1;
+    }
+
+    function hidePic() {
+        const popup = document.querySelector('.popup');
+
+        if (!popup.hasAttribute('clicked'))
+            popup.style.opacity = 0;
+    }
+
+    function clickPic() {
+        showPic();
+        const popup = document.querySelector('.popup');
+        popup.setAttribute('clicked', 'JOERULZ YEEEEAH');
+        popup.style.pointerEvents = 'all'
+    }
+
+    function hidePopup(el) {
+        el.style.pointerEvents = 'none'
+        el.style.opacity = 0;
+        document.querySelector('.popup').removeAttribute('clicked')
+    }
+
+    //**************************************************************************//
+    //**************************************************************************//
+    //**************************************************************************//
+    //**************************************************************************//    
+    const listItems = document.querySelectorAll('.item');
+    const conentEls = document.querySelectorAll('.content');
+    const quotes = document.querySelectorAll('.p-quote');
+    const disclosures = document.querySelectorAll('.disclosure-changer')
+    const subtitles = document.querySelectorAll('.sub-title')
+    const sidesections = document.querySelectorAll('.side-section')
+
+    function switchContent(id, element) {
+        let activeContent = document.getElementById(id);
+        let activeQuote = document.getElementById(`${id}-quote`)
+
+        if (disclosures.length) {
+            disclosures.forEach(disc => disc.classList.remove('active'))
+            disclosures[Number(id.split('-')[1][1]) - 1].classList.add('active')
+        }
+
+        listItems.forEach(el => {
+            el.classList.remove('li-active');
+        })
+        element.classList.add('li-active');
+
+        conentEls.forEach(el => {
+            el.classList.remove('active');
+        })
+        if (activeContent)
+            activeContent.classList.add('active');
+
+        quotes.forEach(quote => {
+            quote.classList.remove('active');
+        })
+        if (activeQuote)
+            activeQuote.classList.add('active');
+
+        /////// added
+        const num = Number(id.split('-')[1][1]) - 1
+        subtitles.forEach((el, i) => {
+            if (i === num) {
+                el.classList.add('active')
+                sidesections[i].classList.add('active')
+            }
+            else {
+                el.classList.remove('active')
+                sidesections[i].classList.remove('active')
+            }
+        })
+    }
+
+    //**************************************************************************//
+    //**************************************************************************// 
+    function showOverlay(num) {
+        // if (num === 0)
+        document.getElementById('info-window').classList.add('active')
+    }
+
+    function closeBox() {
+        document.querySelectorAll('.info-window').forEach(el => el.classList.remove('active'))
+    }
+
+    //////////////////////////
+    function toggleYourFace(num) {
+        const slider = document.getElementById('toggle-slider')
+        const texts = document.querySelectorAll('toggle button')
+        const chart = document.getElementById('chart')
+        const chart1 = document.getElementById('chart-1')
+        const chartTitles = document.querySelectorAll('.inner-deamon')
+
+        if (num === 0) {
+            slider.style.left = '0%';
+            // slider.style.width = '54%'
+            slider.style.width = '50%'
+
+            texts[0].classList.add('toggle-on');
+            texts[1].classList.remove('toggle-on');
+
+            chart.style.opacity = 1;
+            chart1.style.opacity = 0;
+
+            chartTitles[0].classList.add('active')
+            chartTitles[1].classList.remove('active')
+        } else {
+            // slider.style.left = '54%';
+            // slider.style.width = '46%'
+            slider.style.left = '50%';
+            slider.style.width = '50%'
+
+            texts[0].classList.remove('toggle-on');
+            texts[1].classList.add('toggle-on');
+
+            chart.style.opacity = 0;
+            chart1.style.opacity = 1;
+
+            chartTitles[1].classList.add('active')
+            chartTitles[0].classList.remove('active')
+        }
+    }
+
+    /////////////////////////////////
+
+
+    //////////////////////////
+    function grossNetToggle(num) {
+        const slider = document.getElementById('toggle-slider-2')
+        const texts = document.querySelectorAll('toggle button')
+        const titleOnes = document.querySelectorAll('.title-1')
+        const subs = document.querySelectorAll('.sub-1')
+        const titleTwos = document.querySelectorAll('.title-2')
+        const legends = document.querySelectorAll('.towers')
+
+        if (num === 0) {
+            slider.style.left = '0%';
+
+            texts[2].classList.add('toggle-on');
+            texts[3].classList.remove('toggle-on');
+
+            titleOnes[0].classList.add('active')
+            titleOnes[1].classList.remove('active')
+
+            subs[0].classList.add('active')
+            subs[1].classList.remove('active')
+
+            titleTwos[0].classList.add('active')
+            titleTwos[1].classList.remove('active')
+
+            legends[0].classList.add('active')
+            legends[1].classList.remove('active')
+
+            // call redraw
+            grossOrNet = 'gross'
+            chart2.redraw()
+
+            // redraw bars
+            bars1.redraw(barsData1)
+            bars2.redraw(barsData2)
+            bars3.redraw(barsData3)
+
+        } else {
+            slider.style.left = '50%';
+
+            texts[2].classList.remove('toggle-on');
+            texts[3].classList.add('toggle-on');
+
+            titleOnes[0].classList.remove('active')
+            titleOnes[1].classList.add('active')
+
+            subs[0].classList.remove('active')
+            subs[1].classList.add('active')
+
+            titleTwos[0].classList.remove('active')
+            titleTwos[1].classList.add('active')
+
+            legends[0].classList.remove('active')
+            legends[1].classList.add('active')
+
+            // call redraw
+            grossOrNet = 'net'
+            chart2.redraw()
+
+            // redraw bars
+            bars1.redraw(barsData1b)
+            bars2.redraw(barsData2b)
+            bars3.redraw(barsData3b)
+        }
+    }
+
+    function toggleThree(num) {
+        const slider = document.getElementById('toggle-slider-3')
+        const texts = document.querySelectorAll('toggle button')
+        const chart = document.getElementById('chart-2')
+        const chart1 = document.getElementById('chart-3')
+        const chartTitles = document.querySelectorAll('.title-section')
+
+        if (num === 0) {
+            slider.style.left = '0%';
+
+            texts[4].classList.add('toggle-on');
+            texts[5].classList.remove('toggle-on');
+
+            chart.style.opacity = 1;
+            chart1.style.opacity = 0;
+
+            chartTitles[0].classList.add('active')
+            chartTitles[1].classList.remove('active')
+        } else {
+            slider.style.left = '50%';
+
+            texts[4].classList.remove('toggle-on');
+            texts[5].classList.add('toggle-on');
+
+            chart.style.opacity = 0;
+            chart1.style.opacity = 1;
+
+            chartTitles[0].classList.remove('active')
+            chartTitles[1].classList.add('active')
+        }
+    }
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+    const BLUE_GRADIENT = 'url(#BLUE-grad)';
+
+    class drawChartOne {
+        constructor() {
+            this.draws = 0;
+            this.data = [
+                { xVal: 0, yVal: 0.036, },
+                { xVal: 0.0055000000000000005, yVal: 0.0332, },
+                { xVal: 0.011000000000000001, yVal: 0.0304, },
+                { xVal: 0.0165, yVal: 0.0276, },
+                { xVal: 0.022000000000000002, yVal: 0.0254, },
+                { xVal: 0.027500000000000004, yVal: 0.0232, },
+                { xVal: 0.033, yVal: 0.0215, },
+                { xVal: 0.0385, yVal: 0.019799999999999998, },
+                { xVal: 0.044, yVal: 0.018099999999999998, },
+                { xVal: 0.049499999999999995, yVal: 0.016999999999999998, },
+                { xVal: 0.05499999999999999, yVal: 0.015899999999999997, },
+                { xVal: 0.06049999999999999, yVal: 0.014799999999999997, },
+                { xVal: 0.06599999999999999, yVal: 0.013999999999999997, },
+                { xVal: 0.0715, yVal: 0.013199999999999996, },
+                { xVal: 0.077, yVal: 0.012699999999999996, },
+                { xVal: 0.0825, yVal: 0.012199999999999996, },
+                { xVal: 0.08800000000000001, yVal: 0.011899999999999996, },
+                { xVal: 0.09350000000000001, yVal: 0.011599999999999996, },
+                { xVal: 0.09900000000000002, yVal: 0.0112, },
+                { xVal: 0.10450000000000002, yVal: 0.011, },
+                { xVal: 0.11000000000000003, yVal: 0.0107, },
+                { xVal: 0.11550000000000003, yVal: 0.0103, },
+                { xVal: 0.12100000000000004, yVal: 0.0099, },
+                { xVal: 0.12650000000000003, yVal: 0.0095, },
+                { xVal: 0.13200000000000003, yVal: 0.0094, },
+                { xVal: 0.13750000000000004, yVal: 0.009300000000000001, },
+                { xVal: 0.14300000000000004, yVal: 0.009200000000000002, },
+                { xVal: 0.14850000000000005, yVal: 0.009100000000000002, },
+                { xVal: 0.15400000000000005, yVal: 0.009000000000000003, },
+                { xVal: 0.15950000000000006, yVal: 0.008900000000000003, },
+                { xVal: 0.16500000000000006, yVal: 0.008800000000000004, },
+                { xVal: 0.17050000000000007, yVal: 0.008700000000000005, },
+                { xVal: 0.17600000000000007, yVal: 0.008600000000000005, },
+                { xVal: 0.18150000000000008, yVal: 0.008500000000000006, },
+                { xVal: 0.18700000000000008, yVal: 0.008400000000000006, },
+                { xVal: 0.1925000000000001, yVal: 0.008300000000000007, },
+                { xVal: 0.1980000000000001, yVal: 0.008200000000000008, },
+                { xVal: 0.2035000000000001, yVal: 0.008100000000000008, },
+                { xVal: 0.2090000000000001, yVal: 0.008000000000000009, },
+                // { xVal: 0.2145000000000001, yVal: 0.00790000000000001, },
+                // { xVal: 0.2200000000000001, yVal: 0.007800000000000009, },
+                // { xVal: 0.22550000000000012, yVal: 0.007700000000000009, },
+                // { xVal: 0.23100000000000012, yVal: 0.007600000000000009, },
+                // { xVal: 0.23650000000000013, yVal: 0.007500000000000008, },
+                // { xVal: 0.24200000000000013, yVal: 0.007400000000000008, },
+                // { xVal: 0.24750000000000014, yVal: 0.007300000000000008, },
+                // { xVal: 0.2530000000000001, yVal: 0.007200000000000008, },
+            ];
+
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart");
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'vis-g')
+
+            // ADD AREA
+            vis.areaOne = vis.g.append("path")
+                // .attr('fill', BLUE_GRADIENT);
+                .attr('fill', '#6F6F6F');
+
+            vis.title = vis.g.append('text').attr('class', 'p-16 demi').text('Dividend yield (%)').attr('opacity', 0)
+            vis.text1 = vis.g.append('text').attr('class', 'p-16 demi').text('Eligible').attr('fill', '#5F1546').attr('opacity', 0)
+            vis.text2 = vis.g.append('text').attr('class', 'p-16 demi').text('Not eligible').attr('fill', 'white').attr('opacity', 0)
+            vis.titleX = vis.svg.append('text').attr('class', 'p-16 demi').text('Trailing 3-year dividend growth rate (%)').attr('opacity', 0)
+            vis.topLine = vis.g.append('line').attr('stroke', '#5F1546').attr('stroke-width', 1).attr('opacity', 0)
+            vis.botLine = vis.g.append('line').attr('stroke', 'white').attr('stroke-width', 1).attr('opacity', 0)
+            vis.dot = vis.g.append('circle').attr('fill', '#5F1546').attr('opacity', 0)
+            vis.dot1 = vis.g.append('circle').attr('fill', '#007D64').attr('opacity', 0)
+            vis.dot2 = vis.g.append('circle').attr('fill', '#001C3A').attr('opacity', 0)
+
+            vis.popups = [
+                { color: '#5F1546', text1: 'Zurich Insurance Group AG', text2: '', text3: '' },
+                { color: '#007D64', text1: 'Crown Castle International Corp', text2: '', text3: '' },
+                { color: '#001C3A', text1: 'Comcast Corp Class A', text2: '', text3: '' },
+            ]
+
+            vis.textGroup, vis.textGroup1, vis.textGroup2;
+
+            vis.popups.forEach((el, i) => {
+                const newDiv = d3.select(vis.chartDiv).append('div')
+                newDiv.attr('class', 'text-groups')
+                newDiv.style('position', 'absolute');
+                newDiv.style('color', el.color)
+                newDiv.style('opacity', 0)
+                newDiv.style('transition', '.3s opacity ease-in-out')
+                newDiv.attr('id', 'thisThing-' + i)
+                newDiv.html(`
+                    <div class='p-20 demi'>${el.text1} 
+                        <span class='p-18 normal' style='letter-spacing: -.09px'>${el.text2}</span>
+                    </div>
+                    <div class='p-18 normal' style='letter-spacing: -.09px'>${el.text3}</div>
+                `)
+
+                if (i === 0)
+                    vis.textGroup = newDiv;
+                else if (i === 1)
+                    vis.textGroup1 = newDiv;
+                else if (i === 2)
+                    vis.textGroup2 = newDiv;
+            })
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-16')
+                .style('opacity', 0)
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'start')
+                .attr('class', 'axis y-axis p-16')
+                .style('opacity', 0)
+
+            // DEFINE LINEAR GRADIENT
+            vis.gradient = vis.svg
+                .append('linearGradient')
+                .attr('id', 'BLUE-grad')
+                .attr('x1', 0)
+                .attr('y1', 0)
+                .attr('x2', 0)
+                .attr('y2', 1)
+                .attr('gradientUnits', 'objectBoundingBox');
+            vis.gradient
+                .append('stop')
+                .attr('offset', '0')
+                .attr('stop-color', "#938C87");
+            vis.gradient
+                .append('stop')
+                .attr('offset', '.75')
+                .attr('stop-color', "#B8B3B0");
+            vis.gradient
+                .append('stop')
+                .attr('offset', '1')
+                .attr('stop-color', "#B8B3B050");
+
+            setTimeout(() => {
+                vis.redraw()
+            }, 500);
+        }
+
+        redraw() {
+
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = vis.height * .16;
+            vis.top = 20;
+            vis.MARGIN = { top: vis.top, right: 20, bottom: vis.bottom, left: vis.width * .04 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            // X SCALE
+            vis.x = d3.scaleLinear()
+                .domain(d3.extent(vis.data, d => d.xVal * 100))
+                .range([0, vis.gWIDTH])
+            const x = vis.x;
+
+            let yMax = 6.4;
+            let yMin = 0;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            const areaOne = d3.area()
+                .x(d => x(d.xVal * 100))
+                .y1(d => y(yMin))
+                .y0(d => y(d.yVal * 100))
+
+            const flatArea = d3.area()
+                .x(d => x(d.xVal * 100))
+                .y1(d => y(yMin))
+                .y0(d => y(yMin))
+
+            // creates a flat starting path to start the animation
+            let startLine = vis.data.map(k => {
+                return { xVal: k.xVal, yVal: 0 };
+            });
+
+            ////////////////// LINE BLUE
+            if (vis.draws <= 1) {
+                vis.areaOne
+                    .attr('d', flatArea(vis.data))
+                    .transition()
+                    .duration(1500)
+                    .delay(0)
+                    .attr('d', areaOne(vis.data))
+                    .attr('opacity', 1)
+            } else {
+                vis.areaOne
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', areaOne(vis.data))
+                    .attr('opacity', 1)
+            }
+
+            //////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
+                .tickPadding(4)
+                .tickSizeOuter([0])
+            // .tickFormat(e => e.getFullYear());
+
+            if (vis.draws <= 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+            } else {
+                vis.xAxis
+                    .transition()
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .call(xAxisCall.scale(x))
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = seismicApp ? 9 : 10;
+            const yAxisCall = d3.axisLeft()
+                .tickValues([0, 1, 2, 3, 4, 5, 6])
+                .tickFormat(e => e === 6 ? e + '%' : e)
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+
+            }
+
+            vis.title
+                .attr('x', -vis.MARGIN.left)
+                .attr('y', 5)
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.text1
+                .attr('text-anchor', 'middle')
+                .attr('x', x(2.5))
+                .attr('y', y(3))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+            vis.text2
+                .attr('text-anchor', 'middle')
+                .attr('x', x(2.5))
+                .attr('y', y(1.5))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+            vis.titleX
+                .attr('text-anchor', 'middle')
+                .attr('x', vis.width / 2)
+                .attr('y', vis.gHEIGHT + vis.MARGIN.bottom * .9)
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.topLine
+                .attr('x1', x(2.5))
+                .attr('x2', x(2.5))
+                .attr('y1', y(5.9))
+                .attr('y2', y(3.3))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.botLine
+                .attr('x1', x(2.5))
+                .attr('x2', x(2.5))
+                .attr('y1', y(1.3))
+                .attr('y2', y(.3))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            const moveLeft = vis.gWIDTH * .025;
+
+            const coords = [
+                [3.5, 5], // zurich
+                [8.1, 2.7], // crown castle 
+                [13, 1.9] // comcast (2,13)
+            ]
+
+            vis.textGroup
+                .style('margin-top', -vis.textGroup.node().clientHeight / 2)
+                .style('left', x(coords[0][0]) + vis.MARGIN.left + moveLeft + 'px')
+                .style('top', y(coords[0][1]) + vis.MARGIN.top + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 1000 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .style('opacity', 1)
+
+            vis.textGroup1
+                .style('margin-top', -vis.textGroup.node().clientHeight / 2)
+                .style('left', x(coords[1][0]) + vis.MARGIN.left + moveLeft + 'px')
+                .style('top', y(coords[1][1]) + vis.MARGIN.top + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 1000 : 0)
+                .delay(vis.draws === 1 ? 600 : 0)
+                .style('opacity', 1)
+
+            vis.textGroup2
+                .style('margin-top', -vis.textGroup.node().clientHeight / 2)
+                .style('left', x(coords[2][0]) + vis.MARGIN.left + moveLeft + 'px')
+                .style('top', y(coords[2][1]) + vis.MARGIN.top + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 1000 : 0)
+                .delay(vis.draws === 1 ? 900 : 0)
+                .style('opacity', 1)
+
+            const dotSize = vis.gWIDTH * .012;
+            vis.dot
+                .attr('r', vis.draws === 1 ? 0 : dotSize)
+                .attr('cx', x(coords[0][0]))
+                .attr('cy', y(coords[0][1]))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+                .attr('r', dotSize)
+
+            vis.dot1
+                .attr('r', vis.draws === 1 ? 0 : dotSize)
+                .attr('cx', x(coords[1][0]))
+                .attr('cy', y(coords[1][1]))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 600 : 0)
+                .attr('opacity', 1)
+                .attr('r', dotSize)
+
+            vis.dot2
+                .attr('r', vis.draws === 1 ? 0 : dotSize)
+                .attr('cx', x(coords[2][0]))
+                .attr('cy', y(coords[2][1]))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 900 : 0)
+                .attr('opacity', 1)
+                .attr('r', dotSize)
+
+        } // end redraw
+    } //end class
+
+    //************************** D3    CHARTS ***************************************************//
+    //******************************************************************************************//
+
+    data1.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    class drawChartTwo {
+        constructor() {
+            this.draws = 0;
+            this.data = data1
+
+            this.initVis();
+        }
+
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart-1");
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'vis-g')
+
+            // APPEND LINE
+            vis.lineOne = vis.g
+                .append('path')
+                .attr('stroke', "#9F1460")
+                .attr('stroke-width', 2.5)
+                .attr('fill', 'none')
+
+            // APPEND LINE
+            vis.lineTwo = vis.g
+                .append('path')
+                .attr('stroke', "#008DD6")
+                .attr('stroke-width', 2.5)
+                .attr('fill', 'none')
+
+            // APPEND LINE
+            vis.lineThree = vis.g
+                .append('path')
+                .attr('stroke', "#005F9E")
+                .attr('stroke-width', 2.5)
+                .attr('fill', 'none')
+
+            // APPEND LINE
+            vis.lineFour = vis.g
+                .append('path')
+                .attr('stroke', "#00A199")
+                .attr('stroke-width', 2.5)
+                .attr('fill', 'none')
+
+            vis.title = vis.g.append('text').attr('class', 'p-18 demi').text('Yield').attr('opacity', 0)
+            vis.text1 = vis.g.append('text').attr('class', 'p-22 demi').text('CIB 12-month yield').attr('fill', '#004E8A').attr('opacity', 0)
+            vis.text2 = vis.g.append('text').attr('class', 'p-22 demi').text('CIB net SEC yield').attr('fill', 'rgba(0, 141, 214, 1)').attr('opacity', 0)
+
+            vis.topLine = vis.g.append('line').attr('stroke', '#707070').attr('stroke-width', 1).attr('opacity', 0)
+            vis.botLine = vis.g.append('line').attr('stroke', '#707070').attr('stroke-width', 1).attr('opacity', 0)
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-16')
+                .style('opacity', 0)
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.g
+                .append('g')
+                .style('text-anchor', 'end')
+                .attr('class', 'axis y-axis p-16')
+                .style('opacity', 0)
+
+            setTimeout(() => {
+                vis.redraw()
+            }, 500);
+        }
+
+        redraw() {
+
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = vis.height * .13;
+            vis.top = 8;
+            vis.MARGIN = { top: vis.top, right: 20, bottom: vis.bottom, left: vis.width * .06 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            // X SCALE
+            vis.x = d3.scaleTime()
+                .domain(d3.extent(vis.data, d => d.date))
+                .range([0, vis.gWIDTH])
+            const x = vis.x;
+
+            let yMax = 10.4;
+            let yMin = 0;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            const lineOne = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.ten));
+
+            const lineTwo = d3.line()
+                .x(d => x(d.date))
+                .y(d => d.sec ? y(d.sec) : null);
+
+            const lineThree = d3.line()
+                .x(d => x(d.date))
+                .y(d => y(d.cib));
+
+            const lineFour = d3.line()
+                .x(d => x(d.date))
+                .y(d => d.msci ? y(d.msci) : 0);
+
+            // creates a flat starting path to start the animation
+            // let startLine = vis.data.map(k => {
+            //     return { date: k.date, sec: 0, ten: 0, cib: 0, msci: 0 };
+            // });
+
+            ////////////////// LINE BLUE
+            if (vis.draws <= 1) {
+                vis.lineOne
+                    .attr('d', lineOne(vis.data))
+
+                vis.lineTwo
+                    .attr('d', lineTwo(vis.data.slice(8)))
+
+                vis.lineThree
+                    .attr('d', lineThree(vis.data.slice(11)))
+
+                vis.lineFour
+                    .attr('d', lineFour(vis.data.slice(97)))
+            } else {
+                vis.lineOne
+                    .transition()
+                    .duration(1000)
+                    .delay(0)
+                    .attr('d', lineOne(vis.data))
+
+                vis.lineTwo
+                    .transition()
+                    .duration(1000)
+                    .delay(0)
+                    .attr('d', lineTwo(vis.data.slice(8)))
+
+                vis.lineThree
+                    .transition()
+                    .duration(1000)
+                    .delay(0)
+                    .attr('d', lineThree(vis.data.slice(11)))
+
+                vis.lineFour
+                    .transition()
+                    .duration(1000)
+                    .delay(0)
+                    .attr('d', lineFour(vis.data.slice(97)))
+            }
+
+            const tickVals = []
+            tickVals.push(new Date('Apr 1 1988 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 1993 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 1998 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 2003 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 2008 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 2013 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 2018 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+            tickVals.push(new Date('Apr 1 2021 16:00:21 GMT-0700 (Pacific Daylight Time)'))
+
+            ////////////////////////////// X AXIS
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickVals)
+                .tickPadding(4)
+                .tickSizeOuter([0])
+                .tickFormat(e => (e.getMonth() + 1) + '/' + String(e.getFullYear()).replace('19', '').replace('20', ''));
+
+            if (vis.draws <= 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+            } else {
+                vis.xAxis
+                    .transition()
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .call(xAxisCall.scale(x))
+            }
+
+            //////////////////////////////// Y AXIS
+            let xOffset = window.innerWidth < 1700 ? vis.gWIDTH * .035 : seismicApp ? vis.gWIDTH * .035 : vis.gWIDTH * .031;
+            const yAxisCall = d3.axisLeft()
+                .tickValues([0, 2, 4, 6, 8, 10])
+                .tickFormat(e => e === 10 ? e + '%' : e)
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left}, 0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(${xOffset - vis.MARGIN.left}, 0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            vis.title
+                .attr('x', 0)
+                .attr('y', y(9.88))
+                // .attr('dy', vis.title.node().clientHeight / 2.4)
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.text1
+                .attr('text-anchor', 'middle')
+                .attr('x', x(new Date('1/1/2018')))
+                .attr('y', y(7))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.text2
+                .attr('text-anchor', 'middle')
+                .attr('x', x(new Date('6/1/2013')))
+                .attr('y', y(6.1))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.topLine
+                .attr('x1', x(new Date('1/1/2018')))
+                .attr('x2', x(new Date('1/1/2018')))
+                .attr('y1', y(6.8))
+                .attr('y2', y(3.38))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+            vis.botLine
+                .attr('x1', x(new Date('6/1/2013')))
+                .attr('x2', x(new Date('6/1/2013')))
+                .attr('y1', y(5.9))
+                .attr('y2', y(3))
+                .transition()
+                .duration(vis.draws === 1 ? 1600 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .attr('opacity', 1)
+
+        } // end redraw
+    } //end class
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+    data2.forEach(el => {
+        el.date = new Date(el.date)
+    });
+
+    var grossOrNet = 'gross';
+    class drawChartThree {
+        constructor() {
+            this.draws = 0;
+            this.data = data2
+
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART
+            vis.chartDiv = document.getElementById("chart-2");
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'vis-g')
+
+            // ADD AREA
+            vis.areaOne = vis.g.append("path")
+                .attr('fill', "#004E8A");
+
+            vis.areaTwo = vis.g.append("path")
+                .attr('fill', "#CCC5BE");
+
+            vis.text1 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16 demi')
+                .style('line-height', '1.2em')
+                .html('Annualized growth<br>since launch').attr('opacity', 1).style('position', 'absolute').style('color', '#004E8A')
+
+            vis.text2 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16 demi')
+                .attr('opacity', 1).style('position', 'absolute')
+
+
+            vis.text3 = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-16')
+                .style('opacity', 1)
+                .style('transition', '.4s all ease-in-out')
+                .style('color', '#004E8A')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .html(`
+                    <div class='p-30 demi'>$${d3.format(',')(vis.data[vis.data.length - 1].gross)}</div>
+                    <div>
+                        International Growth and Income Fund F-2
+                    </div>
+                `)
+
+            vis.text3alternate = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-16')
+                .style('opacity', 0)
+                .style('transition', '.4s all ease-in-out')
+                .style('color', '#004E8A')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .html(`
+                    <div class='p-30 demi'>$155,523</div>
+                    <div>
+                        Capital Group<br>International Vantage<br>Strategy<sup>3</sup>
+                    </div>
+                `)
+
+            vis.text4 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16')
+                .style('opacity', 1)
+                .style('position', 'absolute')
+                .style('transition', '.4s all ease-in-out')
+                .style('color', '#00A199')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .html(`
+                    <div class='p-30 demi'>1.3x</div>
+                    <div>
+                        more wealth in $ terms
+                    </div>
+                `)
+
+            vis.text4alt = d3.select(vis.chartDiv).append('div').attr('class', 'p-16')
+                .style('opacity', 0)
+                .style('position', 'absolute')
+                .style('transition', '.4s all ease-in-out')
+                .style('color', '#00A199')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .html(`
+                    <div class='p-30 demi'>2.1x</div>
+                    <div>
+                        more wealth in $ terms
+                    </div>
+                `)
+
+            vis.text5 = d3.select(vis.chartDiv).append('div').attr('class', 'p-16 ')
+                .style('opacity', 1)
+                .style('position', 'absolute')
+                .style('transition', '.4s all ease-in-out')
+                .style('color', '#6F6F6F')
+                .style('position', 'absolute')
+                .style('padding-left', '3px')
+                .style('background-color', '#f8f8f8')
+                .html(`
+                    <div class='p-30 demi'>$${d3.format(',')(vis.data[vis.data.length - 1].msci)}</div>
+                    <div>
+                        MSCI ACWI ex USA Index*
+                    </div>
+                `)
+
+
+
+
+            vis.lineOne = vis.g.append('line').attr('class', 'dash-line')
+            vis.lineTwo = vis.g.append('line').attr('class', 'dash-line')
+            vis.lineThree = vis.g.append('line').attr('class', 'dash-line')
+            vis.lineFour = vis.g.append('polyline').attr('class', 'dash-line').attr('fill', 'none')
+            vis.greenLine1 = vis.g.append('line').attr('class', 'green-line')
+            vis.greenLine2 = vis.g.append('line').attr('class', 'green-line')
+
+            vis.box1 = vis.g.append('rect')
+            vis.box2 = vis.g.append('rect')
+            vis.boxVal1 = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-20 demi p-white').style('position', 'absolute')
+            vis.boxVal2 = d3.select(vis.chartDiv).append('div')
+                .attr('class', 'p-20 demi p-white').html('5.81<sup>%</sup>').style('position', 'absolute')
+
+            // APPEND X AXIS 
+            vis.xAxis = vis.g
+                .append('g')
+                .attr('class', 'axis x-axis p-16 myx')
+                .style('opacity', 0)
+
+            // APPEND Y AXIS 
+            vis.yAxis = vis.svg
+                .append('g')
+                .style('text-anchor', 'end')
+                .attr('class', 'axis y-axis p-16')
+                .style('opacity', 0)
+
+            vis.getTheWidthOfThisText = vis.g.attr('class', 'p-16').append('text').text('$30,000.').attr('opacity', 0).style('pointer-events', 'none')
+
+            // DEFINE MARKER
+            vis.defs = vis.svg.append("defs")
+
+            vis.defs.append("marker")
+                .attr("id", "arrow")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 5)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr('fill', '#00A199')
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("class", "arrowHead");
+
+            vis.defs.append("marker")
+                .attr("id", "arrow-reverse")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 5)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr('fill', '#00A199')
+                .attr("orient", "auto-start-reverse")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("class", "arrowHead");
+
+            setTimeout(() => {
+                vis.redraw()
+            }, 500);
+        }
+
+        redraw(value = grossOrNet) {
+
+            const seismicApp = window.innerWidth < 1100;
+
+            const vis = this;
+            vis.value = value;
+            vis.draws += 1;
+
+            // Extract the width and height that was computed by CSS.
+            vis.width = vis.chartDiv.clientWidth;
+            vis.height = vis.chartDiv.clientHeight;
+            vis.bottom = vis.height * .13;
+            vis.top = 8;
+            vis.MARGIN = { top: vis.top, right: vis.width * .17, bottom: vis.bottom, left: vis.width * .07 };
+            vis.gWIDTH = vis.width - (vis.MARGIN.left + vis.MARGIN.right);
+            vis.gHEIGHT = vis.height - (vis.MARGIN.top + vis.MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", vis.width)
+                .attr("height", vis.height);
+
+            // SET G
+            vis.g.attr('width', vis.gWIDTH)
+                .attr('height', vis.gHEIGHT)
+                .attr('transform', 'translate(' + vis.MARGIN.left + ',' + vis.MARGIN.top + ')');
+
+            ///////////////////////////////////////////////////////
+            // X SCALE
+            vis.x = d3.scaleTime()
+                .domain(d3.extent(vis.data, d => d.date))
+                .range([0, vis.gWIDTH])
+            const x = vis.x;
+
+            let yMax = 36000;
+            if (vis.value === 'net') // this is because of toggle
+                yMax = 170000
+
+            let yMin = 0;
+
+            const y = d3.scaleLinear()
+                .range([vis.gHEIGHT, 0])
+                .domain([yMin, yMax]);
+
+            const areaOne = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(yMin))
+                .y0(d => y(d[vis.value]))
+
+            const areaTwo = d3.area()
+                .x(d => x(d.date))
+                .y1(d => y(yMin))
+                .y0(d => y(d.msci))
+
+
+            ////////////////// LINE BLUE
+            if (vis.draws <= 1) {
+                vis.areaOne
+                    .attr('d', areaOne(vis.data))
+                    .attr('opacity', 1)
+
+                vis.areaTwo
+                    .attr('d', areaTwo(vis.data))
+                    .attr('opacity', 1)
+            } else {
+                vis.areaOne
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', areaOne(vis.data))
+                    .attr('opacity', 1)
+
+                vis.areaTwo
+                    .transition()
+                    .duration(500)
+                    .delay(0)
+                    .attr('d', areaTwo(vis.data))
+                    .attr('opacity', 1)
+            }
+
+            //////////////////////////////// X AXIS
+            const tickValsX = []
+            const endOfTime = ' 16:00:21 GMT-0700 (Pacific Daylight Time)';
+            tickValsX.push(new Date('Oct 31 2008' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2009' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2010' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2011' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2012' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2013' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2014' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2015' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2016' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2017' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2018' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2019' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2020' + endOfTime))
+            tickValsX.push(new Date('Oct 31 2021' + endOfTime))
+
+            const xAxisCall = d3.axisBottom()
+                .tickValues(tickValsX)
+                .tickPadding(4)
+                .tickSizeOuter([0])
+                .tickFormat(e => e.getFullYear());
+
+            if (vis.draws <= 1) {
+                vis.xAxis
+                    .call(xAxisCall.scale(x))
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+            } else {
+                vis.xAxis
+                    .transition()
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(0, ${y(yMin)})`)
+                    .call(xAxisCall.scale(x))
+            }
+
+            //////////////////////////////// Y AXIS
+            let tickVals;
+
+            // if (vis.value === 'gross')
+            //     tickVals = [0, 40000, 80000, 120000, 160000, 200000, 240000, 280000]
+            // else
+            //     tickVals = [0, 40000, 80000, 120000, 160000.1]
+
+            tickVals = [0, 5000, 10000, 15000, 20000, 25000, 30000]
+
+
+            const specialWidth = vis.getTheWidthOfThisText.node().getBBox().width;
+            const moveOver = specialWidth ? specialWidth : vis.gWIDTH * .05;
+            const yAxisCall = d3.axisLeft()
+                .tickPadding(-moveOver)
+                .tickValues(tickVals)
+                .tickFormat(e => e === 30000 ? '$' + d3.format(',')(e.toFixed(0)) : d3.format(',')(e))
+
+            if (vis.draws <= 1) {
+                vis.yAxis
+                    .attr('transform', `translate(${0},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+                    .transition()
+                    .delay(0)
+                    .duration(1500)
+                    .style('opacity', 1)
+            } else {
+                vis.yAxis
+                    .transition()
+                    .delay(0)
+                    .duration(500)
+                    .style('opacity', 1)
+                    .attr('transform', `translate(${0},0)`)
+                    .call(yAxisCall.scale(y).tickSizeOuter([0]))
+            }
+
+            //////////////////////
+            ///////////////////
+            ///////////////
+            ///////////
+            ///////
+            ////
+            //
+
+            const boxWidth = x(new Date('9/1/2010')) - x(new Date('1/1/2009'))
+            const box1xPos = x(new Date('5/1/2009'));
+            const box2xPos = x(new Date('8/1/2011'));
+            const halfwayBetweenBoxes = (box2xPos - (box1xPos + boxWidth)) / 2;
+            const leftArrowXpos = box1xPos + boxWidth + halfwayBetweenBoxes + 'px';
+            const leftLinesWidth = halfwayBetweenBoxes * 1.3
+
+            const pushUp = window.innerWidth < 1700 ? -10 : 0;
+
+            vis.text1
+                .style('text-align', 'center')
+                // .style('margin-top', vis.value === 'gross' ? -vis.text1.node().clientHeight / 2 : 0)
+                .style('transition', '.3s margin-top ease-in-out')
+                .style('left', box1xPos + vis.MARGIN.left + boxWidth / 2 + 'px')
+                .style('margin-left', -vis.text1.node().clientWidth / 2 + 'px')
+                .style('top', vis.gHEIGHT * .21 + vis.MARGIN.top + pushUp + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 1000 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .style('opacity', 1)
+
+            const valueOfWhatever = vis.value === 'gross' ? 1.9 : 2.4;
+
+            vis.text2
+                .style('color', '#00A199')
+                .style('text-align', 'center')
+                .style('line-height', '25px')
+                .html(`
+                <div class='p-30' style='line-height: 1.08'>${valueOfWhatever}<sup>%</sup> pts</div>
+                <div class='p-16 demi' style='line-height: 1.2em;'>
+                    higher than the <br> market return
+                        </div>
+                `)
+                .style('left', box2xPos + vis.MARGIN.left + boxWidth / 2 + 'px')
+                .style('margin-left', -vis.text2.node().clientWidth / 2 + 'px')
+                .style('top', vis.gHEIGHT * .242 + vis.MARGIN.top + pushUp + 'px')
+                .transition()
+                .duration(vis.draws === 1 ? 1000 : 0)
+                .delay(vis.draws === 1 ? 300 : 0)
+                .style('opacity', 1)
+
+            vis.lineOne
+                .attr('x1', box1xPos + boxWidth)
+                .attr('x2', box1xPos + boxWidth + leftLinesWidth)
+                .attr('y1', vis.gHEIGHT * .3)
+                .attr('y2', vis.gHEIGHT * .3)
+
+            vis.lineTwo
+                .attr('x1', box2xPos - leftLinesWidth)
+                .attr('x2', box2xPos)
+                .attr('y1', vis.gHEIGHT * .4)
+                .attr('y2', vis.gHEIGHT * .4)
+
+            const topVal = vis.value === 'gross' ? 26573 : null;
+            const lastXpos = x(new Date('12/31/2021'));
+            const lineWidth = vis.gWIDTH + vis.MARGIN.right * .3;
+            const lineWidthHalf = vis.gWIDTH + vis.MARGIN.right * .12;
+
+            const secVal = 21133;
+            const lowVal = 15000
+            if (vis.draws === 1) {
+                vis.lineThree
+                    .attr('x1', lastXpos)
+                    .attr('x2', lineWidth)
+                    .attr('y1', y(topVal))
+                    .attr('y2', y(topVal))
+
+                vis.lineFour
+                    .attr('points', [[lastXpos, y(secVal)], [lineWidthHalf, y(secVal)], [lineWidthHalf, y(lowVal)], [lineWidth, y(lowVal)]])
+                // .attr('x1', lastXpos)
+                // .attr('x2', lineWidth)
+                // .attr('y1', y(secVal))
+                // .attr('y2', y(secVal))
+
+            } else {
+                vis.lineThree
+                    .transition()
+                    .duration(500)
+                    .attr('x1', lastXpos)
+                    .attr('x2', lineWidth)
+                    .attr('y1', y(topVal))
+                    .attr('y2', y(topVal))
+
+                vis.lineFour
+                    .transition()
+                    .duration(500)
+                    .attr('points', [[lastXpos, y(secVal)], [lineWidthHalf, y(secVal)], [lineWidthHalf, y(lowVal)], [lineWidth, y(lowVal)]])
+
+            }
+
+
+            vis.box1
+                .attr('width', boxWidth)
+                .attr('height', vis.gHEIGHT * .25)
+                .attr('fill', '#004E8A')
+                .attr('y', vis.gHEIGHT * .3)
+                .attr('x', box1xPos)
+
+            vis.box2
+                .attr('width', boxWidth)
+                .attr('height', vis.gHEIGHT * .15)
+                .attr('fill', '#CCC5BE')
+                .attr('y', vis.gHEIGHT * .4)
+                .attr('x', box2xPos)
+
+            const pushRight = 5
+            vis.boxVal1
+                .style('text-align', 'center')
+                .style('left', box1xPos + vis.MARGIN.left + pushRight + 'px')
+                .style('top', vis.gHEIGHT * .33 + vis.MARGIN.top + 'px')
+                .style('width', boxWidth + 'px')
+                .html(vis.value === 'gross' ? '7.66<sup>%</sup>' : '8.4<sup>%</sup>')
+                .style('margin-left', vis.value === 'gross' ? 0 : -2)
+
+            vis.boxVal2
+                .style('text-align', 'center')
+                .style('left', box2xPos + vis.MARGIN.left + pushRight + 'px')
+                .style('top', vis.gHEIGHT * .43 + vis.MARGIN.top + 'px')
+                .style('width', boxWidth + 'px')
+
+            const arrowTop = vis.value === 'gross' ? y(26000) : y(151500);
+            const arrowBottom = vis.value === 'gross' ? y(21500) : y(75000);
+            const line2x = vis.gWIDTH + vis.MARGIN.right * .07;
+            if (vis.draws === 1) {
+                vis.greenLine1
+                    .attr('marker-end', "url('#arrow')")
+                    .attr('marker-start', "url('#arrow-reverse')")
+                    .attr('x1', leftArrowXpos)
+                    .attr('x2', leftArrowXpos)
+                    .attr('y1', vis.gHEIGHT * .31)
+                    .attr('y2', vis.gHEIGHT * .39)
+
+                vis.greenLine2
+                    .attr('marker-end', "url('#arrow')")
+                    .attr('marker-start', "url('#arrow-reverse')")
+                    .attr('x1', line2x)
+                    .attr('x2', line2x)
+                    .attr('y1', arrowTop)
+                    .attr('y2', arrowBottom)
+            } else {
+                vis.greenLine1
+                    .transition()
+                    .duration(500)
+                    .attr('x1', leftArrowXpos)
+                    .attr('x2', leftArrowXpos)
+                    .attr('y1', vis.gHEIGHT * .31)
+                    .attr('y2', vis.gHEIGHT * .39)
+
+                vis.greenLine2
+                    .transition()
+                    .duration(500)
+                    .attr('x1', line2x)
+                    .attr('x2', line2x)
+                    .attr('y1', arrowTop)
+                    .attr('y2', arrowBottom)
+            }
+
+            // far right texts
+            const leftPos = vis.gWIDTH + vis.MARGIN.right * .6
+            vis.text3
+                .style('top', y(30000))
+                .style('opacity', vis.value === 'gross' ? 1 : 0)
+                .style('left', leftPos)
+            vis.text3alternate.style('opacity', vis.value === 'gross' ? 0 : 1).style('left', leftPos)
+
+            const text4Ypos = vis.value === 'gross' ? y(23000) : null;
+            vis.text4
+                .style('opacity', vis.value === 'gross' ? 1 : 0)
+                .style('top', text4Ypos)
+                .style('left', leftPos)
+            vis.text4alt
+                .style('top', text4Ypos)
+                .style('opacity', vis.value === 'gross' ? 0 : 1)
+                .style('left', leftPos)
+
+            vis.text5
+                .style('top', y(15000))
+                .style('margin-top', -vis.text5.node().clientHeight / 5)
+                .style('left', leftPos)
+
+        } // end redraw
+    } //end class
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+    class barChart {
+        constructor(data, el, domain) {
+            this.data = data;
+            this.draws = 0;
+            this.el = el;
+            this.domain = domain
+            this.initVis();
+        }
+        initVis() {
+            const vis = this;
+
+            // CHART LEFT
+            vis.chartDiv = document.querySelector(`#${vis.el}`);
+            vis.svg = d3.select(vis.chartDiv).append("svg");
+
+            // APPEND G
+            vis.g = vis.svg
+                .append('g')
+                .attr('class', 'g-group')
+
+            vis.bars = vis.g.append('g').attr('class', 'bars')
+            vis.nums = vis.g.append('g').attr('class', 'nums')
+
+            setTimeout(() => {
+                this.redraw();
+            }, 3000);
+        }
+
+        redraw(data = this.data) {
+            const vis = this;
+            vis.draws += 1;
+            vis.data = data;
+
+            // Extract the width and height that was computed by CSS.
+            const width = vis.chartDiv.clientWidth;
+            const height = vis.chartDiv.clientHeight;
+            const MARGIN = { top: 0, right: 0, bottom: 0, left: 0 };
+            const gWIDTH = width - (MARGIN.left + MARGIN.right);
+            const gHEIGHT = height - (MARGIN.top + MARGIN.bottom);
+
+            // Use the extracted size to set the size of an SVG element.
+            vis.svg
+                .attr("width", width)
+                .attr("height", height);
+
+            // SET G
+            vis.g.attr('width', gWIDTH)
+                .attr('height', gHEIGHT)
+                .attr('transform', 'translate(' + MARGIN.left + ',' + MARGIN.top + ')');
+
+            // X SCALE
+            const x = d3.scaleBand()
+                .range([0, gWIDTH])
+                .paddingOuter(0.9)
+                .paddingInner(0.08)
+                .domain(vis.data.map(d => d.group));
+
+            // Y SCALE
+            const y = d3
+                .scaleLinear()
+                .range([gHEIGHT, 0])
+                .domain(vis.domain)
+
+            ///////////////////////////////////////////////////
+            const bars = vis.bars.selectAll('.grey-bar')
+                .data(vis.data)
+
+            bars.exit().remove();
+
+            bars
+                .transition()
+                .duration(500)
+                .attr("width", x.bandwidth())
+                .attr("x", d => x(d.group))
+                .attr('height', d => Math.abs(y(0) - y(d.value)))
+                .attr('y', d => d.value < 0 ? y(0) : y(d.value))
+
+            bars
+                .enter()
+                .append("rect")
+                .attr("x", d => x(d.group))
+                .attr("width", x.bandwidth())
+                .attr("fill", (d, i) => i === 0 ? '#004E8A' : i === 1 ? '#66C7DC' : '#007D64')
+                .attr('class', 'grey-bar')
+                .attr('height', 0)
+                .attr('y', d => y(0))
+                .transition()
+                .duration(1000)
+                .delay(100)
+                .attr('height', d => Math.abs(y(0) - y(d.value)))
+                .attr('y', d => d.value < 0 ? y(0) : y(d.value))
+
+            ///////////////////////////////////////////////////
+            const nums = vis.nums.selectAll('.num-bar')
+                .data(vis.data)
+
+            nums.exit().remove();
+
+            const plusVal = .3
+            nums
+                .transition()
+                .duration(500)
+                .text(d => d.value.toFixed(2))
+                .attr("x", d => x(d.group) + x.bandwidth() / 2)
+                .attr('y', d => d.value < 0 ? y(d.value - plusVal * 2) : y(d.value + plusVal))
+
+            nums
+                .enter()
+                .append("text")
+                .text(d => d.value.toFixed(2))
+                .attr('class', 'num-bar p-20')
+                .attr("fill", 'black')
+                .style('text-anchor', 'middle')
+                .attr("x", d => x(d.group) + x.bandwidth() / 2)
+                .attr('y', d => y(0))
+                .transition()
+                .duration(1000)
+                .delay(100)
+                .attr('y', d => d.value < 0 ? y(d.value - plusVal * 2) : y(d.value + plusVal))
+
+            ///////////////////////////////////////////////////
+        }
+    }
+
+    //*************************************************************************************************//
+    //*************************************************************************************************//
+
+    const chart = new drawChartOne();
+    const chart1 = new drawChartTwo();
+    const chart2 = new drawChartThree();
+
+    const barsData1 = [
+        { group: 1, value: 7.73 },
+        { group: 2, value: 7.86 },
+        { group: 3, value: 5.37 },
+    ]
+
+    const barsData2 = [
+        { group: 1, value: 5.10 },
+        { group: 2, value: 4.47 },
+        { group: 3, value: 4.82 },
+    ]
+
+    const barsData3 = [
+        { group: 1, value: -0.07 },
+        { group: 2, value: -0.42 },
+        { group: 3, value: -0.23 },
+    ]
+
+    const barsData1b = [
+        { group: 1, value: 6.2 },
+        { group: 2, value: 6.25 },
+        { group: 3, value: 3.74 },
+    ]
+
+    const barsData2b = [
+        { group: 1, value: 3.32 },
+        { group: 2, value: 2.72 },
+        { group: 3, value: 3.07 },
+    ]
+
+    const barsData3b = [
+        { group: 1, value: -2.01 },
+        { group: 2, value: -2.30 },
+        { group: 3, value: -2.09 },
+    ]
+
+    const bars1 = new barChart(barsData1, 'bars-1', [0, 9.4]);
+    const bars2 = new barChart(barsData2, 'bars-2', [0, 9.4]);
+    const bars3 = new barChart(barsData3, 'bars-3', [-4, 0]);
+
+    window.addEventListener("resize", () => redraw());
+
+    function redraw() {
+        chart.redraw();
+        chart1.redraw();
+        chart2.redraw(grossOrNet);
+        bars1.redraw();
+        bars2.redraw();
+        bars3.redraw();
+    }
+
+    function goTo(url) {
+
+        const newDiv = document.createElement('div')
+        newDiv.style.position = 'absolute';
+        newDiv.style.width = '100%'
+        newDiv.style.height = '100%'
+        newDiv.style.backgroundColor = '#f8f8f8'
+        newDiv.style.zIndex = 9999
+        newDiv.style.opacity = 0;
+        newDiv.style.transition = '.3s opacity ease-in-out'
+
+        document.getElementById('master-container').append(newDiv)
+
+        setTimeout(() => {
+            newDiv.style.opacity = 1;
+        }, 0);
+
+
+        setTimeout(() => {
+
+            window.location.href = url
+
+        }, 100);
+    }
+</script>
+
+</html>

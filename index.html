@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+	<link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+	<link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+	<!-- websiteInfo -->
+	<script src="./websiteInfo.js" type="text/javascript"></script>
+
+	<!-- ADD FUND TILES -->
+	<script>
+		const addFundTiles = true;
+	</script>
+
+	<!-- Add Scripts -->
+	<script defer src="./engine/js/init.js"></script>
+
+	<!-- ADD SMA FUNCTIONALITY -->
+	<link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+	<script src="./SMA/sma.js" type="text/javascript"></script>
+
+	<style>
+		@keyframes partial-fade {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 89%
+			}
+		}
+
+		/* PAGE ANIMATIONS */
+		.apperature {
+			opacity: 0;
+			animation: partial-fade 2s ease-in-out .4s forwards;
+		}
+
+		.lp-wrapper {
+			animation: fade-in 1s ease-in-out .3s forwards;
+		}
+
+		.lp-wrapper h1 {
+			animation: move-left .87s ease-in-out .7s forwards;
+		}
+
+		.lp-wrapper h2 {
+			animation: move-left .87s ease-in-out .4s forwards;
+		}
+
+		.legal-fdic {
+			animation: move-left .87s ease-in-out .6s forwards;
+		}
+
+		.legal-finpro {
+			animation: move-left .87s ease-in-out .8s forwards;
+		}
+
+		/* END OF ANIMATIONS */
+
+
+		/* EDITS TO EXISTING FLY-OUT MENU */
+		#footer-wrapper {
+			display: none;
+		}
+
+		.header-menu-icon {
+			height: 11%;
+		}
+
+		#menu-icon-ani {
+			pointer-events: all;
+		}
+
+		/* END OF EDITS */
+
+		#menu-button-spacer {
+			width: 5%;
+			margin-right: 0;
+		}
+
+		.lp-nav-bar {
+			display: flex;
+			position: absolute;
+			width: 100%;
+			height: 10.8%;
+			background-color: white;
+			z-index: 1;
+			opacity: 0;
+			animation: fade-in .5s ease-in-out .2s forwards;
+		}
+
+		.apperature {
+			background: transparent url(./assets/cg-aperture-big.svg) repeat;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+
+
+			background-position-x: 46.5%;
+			background-position-y: 58%;
+			background-size: 201%;
+
+			/* transform: rotateY(180deg); */
+
+			opacity: 0;
+			mix-blend-mode: darken;
+			mix-blend-mode: normal;
+		}
+
+		.lp-wrapper {
+			overflow: hidden;
+
+			position: absolute;
+			left: 0;
+			width: 100%;
+			top: 5%;
+			height: 95%;
+
+			background-color: cadetblue;
+			background: url(./assets/cover.jpg) no-repeat;
+			/* background-size: contain; */
+			background-size: cover;
+			/* background-attachment: fixed; */
+
+
+			background-position-x: 17%;
+			background-position-y: 27%;
+			background-size: 163%;
+
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding-left: 5%;
+
+			opacity: 0;
+		}
+
+		.lp-wrapper h1,
+		.lp-wrapper h2 {
+			z-index: 3;
+			color: white;
+			position: relative;
+			left: 40px;
+			opacity: 0;
+
+		}
+
+		.lp-wrapper h1 {
+			margin-bottom: 0;
+			top: -10.5%;
+			line-height: .95;
+			max-width: 12ch;
+			letter-spacing: -.1rem;
+			padding-right: 3%;
+			/* text-shadow: 0px 0px 40px black; */
+		}
+
+		.lp-wrapper h2 {
+			top: -33%;
+			/* font-size: clamp(18px, 2.5vw, 55px); */
+			letter-spacing: -.86px;
+			/* line-height: 1.2; */
+			/* max-width: 28ch; */
+			width: 95%;
+			margin: 0;
+			/* text-shadow: 0px 0px 10px black; */
+		}
+
+		.legal-fdic {
+			font-weight: 700;
+			line-height: 1.1;
+			color: white;
+			max-width: 54ch;
+			position: relative;
+			left: 40px;
+			opacity: 0;
+			margin: 0;
+			font-family: AvenirCon;
+			top: 1%;
+		}
+
+		.legal-finpro {
+			line-height: 1.1;
+			color: white;
+			max-width: 75ch;
+			position: relative;
+			left: 40px;
+			opacity: 0;
+		}
+
+		.lp-nav-bar button {
+			width: auto;
+			height: 100%;
+			display: flex;
+			flex-flow: column;
+			justify-content: center;
+			align-items: flex-start;
+			text-align: start;
+			transition: all 0.1s;
+			/* margin-right: 15px;
+			margin-right: 36px; */
+			margin-right: 4%;
+		}
+
+		.lp-logo {
+			width: 4%;
+			height: 100%;
+			position: relative;
+			top: -1px;
+			margin-right: 3.2%;
+			margin-right: 2.2%;
+		}
+
+		.lp-logo img {
+			pointer-events: none;
+			width: 90%;
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- page content -->
+	<div id="master-float">
+		<div id="master-container">
+
+			<!-- navigation -->
+			<nav id="nav-container">
+				<div id="menu-button" class="header-menu-icon" onclick="toggleMainMenu()">
+					<div id="menu-icon-ani" class="menu-icon">
+						<div id="line-a" class="icon-line line-straight"></div>
+						<div id="line-b" class="icon-line line-straight"></div>
+						<div id="line-c" class="icon-line line-straight"></div>
+					</div>
+				</div>
+			</nav>
+			<!-- end navigation -->
+
+			<!-- landing page nav bar -->
+			<nav class="lp-nav-bar">
+
+				<div id="menu-button-spacer"></div>
+				<div class="lp-logo">
+					<img src="engine/imgs/cg-logo-color.svg" alt="Capital Group Logo" class="lp-home-logo" />
+				</div>
+
+				<div style='display: flex;  width: 87%;'>
+					<button onclick='goTo("one-01.html")'>
+						<div class="p-20 demi ls-p15">
+							Table of contents
+						</div>
+						<div class='p-16 ls-p15'>
+						</div>
+					</button>
+
+					<button onclick='goTo("two-01.html")'>
+						<div class="p-20 demi ls-p15">
+							Equity markets insights
+						</div>
+						<div class='p-16 ls-p15'>
+						</div>
+					</button>
+
+					<button onclick='goTo("three-01.html")'>
+						<div class="p-20 demi ls-p15">
+							Equities at Capital Group
+						</div>
+						<div class='p-16 ls-p15'>
+						</div>
+					</button>
+
+					<button onclick='goTo("four-01.html")'>
+						<div class="p-20 demi ls-p15">
+							Equity actionable ideas
+						</div>
+						<div class='p-16 ls-p15'>
+						</div>
+					</button>
+
+					<button onclick='goTo("five-01.html")'>
+						<div class="p-20 demi ls-p15">
+							Investment results
+						</div>
+						<div class='p-16 ls-p15'>
+						</div>
+					</button>
+
+				</div>
+
+			</nav>
+			<!-- end landing page nav bar -->
+
+			<section id="content-size-setter">
+				<section id="content-padding">
+					<section id='content-area'>
+
+						<div id='main-page-content'>
+
+							<!-- landing page main content area -->
+							<section class="lp-wrapper">
+								<div class='apperature'></div>
+
+								<div class='p-48 bold white p-white' style='position: relative; top: 5%; left: 40px;
+										opacity: 0; animation: move-left .87s ease-in-out .5s forwards;
+										width: 17ch;'>
+									Equities:
+									<br>
+									<span class='normal'>
+										Macro, markets and actionable ideas
+									</span>
+								</div>
+
+								<h1 class='p-96 bold'>
+									Think outside the box
+								</h1>
+
+								<p class="legal-fdic p-24">
+									Investments are not FDIC-insured, nor are they deposits of or guaranteed by a bank
+									or any other entity, so they may lose value.
+									<br><br>
+									For financial professionals only. Not for use with the public.
+								</p>
+							</section>
+							<!-- end landing page main content area -->
+
+						</div>
+					</section>
+				</section>
+			</section>
+
+		</div>
+	</div>
+	</div>
+	<!-- end page content -->
+</body>
+
+<script>
+	function goTo(url) {
+
+		const page = document.getElementById('content-area');
+
+		page.style.opacity = 1;
+		page.style.animation = `fade-out .3s ease-in-out 0s forwards`;
+
+		const hamburger = document.getElementById('nav-container')
+		const nav = document.querySelector('.lp-nav-bar');
+
+		hamburger.style.opacity = 1;
+		hamburger.style.animation = `fade-out .3s ease-in-out 0s forwards`;
+		nav.style.opacity = 1;
+		nav.style.animation = `fade-out .3s ease-in-out 0s forwards`;
+
+		setTimeout(() => {
+			window.location.href = url
+
+		}, 100);
+	}
+
+	// const iPad =
+	// 	window.orientation >= -90 &&
+	// 	window.navigator.vendor.startsWith('Apple') &&
+	// 	window.navigator.userAgent.includes('Safari');
+
+
+	// // MOBILE STYLES
+	// if (iPad) {
+	// 	// document.getElementById('menu-button-spacer').style.width = '11%';
+	// 	// document.getElementById('menu-button').style.left = '6%';
+
+	// 	window.addEventListener('keypress', key => {
+	// 		if (key.key.toLowerCase() === 'm')
+	// 			document.getElementById('menu-logo-ani').style.opacity = 0;
+	// 	})
+	// }
+</script>
+
+</html>

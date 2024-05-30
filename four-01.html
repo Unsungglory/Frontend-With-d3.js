@@ -1,0 +1,625 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale = 1, user-scalable = no" />
+
+    <link href="./engine/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./engine/css/master.css" rel="stylesheet" type="text/css">
+
+    <!-- websiteInfo -->
+    <script src="./websiteInfo.js" type="text/javascript"></script>
+
+    <!-- ADD FUND TILES -->
+    <script>
+        const addFundTiles = true;
+    </script>
+
+    <!-- Add Scripts -->
+    <script defer src="./engine/js/init.js"></script>
+
+    <!-- ADD SMA FUNCTIONALITY -->
+    <link href="./SMA/css/sma.css" rel="stylesheet" type="text/css" />
+    <script src="./SMA/sma.js" type="text/javascript"></script>
+
+    <style>
+        .four-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+            height: 100%;
+            column-gap: 10px;
+        }
+
+        .grid-column-section {
+            position: relative;
+        }
+
+        .grid-box {
+            height: clamp(170px, 17vw, 254px);
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 70% 30%;
+            justify-content: center;
+            align-items: center;
+            /* flex-flow: column; */
+            margin-top: -2%;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        .grid-box-text {
+            color: white;
+            line-height: clamp(19px, 2.7vw, 26px);
+            text-align: center;
+            padding: 2.5%;
+            padding-top: 0;
+        }
+
+        .hover-element {
+            width: 100%;
+            height: 70%;
+            position: absolute;
+            transition: .3s all ease-in-out;
+            opacity: 0;
+            display: none;
+            z-index: 10;
+            pointer-events: none;
+            top: -77%;
+        }
+
+        .white-cover {
+            background-color: white;
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+            position: relative;
+        }
+
+        .white-arrow {
+            height: 40px;
+            width: 40px;
+            transform: scaleX(.7) rotate(45deg);
+            position: absolute;
+            box-shadow: 0px 20px 30px #0000001c;
+            background-color: white;
+            z-index: 2;
+        }
+
+        .box-shadow {
+            box-shadow: 0px 20px 30px #00000033;
+            z-index: 1;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            top: 0;
+        }
+
+        .close-hover {
+            position: absolute;
+            z-index: 4;
+            right: 3%;
+            top: 2%;
+            transform: scale(1);
+            font-size: clamp(12px, 1.7vw, 25px);
+            -webkit-text-stroke: thin;
+            transition: .3s all ease-in-out;
+            cursor: pointer;
+            pointer-events: all !important;
+        }
+
+        .close-hover:hover {
+            transform: scale(1.1);
+        }
+
+        .hover-content {
+            padding: 20px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .hover-header {
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -.15px;
+            line-height: 24px;
+        }
+
+        .hover-sub-header {
+            letter-spacing: .44px;
+            line-height: clamp(11px, 1.2vw, 20px);
+            padding-top: 3%;
+        }
+
+        .two-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding-top: 4vh;
+            column-gap: 90px;
+        }
+
+        .inner-grid-title {
+            text-align: center;
+            color: #002349;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -.8px;
+            line-height: 22px;
+        }
+
+        #arrow-1 {
+            top: 83%;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        #arrow-2 {
+            top: 83%;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        #arrow-3 {
+            top: 83%;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        #arrow-4 {
+            top: 83%;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        .navy-bg {
+            background-color: #008E77;
+        }
+
+        .teal-bg {
+            background-color: #009CDC;
+        }
+
+        .sky-bg {
+            background-color: #00294b;
+        }
+
+        .ocean-bg {
+            background-color: #6f6f6f;
+        }
+
+        .correlation-section {
+            height: 65px;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .correlation-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .correlation-g-class {
+            height: 100%;
+            width: 100%;
+        }
+
+        .vert-line {
+            stroke: rgba(178, 178, 178, 1);
+            stroke-width: 1.5px;
+        }
+
+        .grey-dashed-line {
+            stroke: rgba(178, 178, 178, 1);
+            stroke-width: 2px;
+            stroke-dasharray: 5 3;
+        }
+
+        .slider-box {
+            background-color: rgba(0, 41, 75, 1);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 42px;
+            width: 69px;
+            margin-left: -38px;
+            position: absolute;
+            border-radius: 10px;
+            transition: all .1s ease-in-out;
+            top: -40%;
+            left: 49%;
+        }
+
+        .slider-box::before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -10px;
+            border: solid 20px transparent;
+            border-top-color: rgba(0, 41, 75, 1);
+            border-left-width: 9px;
+            border-right-width: 9px;
+            border-top-width: 15px;
+        }
+
+        #slider-box-2 {
+            left: 45%;
+        }
+
+        .correlation-text-holder {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 22px;
+        }
+
+        .capital-circle {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .green-circle {
+            background-color: #03965E;
+            border-radius: 100%;
+            width: 160px;
+            height: 160px;
+            margin: auto;
+            display: flex;
+            stroke: transparent;
+            stroke-width: 3px;
+        }
+
+        .white-circle {
+            background-color: white;
+            border-radius: 100%;
+            width: 70px;
+            height: 70px;
+            margin: auto;
+            font-size: 25px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .white-circle sup {
+            font-size: 45%;
+        }
+
+        .title-up {
+            margin-top: -20px;
+            margin-bottom: 20px;
+        }
+
+        .inflation-text-returns {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 22px;
+            text-align: center;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 180px;
+        }
+
+        .grey-circle {
+            background-color: #E3E3E3;
+            border-radius: 100%;
+            width: 70px;
+            height: 70px;
+            margin: auto;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            pointer-events: none;
+            width: 160px;
+            height: 160px;
+            margin: auto;
+            display: flex;
+            stroke: transparent;
+            stroke-width: 3px;
+            pointer-events: none;
+            position: relative;
+            text-align: center;
+            padding: 15px;
+            line-height: 19px;
+        }
+
+        .inner-grey-circle-text {
+            font-size: 25px;
+            line-height: 30px;
+            font-weight: 700;
+        }
+
+        .bg-circle {
+            position: absolute;
+            transform: scale(1);
+            transition: .3s all ease-in-out;
+            left: 50%;
+            margin-left: -80px;
+            pointer-events: all;
+        }
+
+        .bg-circle:hover {
+            transform: scale(1.05);
+        }
+
+        #ip-text-1 {
+            position: relative;
+            left: -9px;
+        }
+
+        #ip-text-2 {
+            position: relative;
+            left: -13px;
+        }
+
+        #bond-section-2-svg {
+            transform: translate(0px, -60px);
+            margin-bottom: -78px;
+        }
+
+        .grid-box-text,
+        .grid-column-section img {
+            pointer-events: none;
+        }
+
+        .four-grid img {
+            /* width: clamp(70px, 7vw, 370px); */
+            margin: auto;
+            margin-top: 12%;
+        }
+
+        @media (max-width: 1500px) {
+            .four-grid img {
+                width: clamp(70px, 7vw, 370px)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- page content -->
+    <div id="master-float">
+
+        <div id="master-container">
+            <!-- navigation -->
+            <div id="nav-container"></div>
+            <!-- end navigation -->
+
+            <section id="content-size-setter">
+                <section id="content-padding">
+                    <section id='content-area'>
+
+                        <!-- content title -->
+                        <div class="title-wrapper-a">
+                            <h1>
+                                Four roles of equities
+                            </h1>
+                            <h2>
+                                How to consider equities in portfolio construction
+                            </h2>
+                        </div>
+                        <!-- end content title -->
+
+                        <div id='main-page-content'>
+                            <!-- chart title & legend area -->
+                            <section class="chart-ui-row" style='margin-bottom: 2%;'>
+
+                            </section>
+
+                            <!-- chart -->
+
+                            <div class="four-grid">
+                                <div class='grid-column-section'>
+                                    <div class='hover-element' id='hover-1'>
+                                        <div class='close-hover' id="close-hover-1" onclick="closeBox(this)">✕
+                                        </div>
+
+                                        <div class='white-cover'>
+                                            <div class="hover-content">
+                                                <div class="p-16 demi">Capital appreciation</div>
+                                                <div class="hover-sub-header p-16">
+                                                    An equity allocation provides investors the opportunity to increase their initial capital over full market cycles
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="white-arrow" id='arrow-1'></div>
+                                        <div class="box-shadow"></div>
+                                    </div>
+
+                                    <div class='grid-box navy-bg' onclick="showHover(this)"
+                                        onmouseover="handleHover(this)" onmouseout="handleOut(this)">
+                                        <img src="./img/line-graph.png" alt="data">
+                                        <div class='grid-box-text p-24 demi'>Capital appreciation</div>
+                                    </div>
+                                </div>
+
+                                <div class='grid-column-section'>
+                                    <div class='hover-element' id='hover-2'>
+                                        <div class='close-hover' id="close-hover-2" onclick="closeBox(this)">✕
+                                        </div>
+                                        <div class='white-cover'>
+                                            <div class="hover-content">
+                                                <div class="p-16 demi">Income</div>
+
+                                                <div class="hover-sub-header p-16">
+                                                    Some equity funds focus on providing dependable and rising dividends
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="white-arrow" id='arrow-2'></div>
+                                        <div class="box-shadow"></div>
+                                    </div>
+
+                                    <div class='grid-box teal-bg' onclick="showHover(this)"
+                                        onmouseover="handleHover(this)" onmouseout="handleOut(this)">
+                                        <img src="./img/money.svg" alt="data">
+                                        <div class='grid-box-text p-24 demi'>Income</div>
+                                    </div>
+                                </div>
+
+                                <div class='grid-column-section'>
+                                    <div class='hover-element' id='hover-3'>
+                                        <div class='close-hover' id="close-hover-3" onclick="closeBox(this)">✕
+                                        </div>
+                                        <div class='white-cover'>
+                                            <div class="hover-content">
+                                                <div class="p-16 demi">Diversification</div>
+                                                <div class="hover-sub-header p-16">
+                                                    Enables investors to incorporate strategies that are diversified from others in their portfolio and that have lower correlation to other asset classes
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="white-arrow" id='arrow-3'></div>
+                                        <div class="box-shadow"></div>
+                                    </div>
+
+                                    <div class='grid-box sky-bg' onclick="showHover(this)"
+                                        onmouseover="handleHover(this)" onmouseout="handleOut(this)">
+                                        <img src="./img/pie.svg" alt="data">
+                                        <div class='grid-box-text p-24 demi'>Diversification</div>
+                                    </div>
+                                </div>
+
+                                <div class='grid-column-section'>
+                                    <div class='hover-element' id='hover-4'>
+                                        <div class='close-hover' id="close-hover-4" onclick="closeBox(this)">✕
+                                        </div>
+                                        <div class='white-cover'>
+                                            <div class="hover-content">
+                                                <div class="p-16 demi">Inflation protection</div>
+                                                <div class="hover-sub-header p-16">
+                                                    Equity funds can provide resilience through inflationary periods, protecting purchasing power through a combination of growth and dividends
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="white-arrow" id='arrow-4'></div>
+                                        <div class="box-shadow"></div>
+                                    </div>
+
+                                    <div class='grid-box ocean-bg' onclick="showHover(this)"
+                                        onmouseover="handleHover(this)" onmouseout="handleOut(this)">
+                                        <img src="./img/shield.svg" alt="data">
+                                        <div class='grid-box-text p-24 demi'>Inflation protection</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- end chart -->
+
+                            <!-- disclosure content -->
+                            <div id="disclosure-wrapper">
+                                Source: Capital Group.
+                                <br><br>
+                                <span>
+                                    Investors should carefully consider investment objectives, risks, charges and
+                                    expenses.
+                                    This and other important information is contained in the fund prospectuses and
+                                    summary
+                                    prospectuses, which
+                                    can be obtained from a financial professional and should be read carefully before
+                                    investing.
+                                </span>
+                                <br><br>
+                                Statements attributed to an individual represent the opinions of that individual as of
+                                the date published and do not necessarily reflect the opinions of Capital Group or its
+                                affiliates. This information is intended to highlight issues and should
+                                not be considered advice, an endorsement or a recommendation.
+                                <br><br>
+                                This content, developed by Capital Group, home of American Funds, should not be used as
+                                a primary basis for investment decisions and is not intended to serve as impartial
+                                investment or fiduciary advice.
+                                <br><br>
+                                All Capital Group trademarks mentioned are owned by The Capital Group Companies, Inc.,
+                                an affiliated company or fund. All other company and product names mentioned are the
+                                property of their respective companies.
+                                <br><br>
+                                American Funds Distributors, Inc., member FINRA.
+                                <br><br>
+                                © 2022 Capital Group. All rights reserved.
+                            </div>
+                            <!-- end disclosure content -->
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </div>
+    </div>
+    <!-- end page content -->
+</body>
+
+
+<script>
+
+    // OPEN HOVER BOX WITH CLICK
+    function showHover(el) {
+        console.log('showHover')
+        const hoverBox = el.previousElementSibling;
+        hoverBox.style.opacity = 0;
+        hoverBox.style.display = 'block';
+        hoverBox.setAttribute('click', true);
+        setTimeout(() => {
+            hoverBox.style.opacity = 1;
+        }, 10);
+    }
+
+    // SHOW HOVER BOX WITH HOVER
+    function handleHover(el) {
+        console.log('handleHover')
+
+        const hoverBox = el.previousElementSibling;
+        hoverBox.style.display = 'block';
+        setTimeout(() => {
+            hoverBox.style.opacity = 1;
+        }, 10);
+    }
+
+    // HIDE HOVER BOX WHEN LEAVE
+    function handleOut(el) {
+        console.log('handleOut')
+
+        const hoverBox = el.previousElementSibling;
+        if (hoverBox.getAttribute('click') === 'true') return;
+
+        hoverBox.style.opacity = 0;
+
+        setTimeout(() => {
+            hoverBox.style.display = 'none';
+        }, 300);
+    }
+
+    // CLOSE HOVER BOX WITH X
+    function closeBox(el) {
+        console.log('closeBox')
+
+        const closeX = el;
+        const hoverBox = closeX.parentElement
+        hoverBox.style.opacity = 0;
+        hoverBox.setAttribute('click', false);
+
+        setTimeout(() => {
+            hoverBox.style.display = 'none';
+        }, 301);
+    }
+
+</script>
+
+</html>
