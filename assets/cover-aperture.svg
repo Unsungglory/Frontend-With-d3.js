@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1931.266" height="1083.031" viewBox="0 0 1931.266 1083.031">
+  <g id="cover-aperture" transform="translate(-28.802 0)">
+    <g id="FRAME" transform="translate(268.802 133)">
+      <path id="BLUE_BG" data-name="BLUE BG" d="M1920,1010H0V-70l1920,0V1010ZM888.351,258.53v585.9h564.115V258.53Z" transform="translate(-238.802 -63.001)" fill="rgba(0,0,0,0.29)"/>
+      <g id="DYNAMIC_APETURE" data-name="DYNAMIC APETURE" transform="translate(-240 -63)">
+        <g id="BOTTOM_LAYER" data-name="BOTTOM LAYER" transform="translate(0 0)" style="mix-blend-mode: soft-light;isolation: isolate">
+          <path id="BLUE" d="M4922.691,4277h1466.1v766.534" transform="translate(-4922.691 -4030.503)" fill="none" stroke="#009cdc" stroke-width="24"/>
+          <path id="GREEN" d="M5549.379,5413.469H4495.691V4487.182" transform="translate(-3618.114 -4557.182)" fill="none" stroke="#00aea9" stroke-width="24"/>
+        </g>
+        <g id="MIDDLE_LAYER" data-name="MIDDLE LAYER" transform="translate(0 0)" style="isolation: isolate">
+          <path id="BLUE-2" data-name="BLUE" d="M4922.691,4277h1466.1v766.534" transform="translate(-4922.691 -4030.503)" fill="none" stroke="#009cdc" stroke-width="24" opacity="0.2" style="mix-blend-mode: multiply;isolation: isolate"/>
+          <path id="GREEN-2" data-name="GREEN" d="M5537.379,5413.469H4495.691V4487.182" transform="translate(-3618.114 -4557.182)" fill="none" stroke="#00aea9" stroke-width="24" opacity="0.2" style="mix-blend-mode: multiply;isolation: isolate"/>
+        </g>
+        <g id="TOP_LAYER" data-name="TOP LAYER" transform="translate(0 0)" style="isolation: isolate">
+          <path id="BLUE-3" data-name="BLUE" d="M4922.691,4277h1466.1v766.534" transform="translate(-4922.691 -4030.503)" fill="none" stroke="#009cdc" stroke-width="24" opacity="0.2"/>
+          <path id="GREEN-3" data-name="GREEN" d="M5537.379,5413.469H4495.691V4487.182" transform="translate(-3618.114 -4557.182)" fill="none" stroke="#00aea9" stroke-width="24" opacity="0.2"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

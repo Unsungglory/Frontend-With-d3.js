@@ -1,0 +1,37 @@
+const date = '3/31/2022';
+
+
+const f2SharesData = [
+    { name: "S&P 500 Index", oneYear: 15.65, fiveYear: 15.99, tenYear: 14.64, lifetime: undefined, expenseRatio: undefined, },
+    { name: "AMCAP Fund", oneYear: 3.64, fiveYear: 13.66, tenYear: 13.38, lifetime: 11.86, expenseRatio: 0.45, },
+    { name: "American Mutual Fund", oneYear: 16.14, fiveYear: 12.14, tenYear: 12.07, lifetime: 11.82, expenseRatio: 0.37, },
+    { name: "Fundamental Investors", oneYear: 8.79, fiveYear: 13.07, tenYear: 13.29, lifetime: 12.72, expenseRatio: 0.38, },
+    { name: "The Growth Fund of America", oneYear: 4.2, fiveYear: 16.59, tenYear: 15.27, lifetime: 14.06, expenseRatio: 0.4, },
+    { name: "The Investment Company of America", oneYear: 11.6, fiveYear: 12.68, tenYear: 12.96, lifetime: 12.34, expenseRatio: 0.37, },
+    { name: "Washington Mutual Investors Fund", oneYear: 16.29, fiveYear: 13.98, tenYear: 13.39, lifetime: 12.18, expenseRatio: 0.38, },
+    { name: "MSCI All Country World Index (ACWI)", oneYear: 7.28, fiveYear: 11.64, tenYear: 10, lifetime: undefined, expenseRatio: undefined, },
+    { name: "Capital World Growth and Income Fund", oneYear: 1.88, fiveYear: 10.08, tenYear: 9.8, lifetime: 10.61, expenseRatio: 0.52, },
+    { name: "The New Economy Fund", oneYear: -4.2, fiveYear: 13.85, tenYear: 13.72, lifetime: 11.67, expenseRatio: 0.52, },
+    { name: "New Perspective Fund", oneYear: 3.86, fiveYear: 15.52, tenYear: 13.01, lifetime: 12.69, expenseRatio: 0.52, },
+    { name: "New World Fund", oneYear: -6.6, fiveYear: 9.74, tenYear: 7.01, lifetime: 8.31, expenseRatio: 0.68, },
+    { name: "MSCI All Country World Index (ACWI) ex USA", oneYear: -1.48, fiveYear: 6.76, tenYear: 5.55, lifetime: undefined, expenseRatio: undefined, },
+    { name: "EuroPacific Growth Fund", oneYear: -9.44, fiveYear: 7.9, tenYear: 7.21, lifetime: 10.5, expenseRatio: 0.57, },
+    { name: "International Growth and Income Fund", oneYear: -4.31, fiveYear: 6.72, tenYear: 5.9, lifetime: 6.77, expenseRatio: 0.65, },
+    { name: "MSCI All Country World Small Cap Index", oneYear: -0.35, fiveYear: 9.55, tenYear: 9.64, lifetime: undefined, expenseRatio: undefined, },
+    { name: "SMALLCAP World Fund", oneYear: -9.57, fiveYear: 12.36, tenYear: 11.36, lifetime: 10.21, expenseRatio: 0.76, },
+    { name: "MSCI EAFE (Europe, Australasia, Far East) Index", oneYear: 1.16, fiveYear: 6.72, tenYear: 6.27, lifetime: undefined, expenseRatio: undefined, },
+    { name: "American Funds International Vantage Fund", oneYear: -2.41, fiveYear: 9.04, tenYear: 7.07, lifetime: 6.04, expenseRatio: 0.8, },
+    { name: "MSCI Emerging Markets Index ", oneYear: -11.37, fiveYear: 5.98, tenYear: 3.36, lifetime: undefined, expenseRatio: undefined, },
+    { name: "American Funds Developing World Growth and Income Fund", oneYear: -16.94, fiveYear: 3.37, tenYear: null, lifetime: 2.66, expenseRatio: 0.95, },
+    { name: "MSCI World Index", oneYear: 10.12, fiveYear: 12.42, tenYear: 10.88, lifetime: undefined, expenseRatio: undefined, },
+    { name: "American Funds Global Insight Fund", oneYear: 2.73, fiveYear: 11.95, tenYear: 10.4, lifetime: 9.29, expenseRatio: 0.56, },
+    { name: "70%/30% MSCI All Country World Index/Bloomberg U.S. Aggregate Index", oneYear: 3.84, fiveYear: 8.98, tenYear: 7.82, lifetime: undefined, expenseRatio: undefined, },
+    { name: "Capital Income Builder", oneYear: 7.84, fiveYear: 7.01, tenYear: 7.19, lifetime: 9.09, expenseRatio: 0.37, },
+    { name: "65%/35% S&P 500 Index/Bloomberg U.S. Aggregate Index", oneYear: 8.5, fiveYear: 11.28, tenYear: 10.38, lifetime: undefined, expenseRatio: undefined, },
+    { name: "The Income Fund of America", oneYear: 9.42, fiveYear: 8.65, tenYear: 8.92, lifetime: 10.96, expenseRatio: 0.35, },
+    { name: "60%/40% S&P 500 Index/Bloomberg U.S. Aggregate Index", oneYear: 7.5, fiveYear: 10.59, tenYear: 9.76, lifetime: undefined, expenseRatio: undefined, },
+    { name: "American Balanced Fund", oneYear: 7.29, fiveYear: 9.84, tenYear: 9.98, lifetime: 10.8, expenseRatio: 0.35, },
+    { name: "60%/40% MSCI All Country World Index/Bloomberg Global Aggregate Index", oneYear: 1.72, fiveYear: 7.82, tenYear: 6.53, lifetime: undefined, expenseRatio: undefined, },
+    { name: "American Funds Global Balanced Fund", oneYear: 1.84, fiveYear: 6.77, tenYear: 6.73, lifetime: 6.53, expenseRatio: 0.59, },
+]
+
