@@ -1,0 +1,303 @@
+.bond-holdings-grid {
+    display: grid;
+    grid-template-columns: 57% 43%;
+}
+
+#bond-holdings-info-container {
+    margin-top: -30px;
+}
+
+#bond-holdings-chart {
+    height: 690px;
+    position: relative;
+}
+
+#bond-holdings-holdings-grid {
+    margin-bottom: 50px;
+}
+
+.bond-holdings-grid-row {
+    display: grid;
+    grid-template-columns: 30px auto 120px;
+    margin-top: 16px;
+}
+
+#bond-holdings-grid-2 {
+    display: grid;
+    grid-template-columns: 320px auto 120px;
+    margin-top: 16px;
+}
+
+.bond-holdings-title-header {
+    display: flex;
+    justify-content: flex-start;
+    height: 52px;
+}
+
+.bond-holdings-header-sm {
+    font-size: 12px;
+    line-height: 12px;
+    color: rgba(0, 0, 0, .5);
+}
+
+.bond-holdings-number {
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bond-holdings-reg {
+    transition: opacity .4s ease-in-out;
+    opacity: 1;
+    width: 120px;
+}
+
+.bond-holdings-alt {
+    position: absolute;
+    top: 0;
+    transition: opacity .4s ease-in-out;
+    opacity: 0;
+    width: 120px;
+    pointer-events: none;
+}
+
+.bond-holdings-header-big {
+    font-size: 22px;
+    line-height: 34px;
+    font-weight: 500;
+}
+
+.bond-holdings-header-big sup {
+    font-size: 10px;
+    top: -10px;
+}
+
+.bond-holdings-grid-dot {
+    border-radius: 100px;
+    height: 20px;
+    width: 20px;
+    transition: opacity .4s ease-in-out;
+    background-color: rgba(251, 255, 0, 0.158);
+}
+
+.bond-holdings-text {
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    transition: opacity .4s ease-in-out;
+}
+
+.bond-holdings-meter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#bond-holdings-meter-bar {
+    background-color: black;
+    transition: all .4s ease-in-out;
+    width: 0%;
+    height: 7px;
+}
+
+#bond-holdings-meter-bg {
+    background-color: rgba(213, 208, 202, 1);
+    flex-grow: 1;
+    height: 7px;
+}
+
+.appened-upper-grid-el,
+.appened-lower-grid-el {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+}
+
+.appened-upper-grid-el {
+    cursor: pointer;
+}
+
+.bond-holdings-slice {
+    cursor: pointer;
+}
+
+.holdings-div {
+    width: 80px;
+    cursor: pointer;
+}
+
+.holdings-text {
+    opacity: 1;
+}
+
+@media (max-width: 1400px) {
+    #bond-holdings-info-container {
+        margin-top: -40px;
+    }
+
+    #bond-holdings-holdings-grid {
+        margin-bottom: 44px;
+    }    
+
+    .bond-holdings-grid-row,
+    #bond-holdings-grid-2 {
+        margin-top: 14px;
+    }
+
+    #bond-holdings-chart {
+        height: 640px;
+    }
+
+    .pi-text-labs, .pi-text-labs-2 {
+        line-height: 11px;
+        margin-top: 9px;
+    }
+
+    @media (max-height: 770px) {
+
+        #bond-holdings-info-container {
+            margin-top: -40px;
+        }
+  
+        #bond-holdings-chart {
+            height: 480px;
+        }
+
+        .bond-holdings-header-big {
+            font-size: 20px;
+            line-height: 29px;
+        }
+
+        .bond-holdings-text {
+            font-size: 15px;
+            line-height: 19px;
+        }
+
+        .bond-holdings-grid-dot {
+            height: 15px;
+            width: 15px;
+        }
+
+        .bond-holdings-grid-row {
+            grid-template-columns: 23px auto 90px;
+            margin-top: 7px;
+        }
+
+        #bond-holdings-grid-2 {
+            grid-template-columns: 250px auto 90px;
+            margin-top: 7px;
+        }
+
+        .bond-holdings-number {
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+        #bond-holdings-holdings-grid {
+            margin-bottom: 25px;
+        }
+
+        .bond-holdings-title-header {
+            height: 43px;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    .th-big-bold {
+        font-size: 16px;
+    }    
+
+    .th-grid-box {
+        margin-left: 0px;
+        padding: 0 8px;
+        height: 40px;
+    }
+
+    .fp-section-sm {
+        font-size: 8px;
+        line-height: 19px;
+    }
+
+    .th-reg-text {
+        font-size: 10px;
+    }
+
+    .th-med {
+        font-size: 14px;
+        min-height: 14px;
+    }
+
+    .th-number-text {
+        font-size: 17px;
+    }
+
+    .th-container {
+        padding-top: 8px;
+    }
+
+
+
+
+    .pi-text-labs, .pi-text-labs-2 {
+        line-height: 9px;
+    }
+
+    #bond-holdings-info-container {
+        margin-top: -50px;
+    }
+
+    #bond-holdings-chart {
+        height: 390px;
+    }
+
+    .bond-holdings-header-big {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .bond-holdings-header-sm {
+        font-size: 9px;
+        line-height: 9px;
+    }
+
+    .bond-holdings-text {
+        font-size: 10px;
+        line-height: 12px;
+    }    
+
+    .bond-holdings-grid-row {
+        grid-template-columns: 16px auto 60px;
+        margin-top: 6px;
+        align-items: center;
+    }
+    
+    #bond-holdings-grid-2 {
+        grid-template-columns: 170px auto 60px;
+        margin-top: 6px;
+    }
+
+    .bond-holdings-number {
+        font-size: 11px;
+        line-height: 15px;
+    }
+
+    .bond-holdings-grid-dot {
+        height: 10px;
+        width: 10px;
+    }
+
+    .bond-holdings-title-header {
+        height: 33px;
+    }    
+
+    .bond-holdings-header-big sup {
+        font-size: 6px;
+        top: -7px;
+    }
+}
+

@@ -1,0 +1,31 @@
+.sfd {
+    color: #6F6F6F;
+    opacity: .6;
+    text-align: center;
+}
+
+#td-value-chart .x-axis .tick:first-of-type {
+    display: none;
+}
+
+#td-value-chart .axis text {
+    fill: rgb(172, 172, 172);
+    font-weight: 700;
+}
+
+.noticks path.domain {
+    opacity: .5;
+    transform: scaleX(1.25);
+}
+
+.noticks text, #chart .x-axis .tick text {
+    display: none;
+}
+
+.dashed-line {
+    stroke-dasharray: 4px 2px;
+    stroke: grey;
+    stroke-width: 2px;
+    opacity: .3;
+    transform: scaleX(1.25);
+}

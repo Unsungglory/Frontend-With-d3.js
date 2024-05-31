@@ -1,0 +1,81 @@
+.td-ex-grid {
+    display: grid;
+    grid-template-columns: 22% 75%;
+    column-gap: 3%;
+    height: 100%;
+    position: relative;
+}
+
+.td-ex-grid #white-box {
+    background-color: white;
+    box-shadow: 3px 15px 30px #204d604d;
+    width: 100%;
+    height: 65%;
+    padding: 2%;
+    display: flex;
+    flex-flow: column;
+}
+
+#white-box #griddy {
+    display: grid;
+    grid-template-columns: 40% 45%;
+    grid-gap: 6%;
+    flex-grow: 1;
+    padding: 4%;
+    padding-left: 0;
+    padding-right: 10%;
+    align-items: center;
+    position: relative;
+}
+
+.td-ex-grid hr {
+    border-top: 1px solid grey;
+    width: 100%;
+    position: absolute;
+    left: 10%;
+    top: 76%;
+}
+
+#griddy div.p-26 {
+    text-align: end;
+    position: relative;
+    left: -10%;
+}
+
+.td-ex-grid  .p-blue {
+    color: #005F9E;
+}
+
+.td-ex-grid .p-turq {
+    color: #00AEA9;
+}
+
+.td-ex-grid  .raspberry, .td-ex-grid  .p-raspberry {
+    color: #B42573;
+}
+
+.td-ex-grid .tick {
+    font-weight: 700;
+    font-size: clamp(8px, 1vw, 15px);
+    color: rgba(4, 5, 4, 0.5);
+}
+
+.td-ex-grid .x-axis .domain {
+    display: none;
+}
+
+.td-ex-grid .text-label {
+    position: absolute;
+}
+
+#td-ex-returns-chart svg {
+    overflow: visible;
+}
+
+#td-ex-returns-chart .axis {
+    font-family: 'Avenir';
+}
+
+#td-ex-returns-chart .x-axis .tick text {
+    transform: rotate(-20deg) translateY(20px);
+}

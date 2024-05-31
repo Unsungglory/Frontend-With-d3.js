@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>XL Reader</title>
+    <link href="../css/xlReader.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <div style='display: flex; align-items: center;justify-content: space-around;'>
+        <input type="file" id="file-input" />
+        <h3 id='title' style="margin-right: 40px;">Open dev tools, then select file</h3>
+        <h3 id='end-text'></h3>
+    </div>
+    <textarea rows="57" id="append-here" style="display: none; width: 99%; height: 88vh;"></textarea>
+
+    <div id="loading">
+        <div id='loading-text'>
+            READING SPREADSHEET...
+        </div>
+        <div
+            style="position: absolute; z-index: 1; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.877);">
+        </div>
+    </div>
+</body>
+
+<script src="../js/xlsx.mini.min.js"></script>
+<script src='./xlReader.js'></script>
+<script src="./xlExpectedSheetNames.js"></script>
+<script src="./xlExpectedTickers.js"></script>
+
+<script>
+    ////////////////////////////////////////////
+    document.getElementById('file-input')
+        .addEventListener('change', fileInputHandler, false);
+
+    //////////////////////////////////////////////////////////
+    async function fileInputHandler(e) {
+
+        try {
+            window.spreadSheet = await readFile(e);
+        } catch (error) {
+            console.log(error)
+            return
+        }
+    }
+
+    /////////////////////////////////////////////////////////
+    async function readFile(e) {
+
+        const file = e.target.files[0];
+
+        if (file.length === 0) {
+            return
+        } else if (!file) {
+            window.alert('File input not working')
+        } else {
+            await togglePopup('loading', 'READING FILE') // on
+            await runProgram(file)
+        }
+    }
+
+    /////////////////////////////////////////////////////////
+    async function togglePopup(id, text = null) {
+        if (text)
+            document.getElementById('loading-text').textContent = text;
+
+        document.getElementById(id).classList.toggle('active')
+
+        // I really want this loading screen to work!!!
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                res();
+            }, 100);
+        })
+    }
+
+    /////////////////////////////////////////////////////////
+
+    async function runProgram(inputFile) {
+        console.warn('FILE', inputFile)
+
+        // TIME OUTPUT
+        const startTime = new Date().getTime();
+        document.getElementById('title').innerHTML = `
+            <span style='font-weight: normal; font-size: .9em;'>${currentTime()}: reading from</span> ${inputFile.name}
+        `
+        console.log(currentTime(true), 'READING FILE');
+
+        // READ FROM FILE
+        try {
+            await readExcel(inputFile).then(data => {
+
+                // append data to text area
+                if (data) {
+                    document.querySelector('#append-here').style.display = 'block';
+                    document.querySelector('#append-here').innerHTML = data;
+                }
+
+                const endTime = new Date().getTime();
+                const minutes = Math.floor((endTime - startTime) / 1000 / 60);
+                const leftoverSeconds = Math.round((((endTime - startTime) / 1000 / 60) - minutes) * 60);
+
+                // update text
+                document.getElementById('end-text').innerText = currentTime() + ': DONE (' + minutes + ' mins & ' + leftoverSeconds + ' secs)';
+            });
+            await togglePopup('loading') // off
+        } catch (error) {
+            document.getElementById('loading-text').innerHTML = error;
+            document.getElementById('loading-text').style.color = 'red';
+            console.error(error)
+        }
+
+        console.log('DONE READING FILE', inputFile.name)
+        console.log('**************************************')
+    }
+
+    /////////////////////////////////////////////////////////
+    function currentTime(shorten = false) {
+        const TIME = new Date().toLocaleString().split(', ')[1].replace(',', '');
+
+        if (shorten) {
+            return '(' + TIME.split(' ')[0] + ')'
+        }
+
+        return TIME;
+    }
+
+</script>
+
+</html>

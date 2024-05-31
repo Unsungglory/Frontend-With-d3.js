@@ -1,0 +1,414 @@
+
+    .ft-header {
+        background-color: rgba(11, 14, 16, 1);
+        height: 145px;
+        color: white;
+        align-items: center;
+        padding: 0px 60px;
+        display: flex;
+        z-index: 11;
+        position: relative;
+  
+        position: fixed;
+        width: 100%;
+        top: 0;
+      }
+  
+      .ft-subheader {
+        height: 70px;
+        background-color: rgb(248, 248, 246);
+        padding-left: 60px;
+        position: relative;
+        display: flex;
+        z-index: 11;
+  
+        position: fixed;
+        width: 100%;
+        top: 145px;
+      }
+  
+      .ft-sub-group {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        align-self: center;
+        transition: opacity .4s ease-in-out;
+      }
+  
+      .ft-subheader-button {
+        text-align: center;
+        margin-right: 40px;
+        cursor: pointer;
+        padding: 15px 0px;
+        font-size: 22px;
+      }
+  
+      #ft-subheader-bond {
+        opacity: 0;
+        pointer-events: none;
+      }
+  
+      #down-caret {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+  
+      .subnav {
+        width: 100%;
+        position: fixed;
+        background-color: white;
+        z-index: 10;
+        top: -490px;
+        transition: top .5s ease-in-out, opacity .4s ease-in-out;
+      }
+  
+      .subnav-black {
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 0;
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .4s ease-in-out;
+      }
+  
+      .dark-blue {
+        background-color: rgba(1, 45, 114, 1);
+      }
+  
+      .royal-blue {
+        background-color: rgba(0, 87, 184, 1);
+      }
+  
+      .green {
+        background-color: rgba(3, 150, 94, 1);
+      }
+  
+      .dark-green {
+        background-color: rgba(0, 108, 91, 1);
+      }
+  
+      .fund-container {
+        display: grid;
+        grid-template-columns: 350px 350px;
+        column-gap: 18px;
+        row-gap: 30px;
+        padding: 50px 0 50px 60px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0);
+        transition: box-shadow .4s ease-in-out;
+      }
+  
+      .fund-box-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+  
+      .fund-box-container sup {
+        font-size: 7px;
+        top: -8px;
+      }
+  
+      .fund-text {
+        width: 250px;
+        padding-left: 15px;
+        font-size: 18px;
+        line-height: 22px;
+      }
+  
+      .fund-box {
+        height: 75px;
+        width: 75px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+      }
+  
+      .ft-fund-box {
+        width: 80px;
+        height: 80px;
+        background-color: grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        font-size: 15px;
+        margin-right: 15px;
+        position: relative;
+        transition: background-color .3s ease-in-out;
+      }
+  
+      .ft-header-fund-container {
+        width: 100%;
+      }
+  
+      .ft-header-row-two {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+  
+      .ft-fund-name {
+        font-size: 45px;
+        position: relative;
+        top: 4px;
+        /* transition: opacity .3s ease-in-out; */
+      }
+  
+      .ft-cat-container {
+        display: flex;
+      }
+  
+      .ft-fund-category {
+        font-size: 18px;
+      }
+  
+      .ft-header-buttons {
+        text-transform: uppercase;
+        display: flex;
+        font-size: 12px;
+        letter-spacing: 1.2px;
+        align-items: center;
+        justify-content: space-between;
+        width: 436px;
+  
+        top: -2px;
+        position: relative;
+      }
+  
+      .header-reg-el {
+        position: relative;
+        display: flex;
+        transition: opacity .3s ease-in-out;
+      }
+  
+      .header-alt-el {
+        position: absolute;
+        white-space: nowrap;
+        display: flex;
+        transition: opacity .3s ease-in-out;
+        opacity: 0;
+      }
+  
+  
+  
+      .ft-launch-icon {
+        height: 24px;
+        width: 24px;
+        margin-left: 65px;
+        cursor: pointer;
+        position: absolute;
+        align-self: center;
+      }
+  
+      .ft-share-class {
+        display: flex;
+        align-items: center;
+      }
+  
+      .ft-share-class-buttons {
+        background-color: rgba(64, 64, 64, 1);
+        border-radius: 100px;
+        height: 35px;
+        width: 138px;
+        margin-left: 24px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+      }
+  
+      .ft-class {
+        z-index: 1;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        user-select: none;
+        -webkit-user-select: none;
+        /* Safari */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE10+/Edge */
+      }
+  
+      .ft-button-slider {
+        background-color: rgba(0, 156, 220, 1);
+        width: 50%;
+        height: 100%;
+        border-radius: 100px;
+        position: absolute;
+        left: 0;
+        transition: .3s all ease-in-out;
+      }
+  
+      .ft-disclousure-title {
+        padding: 8px 20px;
+        cursor: pointer;
+        text-transform: none;
+        font-size: 13px;
+        letter-spacing: .15px;
+        background-color: rgba(64, 64, 64, 1);
+        height: 30px;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        align-self: flex-start;
+        user-select: none;
+        -webkit-user-select: none;
+        /* Safari */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* IE10+/Edge */
+      }
+  
+      li span {
+        position: relative;
+        left: 10px;
+      }
+  
+      /* The Close X in modal*/
+      .close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        z-index: 999;
+        color: #fff;
+        font-size: 3.5rem;
+        background-color: transparent;
+        border-radius: 3px;
+        text-align: center;
+        transition: all 0.4s;
+        overflow: hidden;
+        height: 32px;
+        width: 32px;
+        padding: 0px;
+        padding-top: 13px;
+        padding-right: 37px;
+        cursor: pointer;
+      }
+  
+      .close:hover,
+      .close:focus {
+        transform: scale(1.1);
+      }
+  
+      .close div {
+        position: absolute;
+        top: -19px;
+        left: -1px;
+      }
+
+      
+    @media (max-width: 1400px) {
+
+        .ft-header {
+          padding-left: 82px;
+        }
+  
+        .ft-fund-name {
+          font-size: 42px;
+          top: 8px;
+        }
+  
+        .ft-fund-category {
+          position: relative;
+          top: 2px;
+        }
+  
+        @media (max-height: 770px) {
+  
+          .ft-header {
+            padding-left: 60px;
+          }
+  
+          .ft-fund-name {
+            font-size: 36px;
+            top: 4px;
+          }
+  
+          .ft-header-buttons {
+            transform-origin: center right;
+            transform: scale(.95);
+          }
+  
+          .ft-launch-icon {
+            height: 22px;
+            width: 22px;
+          }
+  
+          .fund-box {
+            height: 55px;
+            width: 55px;
+            font-size: 13px;
+          }
+        }
+  
+      }
+  
+      @media (max-width: 1100px) {
+  
+        .ft-header {
+          padding-left: 60px;
+        }
+  
+        .ft-header {
+          height: 85px
+        }
+  
+        .ft-fund-name {
+          font-size: 24px;
+          top: 9px;
+        }
+  
+        .ft-fund-category {
+          font-size: 11px;
+          position: relative;
+          top: 1px;
+        }
+  
+        .ft-launch-icon {
+          height: 16px;
+          width: 16px;
+        }
+  
+        .ft-fund-box {
+          width: 55px;
+          height: 55px;
+          font-size: 9px;
+          margin-right: 11px;
+        }
+  
+        .ft-cat-container {
+          align-items: center;
+        }
+  
+        .ft-header-buttons {
+          font-size: 9px;
+          width: 260px;
+        }
+  
+        .ft-share-class-buttons {
+          height: 20px;
+          width: 78px;
+          margin-left: 8px;
+        }
+  
+        .close {
+          transform: scale(.7);
+          transform-origin: top center;
+          top: 13px;
+        }
+  
+        .ft-fund-name sup {
+          font-size: .7rem;
+          top: -.6rem;
+        }
+  
+      }

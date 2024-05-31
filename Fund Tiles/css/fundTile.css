@@ -1,0 +1,299 @@
+   .fp-page-section {
+      height: 100vh;
+      display: flex;
+      flex-flow: column;
+    }
+
+    .fp-top-header {
+      height: 195px;
+      background-color: rgba(11, 14, 16, 1);
+      padding-left: 46px;
+      display: flex;
+      align-items: center;
+    }
+
+    .fp-header-container {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .fp-logo {
+      height: 100px;
+    }
+
+    .fp-header-bottom {
+      background-color: rgba(34, 37, 39, 1);
+      height: 87px;
+      color: white;
+      font-size: 40px;
+      font-weight: 700;
+      padding-left: 46px;
+      display: flex;
+      align-items: center;
+    }
+
+    .dark-blue {
+      background-color: rgba(1, 45, 114, 1);
+    }
+
+    .royal-blue {
+      background-color: rgba(0, 87, 184, 1);
+    }
+
+    .green {
+      background-color: rgba(3, 150, 94, 1);
+    }
+
+    .dark-green {
+      background-color: rgba(0, 108, 91, 1);
+    }
+
+    .fund-container {
+      display: grid;
+      grid-template-columns: 94px 94px;
+      column-gap: 18px;
+      padding-left: 46px;
+    }
+
+    .fund-box {
+      height: 95px;
+      width: 94px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      margin-top: 18px;
+
+      opacity: .12;
+      transition: opacity .75s ease-in-out;
+    }
+
+    .fp-hr {
+      border: 1px solid rgba(213, 208, 202, 1);
+      margin: 46px;
+      margin-bottom: 0px;
+      opacity: .6;
+    }
+
+    .fp-legend {
+      display: flex;
+      align-items: center;
+      padding-left: 46px;
+      height: 64px;
+    }
+
+    .fp-legend-box {
+      width: 14px;
+      height: 14px;
+      margin-right: 5px;
+    }
+
+    .fp-bottom-text {
+      font-size: 14px;
+      margin-right: 30px;
+      margin-top: -1px;
+    }
+
+    .p-footer {
+      padding-left: 46px;
+      font-size: 15px;
+    }
+
+    .p-footer strong {
+      font-size: 15px;
+      line-height: 18px;
+    }
+
+    .fp-spacer {
+      flex-grow: .3;
+    }
+
+    #fund-page {
+      display: none;
+      position: fixed;
+      z-index: 327;
+      border: none;
+      top: 1080px;
+      background-color: rgba(255, 255, 255, 0.94);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transition: .7s top ease-in-out;
+      border: none;
+    }
+
+    #canvas-container {
+        top: 210px;
+    }
+
+    .c-annotation, .c-highlighter {
+        z-index: 202;
+    }
+
+    .open-annotation-icon {
+        z-index: 202;
+    }
+
+    .ipad-push {
+      height: 21px;
+      background-color: black;
+      display: none;
+    }
+
+    @media (max-width: 1400px) {
+      .fp-top-header {
+        height: 155px;
+        background-color: rgba(11, 14, 16, 1);
+        padding-left: 46px;
+        display: flex;
+        align-items: center;
+      }
+
+      .fp-header-bottom {
+        background-color: rgba(34, 37, 39, 1);
+        height: 70px;
+        color: white;
+        font-size: 40px;
+        font-weight: 700;
+        padding-left: 46px;
+        display: flex;
+        align-items: center;
+      }
+
+      .fp-hr {
+        margin-bottom: 5px;
+      }
+
+      @media (max-height: 770px) {
+
+        .annotation-ui {
+          top: 0px;
+        }
+
+        #canvas-container {
+          top: 153px;
+        }
+
+        .fp-top-header {
+          height: 135px;
+        }
+
+        .fp-logo {
+          height: 80px;
+        }
+
+        .fp-header-bottom {
+          height: 55px;
+          font-size: 28px;
+        }
+
+        .fund-container {
+          display: grid;
+          grid-template-columns: 75px 75px;
+          column-gap: 9px;
+        }
+
+        .fund-box {
+          margin-top: 9px;
+          width: 75px;
+          height: 75px;
+          font-size: 13px;
+          cursor: pointer;
+        }
+
+        .fp-hr {
+          margin: 19px 46px;
+        }
+
+        .fp-bottom-text {
+          font-size: 11px;
+          margin-right: 25px;
+          margin-top: 0px;
+        }
+
+        .fp-legend {
+          height: 12px;
+        }
+
+        .fp-legend-box {
+          width: 12px;
+          height: 12px;
+          margin-right: 5px;
+        }
+      }
+
+    }
+
+    @media (max-width: 1100px) {
+
+      
+      #canvas-container {
+        top: 153px;
+      }
+
+
+      .annotation-ui {
+        top: 0px;
+      }
+
+      .fp-top-header {
+        height: 105px;
+      }
+
+      .fp-spacer {
+        flex-grow: .4;
+      }
+
+      .fp-logo {
+        height: 64px;
+      }
+
+      .fp-header-bottom {
+        height: 50px;
+        font-size: 24px;
+      }
+
+      .fund-container {
+        display: grid;
+        grid-template-columns: 55px 55px;
+        column-gap: 9px;
+      }
+
+      .fund-box {
+        margin-top: 9px;
+        width: 55px;
+        height: 55px;
+        font-size: 10px;
+        cursor: pointer;
+      }
+
+      .fp-bottom-text {
+        font-size: 12px;
+        margin-right: 25px;
+        margin-top: 0px;
+      }
+
+      .fp-hr {
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+
+      .fp-bottom-text {
+        font-size: 9px;
+        margin-right: 20px;
+        margin-top: 0px;
+      }
+
+      .fp-legend {
+        height: 10px;
+      }
+
+      .fp-legend-box {
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
+
+    }

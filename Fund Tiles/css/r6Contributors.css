@@ -1,0 +1,155 @@
+.fp-section-12 {
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 5px;
+}
+
+.r6-cont-two-col {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 30px;
+}
+
+.r6-cont-five-col {
+    display: grid;
+    grid-template-columns:  340px repeat(4, 66px);
+    margin-top: 56px;
+    text-align: center;
+    row-gap: 22px;
+    column-gap: 50px;
+    margin-bottom: 20px;
+}
+
+.r6-col-header {
+    font-size: 19px;
+    color: rgba(93, 93, 93, 1);
+    margin-bottom: 24px;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    letter-spacing: -.25px;
+}
+
+.r6-col-header sup {
+    font-size: 50%;
+    left: 1px;
+    top: 29px;
+}
+
+.r6-cont-company-name {
+    font-size: 18px;
+    font-weight: 500;
+    padding-top: 2px;
+    margin-bottom: -5px;
+}
+
+.r6-cont-num {
+    font-size: 20px;
+}
+
+.tas {
+    text-align: left;
+    justify-self: flex-start;
+}
+
+.r6-column-section {
+    padding-right: 50px;
+}
+
+@media (max-width: 1400px) {
+
+    .r6-cont-five-col {
+        grid-template-columns: 190px repeat(4, 54px);
+        margin-top: 56px;
+        row-gap: 22px;
+        column-gap: 34px;
+        margin-bottom: 20px;
+    }
+
+    .r6-col-header {
+        font-size: 14px;
+    }
+
+    .r6-col-header sup {
+        font-size: 60%;
+        left: 1px;
+        top: 21px;
+    }
+
+    .r6-cont-company-name {
+        font-size: 16px;
+    }
+    
+    .r6-cont-two-col {
+        column-gap: 30px;
+    }
+
+    .r6-cont-num {
+        font-size: 19px;
+    }
+
+    @media (max-height: 770px) {
+        .r6-cont-five-col {
+            grid-template-columns: 190px repeat(4, 54px);
+        }
+
+        .r6-col-header {
+            font-size: 14px;
+        }
+
+        .r6-col-header sup {
+            font-size: 60%;
+            left: 1px;
+            top: 21px;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    .fp-section-12 {
+        font-size: 10px;
+        line-height: 14px;
+        margin-top: 1px;
+    }
+
+    .r6-cont-five-col {
+        grid-template-columns: 150px repeat(4, 44px);
+        margin-top: 26px;
+        column-gap: 15px;
+    }
+
+    .r6-col-header {
+        font-size: 10px;
+        margin-bottom: 0px;
+    }
+
+    .r6-cont-company-name {
+        font-size: 11px;
+        font-weight: 500;
+        padding-top: 0px;
+        margin-bottom: -2px;
+    }
+
+    .r6-cont-num {
+        font-size: 12px;
+    }  
+
+    .r6-col-header sup {
+        top: -6px;
+    }   
+    
+    .r6-column-section {
+        padding-right: 30px;
+    }   
+    
+    .r6-col-header sup {
+        font-size: 60%;
+        left: 1px;
+        top: 15px;
+    }
+
+    #r6-tc-bottom {
+        font-size: 9px;
+    }
+
+}

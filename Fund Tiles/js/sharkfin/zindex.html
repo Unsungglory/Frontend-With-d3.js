@@ -1,0 +1,769 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- External libraries -->
+    <script src="../../engine/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+    <!-- <script src="engine/loadApp.js" type="text/javascript"></script> -->
+
+    <script src="./lib/d3/d3.min.js"></script>
+    <script src="./lib/lodash/lodash.min.js"></script>
+    <script src="./lib/numeral/numeral.min.js"></script>
+    <script src="./lib/ramda/ramda.min.js"></script>
+
+    <link href="engine/cg.css" rel="stylesheet" type="text/css" />
+    <link href="./css/shark-fin.css" rel="stylesheet">
+    </link>
+
+    <script>
+        const sharkFinApp = {};
+    </script>
+
+    <style>
+        button {
+            outline: none;
+            border: none;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .top-btn button {
+            z-index: 4;
+            align-content: center;
+            align-items: center;
+            display: flex;
+            color: gray;
+            text-decoration: none;
+            font-size: 12px;
+            font-family: AvenirCon;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE and Edge */
+        body {
+            -ms-overflow-style: none;
+        }
+
+        .details-box div:first-child {
+            margin-right: 80px;
+        }
+
+        .details-box {
+            margin-top: 0px;
+        }
+
+        .main-container {
+            padding-top: 200px;
+            position: absolute;
+            top: 0px;
+        }
+
+        .main-container .details-row {
+            margin-bottom: 10px;
+        }
+
+        .details-box .text-label {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .disclosure-button {
+            display: block;
+            font-family: "Avenir Next LT W01 Demi";
+            font-size: 12px;
+            letter-spacing: 0.16px;
+            text-align: center;
+            border: 2px solid rgba(198, 162, 148, 1);
+            background-color: #FFFFFF;
+            padding: 8px 10px;
+            border-radius: 100px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .disclaimer-bigger {
+            font-size: 20px;
+            font-family: Avenir;
+            color: rgba(136, 136, 136, 1);
+            margin-bottom: 10px;
+        }
+
+        .disclaimer-grey {
+            font-size: 15;
+            font-family: Avenir;
+            color: rgba(136, 136, 136, 1);
+            margin-bottom: 20px;
+        }
+
+        .p-footer p strong {
+            font-size: 20px;
+            letter-spacing: -.1px;
+            line-height: 23px;
+        }
+
+        h1.title {
+            font-size: 20px !important;
+        }
+
+        .assumptions-section .inner-container .assumption-container h1 {
+            font-size: 14px !important;
+        }
+
+        /* body {
+            background-color: white;
+        } */
+
+        .sharkfin-top-fold {
+            height: 100vh;
+        }
+
+        .sharkfin-row {
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+            z-index: 10;
+        }
+
+        .sharkfin-text {
+            font-family: Avenir, Helvetica, sans-serif;
+            font-weight: 500;
+            padding-top: 4px;
+            padding-right: 20px;
+            font-size: 2.5rem;
+            width: fit-content;
+            cursor: pointer;
+            margin-left: auto;
+            transition: .4s all ease-in-out;
+            padding-left: 20px;
+        }
+
+        .sharkfin-text:hover {
+            transform: scale(1.1)
+        }
+
+        .sharkfin-top-section {
+            font-family: Avenir;
+            padding-left: 50px;
+            padding-top: 40px;
+            padding-right: 50px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1;
+            position: relative;
+        }
+
+        .sharkfin-bold {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .sharkfin-norm {
+            font-weight: 700;
+            font-size: 24px;
+            color: rgba(163, 158, 153, 1);
+            margin-bottom: 25px;
+        }
+
+        .assumptions-section {
+            min-width: 278px;
+        }
+
+
+        /* LOOK HERE Ipad seismic app specific css */
+        .ipadseismic .assumptions-section {
+            min-width: 278px;
+        }
+
+        .ipadseismic .slider-page-section .inner-container .slider-label {
+            font-size: 12px;
+        }
+
+        .ipadseismic .assumptions-section .inner-container .assumption-container {
+            margin: 4px 0;
+            flex: none;
+        }
+
+        .ipadseismic .assumption-container h2 {
+            margin-top: 4px;
+        }
+
+        .ipadseismic .main-container .legend .color-box {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+        }
+
+        .ipadseismic .details-box .text-label {
+            margin: 0 0;
+        }
+
+        .ipadseismic .details-box div:nth-child(even) {
+            margin-right: 20px;
+        }
+
+        .ipadseismic .details-box div:first-child {
+            margin-right: 20px;
+        }
+
+        .ipadseismic .sharkfin-bold {
+            font-size: 10px;
+        }
+
+
+        /* END IPAD CLASSES */
+
+        @media (max-width: 1400px) {
+
+            .sharkfin-top-section {
+                padding-top: 10px;
+            }
+
+            .main-container {
+                padding-top: 175px;
+            }
+
+            .assumptions-section {
+                min-width: 340px;
+            }
+
+            .p-footer {
+                padding-top: 40px;
+            }
+
+            @media (max-height: 770px) {
+                .main-container {
+                    padding-top: 170px;
+                }
+
+                .sharkfin-bold {
+                    font-size: 40px;
+                    margin-bottom: 2px;
+                }
+
+                .sharkfin-norm {
+                    font-size: 24px;
+                    margin-bottom: 25px;
+                }
+
+                .assumptions-section {
+                    min-width: 325px;
+                }
+
+                .main-container .legend .color-box {
+                    width: 15px;
+                    height: 15px;
+                }
+
+                .details-box .green-text {
+                    font-size: 27px;
+                }
+
+                .details-box .text-label {
+                    margin-top: -3px;
+                    margin-bottom: 0px;
+                }
+
+                .details-box .text-label {
+                    font-size: 14px;
+                }
+
+                .sharkfin-top-section {
+                    padding-top: 10px;
+                }
+
+                .assumptions-section .inner-container .assumption-container {
+                    margin: 5px 0;
+                }
+
+                .assumptions-section .inner-container .assumption-container th,
+                .assumptions-section .inner-container .assumption-container td {
+                    padding: 4px 5px;
+                    padding-left: 0px;
+                }
+
+                .assumptions-section .inner-container .assumption-container th {
+                    font-size: 14px;
+                    letter-spacing: 0.05px;
+                    line-height: 15px;
+                }
+
+                h1 {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        @media (max-width: 1200px) {
+
+            .p-footer {
+                padding-top: 20px;
+            }
+
+            .main-container {
+                padding-top: 148px;
+            }
+
+            .main-container .details-row {
+                padding-right: 12px;
+            }
+
+            .details-box .text-label {
+                margin-top: -1px;
+                margin-bottom: 1px;
+            }
+
+            .details-box .text-label {
+                font-size: 10px;
+                letter-spacing: 0.2px;
+            }
+
+            .details-box .green-text {
+                font-size: 18px;
+            }
+
+            .details-box .column {
+                margin: 0;
+                min-width: unset;
+            }
+
+            .details-box div:first-child {
+                margin-right: 60px;
+            }
+
+            .details-box div:nth-child(even) {
+                margin-right: 60px;
+            }
+
+            .main-container .legend .color-box {
+                width: 10px;
+                height: 10px;
+                margin-right: 5px;
+            }
+
+            .sharkfin-bold {
+                font-size: 28px;
+                margin-bottom: 2px;
+            }
+
+            .sharkfin-norm {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+            .main-container {
+                border-left: 2px solid #f5f6fa;
+                border-right: 0px solid #f5f5f5;
+            }
+
+            .assumptions-section {
+                min-width: unset;
+            }
+
+            .assumptions-section .inner-container {
+                flex-flow: column;
+                width: 245px;
+            }
+
+            .main-content .graph-section .content-container .legend {
+                transform: scale(.77) translate(0px, -3px);
+            }
+
+            .disclaimer-bigger {
+                font-size: 10px;
+            }
+
+            .disclaimer-grey {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .disclosure-button {
+                font-size: 10px;
+                border: 1px solid rgba(198, 162, 148, 1);
+                padding: 4px 7px;
+            }
+
+            .assumptions-section .inner-container .assumption-container th {
+                font-size: 10px;
+                letter-spacing: 0.05px;
+                line-height: 11px;
+            }
+
+            .assumptions-section .inner-container .assumption-container th,
+            .assumptions-section .inner-container .assumption-container td {
+                padding: 1px 5px;
+                padding-left: 0px;
+            }
+
+            .assumptions-section .inner-container .assumption-container td {
+                font-size: 13px;
+            }
+
+            .top-btn button {
+                margin-bottom: 20px;
+            }
+
+            .p-footer p {
+                font-size: 11px;
+            }
+
+            .p-footer p strong {
+                font-size: 15px;
+                letter-spacing: -.1px;
+                line-height: 18px;
+            }
+
+            .p-footer>.source {
+                font-size: 11px;
+                font-weight: 400;
+                color: gray;
+            }
+
+            .axis-tick-text {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class='sharkfin-top-fold'>
+
+        <div class='sharkfin-row'>
+            <div class='sharkfin-text' id='shark-fin-close'>
+                <div>
+                    &times;
+                </div>
+            </div>
+        </div>
+
+        <div class='sharkfin-top-section'>
+            <div>
+                <div class='sharkfin-bold'>
+                    The impact of higher returns
+                </div>
+                <div class='sharkfin-norm'>
+                    Just a 1% increase in returns can result in 13 additional years of spending.
+                </div>
+            </div>
+            <div class="disclosure-button-container">
+                <button onclick="jumpToSharkDisclosures()" class="disclosure-button">Investment Disclosures</button>
+            </div>
+        </div>
+        <div class="main-container">
+            <div class="details-row">
+                <div class="header-content-right">
+                    <div class="details-box">
+                        <div class="column">
+                            <p class="green-text">
+                                <span><span class="js-bps-number"></span> BPS</span>
+                            </p>
+                            <p class="text-label">Impact of</p>
+                            <p class="text-label">excess returns</p>
+                        </div>
+                        <div class="column">
+                            <p class="green-text"><span class="js-extra-years"></span></p>
+                            <p class="text-label">Additional years </p>
+                            <p class="text-label">of retirement spending</p>
+                        </div>
+
+                        <div class="column">
+                            <p class="green-text">$<span class="js-extra-savings"></span></p>
+                            <p class="text-label">Additional savings</p>
+                            <p class="text-label">at age 65</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legend">
+                <div class="color-box base"></div>
+                <div class="legend-text">Baseline</div>
+                <div class="color-box improved"></div>
+                <div class="legend-text">Impact of BPS</div>
+            </div>
+
+            <div class="main-content">
+                <div class="slider-page-section">
+
+                    <div class="inner-container">
+
+
+                        <div class="slider-label">125 BPS Max</div>
+
+                        <div class="slider-container">
+                            <input id="slider" type="range" min="0" step="5" />
+                            <output for="slider" id="current-bps">
+                                <p id="current-bps-text"></p>
+                                <div class="arrow-up"></div>
+
+                                <div class="arrow-down"></div>
+                            </output>
+                        </div>
+
+                        <div class="slider-label">0 Min</div>
+                    </div>
+                </div>
+
+                <div class="right-section">
+                    <div class="graph-section">
+
+                        <div class="content-container">
+
+                            <div class="middle-section">
+
+
+
+                                <div class="right-side-container">
+                                    <div class="graph-container">
+
+                                        <div class="baseline-label">Baseline</div>
+
+                                        <svg id="chart">
+                                            <defs>
+                                                <clipPath id="sharkFinAreaClip">
+                                                    <rect x="0" y="0" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                    </div>
+
+                                    <div class="x-axis-label-container">
+                                        <div class="axis-label">AGE (YEARS)</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="assumptions-section">
+                        <div class="inner-container">
+                            <div class="assumption-container">
+                                <h2>Demographic assumption</h2>
+
+                                <table>
+                                    <tr>
+                                        <th>Starting balance</th>
+                                        <td>$0</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Starting age</th>
+                                        <td>25</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Starting salary</th>
+                                        <td>$40,000</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Annual salary growth rate</th>
+                                        <td>3%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Annual contribution rate</th>
+                                        <td>10%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Retirement age</th>
+                                        <td>65</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ending salary at 65</th>
+                                        <td>$130,482</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="assumption-container">
+                                <h2>Scenario assumptions</h2>
+
+                                <table>
+                                    <tr>
+                                        <th>Returns before 65</th>
+                                        <td><span class="js-returns-before-65"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Returns after 65</th>
+                                        <td><span class="js-returns-after-65"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account balance at 65</th>
+                                        <td>$<span class="js-account-balance-at-65"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Withdrawal</th>
+                                        <td>50%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Annual withdrawal amount</th>
+                                        <td>$65,241</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="p-footer" id="legal">
+
+        <!-- engine back to top -->
+        <span class="top-btn">
+            <button onclick="scrollToSharkTop()">
+                Back to Top
+                <svg id="W-sharp-arrow_upward" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24">
+                    <path id="Path" d="M0,0H24V24H0Z" fill="#005f9e" fill-rule="evenodd" />
+                    <path id="Path-2" data-name="Path" d="M4,12l1.41,1.41L11,7.83V20h2V7.83l5.58,5.59L20,12,12,4Z"
+                        fill="#fff" fill-rule="evenodd" />
+                </svg>
+            </button>
+        </span>
+        <!-- end back to top -->
+
+        <!-- end back to top -->
+
+        <h4 class='source'>
+            Sources: Capital Group. The demographic assumptions, returns and ending balances are hypothetical and
+            provided for illustrative purposes only, and are not intended to provide any assurance or promise of actual
+            returns and outcomes. returns will be affected
+            by the management of investments and any adjustments to the assumed contribution rates, salary or other
+            participant demographic information. Actual results may be higher or lower than those shown. Past results
+            are not predictive of results in future
+            periods. Based on exhibit from Russell Investments. The additional years of retirement spending are intended
+            to represent a conservative measure.
+            <br><br>
+            Based on a hypothetical scenario: $40,000 initial salary, 3% annual salary growth (mimicking the 3% standard
+            inflation rate adjustment) and 10% annual contribution starting at age 25. Withdrawal rate under all
+            scenarios is 50% of ending salary ($s5,241). For
+            illustrative purposes only. Not intended to portray actual investment. Based on an exhibit from Russell
+            Investments.
+        </h4>
+        <p>
+            <strong>
+                Investors should carefully consider investment objectives, risks, charges and expenses. This and other
+                important information is contained in the fund prospectuses and summary prospectuses, which can be
+                obtained from a financial
+                professional and should be read carefully before investing.
+            </strong>
+            <br><br>
+            Statements attributed to an individual represent the opinions of that individual as of the date published
+            and do not necessarily reflect the opinions of Capital Group or its affiliates. This information is intended
+            to highlight issues and should not be considered advice, an endorsement or a recommendation.
+            <br><br>
+            ©2020 Morningstar, Inc. All rights reserved. The information contained herein: (1) is proprietary to
+            Morningstar and/or its content providers; (2) may not be copied or distrubuted; and (3) is not warranted to
+            be accurate, complete or timely. Neither Morningstar nor its content providers are responsible for any
+            damages or losses arising from any
+            use of this information. Past performance is no guarantee of future results.
+            <br><br>
+            This content, developed by Capital Group, home of American Funds, should not be used as a primary basis for
+            investment decisions and is not intended to serve as impartial investment or fiduciary advice.
+            <br><br>
+            All Capital Group trademarks mentioned are owned by The Capital Group Companies, Inc., an affiliated company
+            or fund. All other company and product names mentioned are the property of their respective companies.
+            <br><br>
+            American funds Distributors, Inc., member FINRA.
+            <br><br>
+            © <span id='sf-copy-date'>2021</span> Capital Group. All rights reserved.
+        </p>
+    </footer>
+
+    <script src="./data/Sharkfin_Data.js"></script>
+    <script src="./js/savings-calculator.js"></script>
+    <script src="./js/shark-fin.js"></script>
+    <!-- <script src="./js/smooth-scrolling.js"></script> -->
+
+    <script>
+        document.getElementById('sf-copy-date').innerText = new Date().getFullYear();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('sharkfin loaded')
+
+            window.parent.postMessage('sharkfinReady', '*');
+        })
+
+        document.getElementById('shark-fin-close').addEventListener('click', () => {
+            window.parent.postMessage('closeSharkfin', '*');
+        })
+
+        // SCROLL FUNCTIONS
+        function jumpToSharkDisclosures() {
+            const bottom = document.body.offsetHeight - window.innerHeight;
+            const legal = document.querySelector('.sharkfin-top-fold').offsetHeight - 5;
+            const jump = Math.min(bottom, legal);
+
+            $('html, body').animate(
+                {
+                    scrollTop: jump
+                },
+                700,
+                'swing'
+            );
+        }
+
+        function scrollToSharkTop(e = null) {
+            if (e)
+                e.preventDefault();
+            $('html, body').animate(
+                {
+                    scrollTop: 0
+                },
+                700,
+                'swing'
+            );
+        }
+
+        // **************************************************************** //
+        // LISTEN FOR KEYPRESSES
+        // **************************************************************** //
+        window.addEventListener('keydown', (e) => {
+            // D PRESSED
+            if (e.key.toLowerCase() === 'd') {
+                jumpToSharkDisclosures();
+            }
+
+            // UP PRESSED
+            if (e.key === 'ArrowUp') {
+                scrollToSharkTop(e);
+            }
+
+            if (event.key.toLowerCase() === 'a') {
+
+                try {
+                    window.parent.toggleAnnotation();
+                } catch (error) {
+                    console.warn(error)
+                }
+            }
+        })
+        let userAgent = window.navigator.userAgent.toLowerCase(),
+            safari = /safari/.test(userAgent),
+            ios = /iphone|ipod|ipad/.test(userAgent);
+        // so this is kinda weird since userAgent is sorta unrelieable
+        // when content is opended in a browser safari will be true ios false
+        // when opened in the seismic app on ios both safari and ios will be false...
+        const iPadSeismic = window.innerWidth < 1370 && window.innerHeight < 1030 && safari === false && ios === false;
+
+        if (iPadSeismic) {
+            document.querySelector('.main-container').classList.add('ipadseismic')
+        }
+    </script>
+</body>
+
+</html>

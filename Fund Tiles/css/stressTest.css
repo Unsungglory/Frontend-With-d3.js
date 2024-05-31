@@ -1,0 +1,359 @@
+#fp-growth-5 {
+    max-height: 535px;
+    min-width: 1px;
+    min-height: 1px;
+}
+
+.stress-test-3-cols {
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 100px;
+}
+
+.st-row-2 {
+    margin-top: 6px;
+    height: 60px;
+
+}
+
+.stress-test-legend {
+    display: flex; 
+    align-items: center;
+}
+
+.stress-test-legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.positive {
+    background-color: rgba(0, 156, 221, 1);
+}
+
+.negative {
+    background-color: rgba(132, 205, 203, 1)
+}
+
+.nuetral {
+    background-color: rgba(178, 213, 239, 1);
+}
+
+.st-blue {
+    background-color: rgba(0, 95, 158, 1);
+}
+.st-dark {
+    background-color: rgba(112, 112, 112, 1);
+}
+
+#st-info-boxes {
+    position: relative;
+    height: 266px;
+    overflow: hidden;
+}
+
+.st-info-box {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 156, 221, 1);
+    padding: 11px;
+    color: white;
+    font-size: 18px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transition: all .5s ease-in-out;
+}
+
+.st-box-number {
+    color: white;
+    font-weight: 700;
+    transition: opacity .4s ease-in-out;
+    width: 64px;
+    text-align: right;
+}
+
+.st-overlay {
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    transition: opacity .4s ease-in-out;
+    width: 64px;
+    text-align: right;
+}
+
+.st-2-cols {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    position: relative;
+}
+
+#st-pie-chart {
+    height: 266px;
+}
+
+#st-pie-grid-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.st-pie-grid-row {
+    display: grid;
+    grid-template-columns: 28px auto 82px;
+    margin-bottom: 20px;
+    opacity: 0;
+    transition: all .4s ease-in-out;
+    cursor: pointer;
+}
+
+.st-pie-grid-row:hover {
+    opacity: 1 !important;
+}
+
+.st-pie-dot {
+    background-color: rgba(0, 95, 158, 1);
+    height: 20px;
+    width: 20px;
+    border-radius: 100px;
+}
+
+.st-body-text {
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.right-j {
+    text-align: right;
+    transition: all .4s ease-in-out;
+}
+
+.st-overlay-2 {
+    font-size: 18px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    transition: all .4s ease-in-out;
+    opacity: 0;
+}
+
+.st-pi-text {
+    fill: white;
+    text-align: center;
+    text-anchor: middle;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#stress-test-line-chart {
+    height: 266px;
+    position: relative;
+}
+
+.st-data-missing {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 70px;
+    transition: opacity .4s ease-in-out;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#st-data-missing-1 {
+    justify-content: flex-start;
+    padding-left: 40px;
+}
+
+.st-output-div {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+    padding-top: 70px;
+    transition: opacity .4s ease-in-out;
+    z-index: 1;
+    top: 0px;
+    pointer-events: none;
+}
+
+.grid {
+    opacity: .13;
+}
+
+.grid .domain {
+    display: none;
+}
+
+.st-y-axis .domain {
+    display: block;
+    opacity: .7;
+}
+
+@media (max-width: 1400px) {
+
+    #fp-growth-5 {
+        max-height: 506px;
+    }
+
+    .stress-test-3-cols {
+        column-gap: 50px;
+        grid-template-columns: 1fr 2fr 2fr;
+    }
+
+    .st-2-cols {
+        display: grid;
+        grid-template-columns: 55% 45%;
+    }
+
+    .stress-test-legend-item {
+        display: grid;
+        align-items: center;
+        margin-right: 15px;
+        grid-template-columns: 22px auto;
+    }
+
+    .st-pie-grid-row {
+        align-items: center;
+        grid-template-columns: 21px auto 82px;
+    }
+
+    #st-pie-grid-container {
+        padding-left: 35px;
+    }
+
+    .th-big-bold {
+        font-size: 19px;
+    }
+    
+    .st-body-text,
+    .st-overlay-2 {
+        font-size: 17px;
+    }
+
+    .st-pie-dot {
+        height: 12px;
+        width: 13px;
+    }
+
+    @media (max-height: 770px) {
+
+        #fp-growth-5 {
+            max-height: 466px;
+        }
+
+        .st-pi-text {
+            font-size: 16px;
+        }
+
+        .st-body-text,
+        .st-overlay-2 {
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        #st-pie-grid-container {
+            padding-left: 32px;
+        }
+
+        .st-pie-grid-row {
+            grid-template-columns: 18px 46px 82px;
+        }
+    }
+
+  }
+
+  @media (max-width: 1100px) {
+
+    #fp-growth-5 {
+        max-height: 375px;
+    }
+
+    .th-big-bold {
+        font-size: 14px;
+    }
+
+    .stress-test-3-cols {
+        margin-top: 10px;
+        column-gap: 40px;
+    }
+
+    .st-row-2 {
+        margin-top: 5px;
+        height: 50px;
+    }
+
+    .stress-test-legend-item {
+        font-size: 10px;
+    }
+
+    .st-info-box {
+        height: 30px;
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .st-body-text, .st-overlay-2 {
+        font-size: 11px;
+    }
+
+    .st-pie-grid-row {
+        align-items: center;
+        grid-template-columns: 19px 25px 56px;
+    }
+
+    .st-pi-text {
+        font-size: 11px;
+    }
+
+    #st-pie-grid-container {
+        padding-left: 22px;
+    }
+
+    #st-info-boxes {
+        position: relative;
+        height: 210px;
+    }
+
+    #st-pie-chart {
+        height: 210px;
+        max-width: 160px;
+    }
+
+    #stress-test-line-chart {
+        height: 210px;
+    }
+
+    .st-output-div {
+        font-size: 9px;
+    }
+    #st-data-missing-1 {
+        padding-left: 21px;
+    }
+
+    .st-data-missing {
+        font-size: 9px;
+        width: 103%;
+    }
+
+    .stress-test-legend-item {
+        font-size: 9px;
+        margin-right: 12px;
+        grid-template-columns: 13px auto;
+    }
+
+
+  }

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="cursor-b" transform="translate(-136 -103)">
+    <g id="cursor" transform="translate(136 103)" fill="none" stroke="#fff" stroke-width="2">
+      <circle cx="15" cy="15" r="15" stroke="none"/>
+      <circle cx="15" cy="15" r="14" fill="none"/>
+    </g>
+    <circle id="cursor-2" data-name="cursor" cx="13" cy="13" r="13" transform="translate(138 105)" fill="rgba(123,208,226,0.5)"/>
+  </g>
+</svg>

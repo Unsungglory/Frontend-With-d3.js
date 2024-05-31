@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112.312" height="83.36" viewBox="0 0 112.312 83.36">
+  <g id="icons_credit_card_24px" transform="translate(-0.8 -3.8)">
+    <g id="Group_10912" data-name="Group 10912" transform="translate(0.8 3.8)">
+      <path id="Path_5330" data-name="Path 5330" d="M84.16,3.8H8.787A7.884,7.884,0,0,0,.8,11.787V58.708a7.884,7.884,0,0,0,7.987,7.987h8.486V63.2H8.787a4.474,4.474,0,0,1-4.492-4.492V11.787A4.474,4.474,0,0,1,8.787,7.294H84.659a4.474,4.474,0,0,1,4.492,4.492v7.987h3.494V11.787A8.66,8.66,0,0,0,84.16,3.8Z" transform="translate(-0.8 -3.8)" fill="#00254a"/>
+      <g id="Group_10910" data-name="Group 10910" transform="translate(20.965 20.965)">
+        <path id="Path_5331" data-name="Path 5331" d="M87.861,11.993a5,5,0,0,1,4.992,4.992V62.409A5,5,0,0,1,87.861,67.4H13.486a5,5,0,0,1-4.992-4.992V16.486a5,5,0,0,1,4.992-4.992H87.861m0-3.494H13.486A8.413,8.413,0,0,0,5,16.486V61.91A8.747,8.747,0,0,0,13.486,70.4H87.861a8.747,8.747,0,0,0,8.486-8.486V16.486A8.747,8.747,0,0,0,87.861,8Z" transform="translate(-5 -8)" fill="#00254a"/>
+      </g>
+      <g id="Group_10911" data-name="Group 10911" transform="translate(22.462 32.446)">
+        <line id="Line_1968" data-name="Line 1968" x2="86.854" fill="none" stroke="#00254a" stroke-width="0.75"/>
+      </g>
+      <line id="Line_1969" data-name="Line 1969" x2="86.854" transform="translate(22.462 45.424)" fill="none" stroke="#00254a" stroke-width="0.75"/>
+    </g>
+    <line id="Line_1970" data-name="Line 1970" x2="25.956" transform="translate(30.75 63.2)" fill="none" stroke="#00254a" stroke-width="0.75"/>
+    <line id="Line_1971" data-name="Line 1971" x2="25.956" transform="translate(30.75 73.683)" fill="none" stroke="#00254a" stroke-width="0.75"/>
+    <circle id="Ellipse_2387" data-name="Ellipse 2387" cx="7.487" cy="7.487" r="7.487" transform="translate(72.679 60.705)" fill="none" stroke="#009cdc" stroke-width="0.75"/>
+    <circle id="Ellipse_2388" data-name="Ellipse 2388" cx="7.487" cy="7.487" r="7.487" transform="translate(84.659 60.705)" fill="#fff" stroke="#009cdc" stroke-width="0.75"/>
+  </g>
+</svg>

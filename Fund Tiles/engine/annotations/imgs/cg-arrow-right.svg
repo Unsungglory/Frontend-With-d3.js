@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
+  <g id="Group_32" data-name="Group 32" transform="translate(313 -1764)">
+    <circle id="Ellipse_6" data-name="Ellipse 6" cx="17.5" cy="17.5" r="17.5" transform="translate(-313 1764)" fill="#fff"/>
+    <g id="Arrow" transform="translate(-301.636 1786.87) rotate(-90)">
+      <path id="Line-2" d="M11.936,0H0" transform="translate(5.222 0) rotate(90)" fill="none" stroke="#000" stroke-linecap="square" stroke-width="2" fill-rule="evenodd"/>
+      <path id="Path-2" d="M0,0,5.567,5.193,0,10.453" transform="translate(10.453 7.208) rotate(90)" fill="none" stroke="#000" stroke-width="2" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>

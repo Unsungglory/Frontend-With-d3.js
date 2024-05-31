@@ -1,0 +1,270 @@
+
+
+.bond-sub {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  #bond-section-1-chart-1 {
+    height: 85px;
+    position: relative;
+    margin-top: 100px;
+  }
+
+  #bond-section-1-chart-2 {
+    margin-top: 0px;
+    height: 200px;
+    width: 100%;
+    position: relative;
+  }
+
+  #bond-section-1-chart-3,
+  #bond-section-1-chart-4 {
+    height: 325px;
+    width: 100%;
+    position: relative;
+    transition: all .4s ease-in-out;
+  }
+
+  .bond-donut {
+    transition: .4s all ease-in-out;
+  }
+
+  #bond-section-3-svg,
+  #bond-section-4-svg {
+    overflow: unset;
+  }
+
+  .bond-sub-sm {
+    font-size: 16px;
+    line-height: 20px;
+    height: 120px;
+  }
+
+.bond-section-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 70px;
+    height: 520px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+  }
+
+  .bond-column {
+    position: relative;
+  }
+
+  .bond-white {
+    font-size: 18px;
+  }
+
+  .bond-white-big {
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .bond-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 18px;
+  }
+
+  .bond-min-max {
+    opacity: 0;
+    transition: opacity .4s ease-in-out;
+}
+
+  .bond-row div:last-child {
+    text-align: right;
+  }
+
+  .bond-line {
+      stroke: rgba(178, 178, 178, 1);
+      stroke-width: 1.5px;
+  }
+
+  .bond-dashed-line {
+    stroke: rgba(178, 178, 178, 1);
+    stroke-width: 2px;
+    stroke-dasharray: 5 3;
+}
+
+.bond-slider-box {
+    background-color: rgba(0, 41, 75, 1);
+    color: white;
+    font-size: 22px;
+    font-weight: 500;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 63px;
+    width: 79px;
+    margin-left: -38px;
+    position: absolute;
+    border-radius: 10px;
+    transition: all .1s ease-in-out;
+    top: -38px;
+    left: 50%;
+}
+
+.bond-slider-box::before { 
+    content: "";
+    position: absolute;
+    top: 100%;                     
+    left: 50%;
+    margin-left: -10px;
+    border: solid 20px transparent;
+    border-top-color: rgba(0, 41, 75, 1);
+    border-left-width: 9px;
+    border-right-width: 9px;
+    border-top-width: 15px;
+}
+
+.bond-pi-big {
+    fill: black;
+    font-size: 30px;
+    font-weight: 700;
+    text-anchor: middle;
+    text-align: center;
+    pointer-events: none;
+
+}
+
+.bond-pi-sm {
+    fill:rgba(0, 41, 75, 1);
+    font-size: 16px;
+    font-weight: 500;
+    text-anchor: middle;
+    text-align: center;
+    pointer-events: none;
+}
+
+.bond-nums-data {
+    font-size: 22px;
+    text-align: center;
+    text-anchor: middle;
+    font-weight: 700;
+}
+
+.bond-section-1-label {
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    text-anchor: middle;
+    width: 100px;
+    position: absolute;
+    top: 0px;
+    transition: opacity .3s ease-in-out;
+  }
+  #bond-section-1-ticker-a,
+  #bond-section-1-ticker-f2,
+  #bond-section-1-ticker-r6 {
+    opacity: 0;
+  }
+  
+.bond-section-1-label sup {
+  font-size: 16px;
+  top: 0px;
+}
+
+.bond-section-output-text {
+    text-align: center;
+    text-anchor: middle;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px;
+    line-height: 24px;
+    position: absolute;
+}
+
+.bond-circle {
+  transition: all .4s ease-in-out;
+  stroke: transparent;
+  stroke-width: 0px;
+  fill: rgba(227, 227, 227, 1);
+}
+
+.bond-circle:hover {
+  stroke: rgba(0, 0, 0, 0.445);
+  stroke-width: 7px;
+  fill: rgba(227, 227, 227, 0.65);
+}
+
+    @media (max-width: 1400px) {
+
+    .bond-column {
+      width: 260px;
+    }
+
+    @media (max-height: 770px) {
+
+    }
+  }
+
+  @media (max-width: 1100px) {
+
+    .bond-column {
+      width: 175px;
+    }
+
+    .bond-sub-sm {
+      font-size: 10px;
+      line-height: 13px;
+      height: 40px;
+    } 
+    
+    .bond-section-1 {
+      height: 420px;
+      margin-top: 20px;
+    }
+
+    .bond-nums-data {
+      font-size: 14px;
+    }
+
+    .bond-section-1-label {
+      font-size: 10px;
+    }  
+
+    .bond-section-1-label sup {
+      font-size: 13px;
+      top: 0px;
+    }
+
+    .bond-slider-box {
+      font-size: 13px;
+      height: 40px;
+      width: 56px;
+      margin-left: -28px;
+      top: -32px;
+    }
+
+    .bond-row {
+      font-size: 11px;
+      margin-top: 8px;
+
+    }  
+
+    #bond-section-1-chart-1 {
+      height: 50px;
+    }
+
+    .bond-pi-big {
+      font-size: 20px;
+      transform: translate(0px, -2px);
+    }
+
+    .bond-pi-sm {
+      font-size: 11px;
+      transform: translate(0px, -10px);
+    }
+
+    .bond-section-output-text {
+      font-size: 10px;
+      padding: 12px;
+      line-height: 14px;
+    }
+
+  }

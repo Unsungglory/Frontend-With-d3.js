@@ -1,0 +1,20 @@
+new LineChart
+line 166 of FT_drawPage.js
+currentFundData param? could pass in aShares to test console output?
+
+
+adding extra param in LineChart()
+removed fileName.js dependency
+changed filename.js scripts to data.js
+
+added constants.js to index.html
+
+is location a factor?
+./data/data.js
+or
+data/data.js
+
+I moved the data.js script up and jquery down in 
+fund-page-template.html
+
+adding settimeout in FT_drawPage 177

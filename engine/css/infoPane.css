@@ -1,0 +1,235 @@
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+/* START INFO OVERLAY PANEL */
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+
+#info-overlay-container {
+    /* font-family: AvenirCon; */
+    font-weight: 500;
+    color: black;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 998;
+    background-color: #e1e1e1;
+    transition: all .3s;
+    min-width: 1024px;
+}
+
+.info-top-bar {
+    color: white;
+    background-color: #00294e;
+    height: clamp(35px, 2.3vw, 60px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.info-top-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+#guide-title {
+    position: absolute;
+    left: 3%;
+    font-size: clamp(12px, 1.5vw, 24px);
+    font-weight: 700;
+}
+
+#info-close-btn {
+    font-size: clamp(10px, 1vw, 14px);
+    letter-spacing: 1.8px;
+    letter-spacing: clamp(.8px, 1vw, 1.8px);
+    opacity: .5;
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    position: absolute;
+    right: 3%;
+}
+
+#info-close-btn svg {
+    transform: scale(1.8);
+    margin-left: 25px;
+}
+
+#info-close-btn:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.info-content-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 80% 20%;
+    column-gap: 1%;
+    width: 100%;
+    /* justify-content: center; */
+    align-items: center;
+    height: 93%;
+    padding-left: 3%;
+    padding-right: 2%;
+}
+
+.info-sidebar-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.info-sidebar-header,
+.info-sidebar-header-2 {
+    font-size: clamp(11px, 1.3vw, 22px);
+    font-weight: 700;
+    line-height: 35px;
+    margin-bottom: 2px;
+}
+
+.info-sidebar-header-2 {
+    margin-bottom: 5px;
+}
+
+.sidebar-grid {
+    grid-column: 1/3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 40% 30% 30%;
+}
+
+.info-li,
+.info-li-key {
+    display: flex;
+    align-items: center;
+
+    font-size: clamp(9px, .9vw, 14px);
+    font-weight: 900;
+    letter-spacing: clamp(.8px, .1vw, 1.4px);
+    text-transform: uppercase;
+    margin-bottom: 4%;
+}
+
+.info-num {
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 0px 2px 1px #00000026;
+    width: clamp(16px, 1.4vw, 24px);
+    height: clamp(16px, 1.4vw, 24px);
+    min-width: clamp(16px, 1.4vw, 24px);
+    min-height: clamp(16px, 1.4vw, 24px);
+    text-align: center;
+    margin-right: clamp(10px, 1.18vw, 18px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1px;
+    padding-right: 1px;
+    letter-spacing: -0.2px;
+}
+
+.info-sm {
+    letter-spacing: -.05px;
+}
+
+.info-key {
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 0px 3px 1px #00000026;
+    border-radius: 5px;
+    margin-right: clamp(10px, 1.18vw, 18px);;
+    width: clamp(22px, 2.2vw, 36px);
+    height: clamp(22px, 2.2vw, 36px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-screen-pic {
+    background-image: url('../imgs/InfoOverlayDesktop.jpg');
+
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 1%;
+    margin-top: 5%;
+}
+
+@media (max-width: 1367px) {
+    /* FOR INFO OVERLAY */
+    .info-screen-pic {
+        background-image: url('../imgs/InfoOverlayiPad.jpg');
+        margin-top: 15%;
+    }
+
+
+    @media (max-height: 830px) {
+        /* FOR INFO OVERLAY */
+
+
+        .info-screen-pic {
+            background-image: url('../imgs/InfoOverlayDesktop.jpg');
+            margin-top: 5%;
+        }
+
+        .key-right svg {
+            transform: translate(.5px, 0px) scale(.8);
+        }
+
+        .key-left svg {
+            transform: translate(-.5px, 0px) scale(.8);
+        }
+
+
+    }
+}
+
+@media (max-width: 1100px) {
+    /*/////////////////// INTERACTIVE GUIDE  (max-width: 1100px) //////////////////// */
+
+    .info-content-container {
+        grid-template-rows: 76% 20%;
+    }
+
+    #info-close-btn svg {
+        transform: scale(1.2);
+        margin-left: 18px;
+    }
+
+    .info-li,
+    .info-li-key {
+
+        margin-bottom: 2%;
+    }
+
+    .key-right svg {
+        transform: translate(.5px, 0px) scale(.75);
+    }
+
+    .key-left svg {
+        transform: translate(-.5px, 0px) scale(.75);
+    }
+
+}
+
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+/* END INFO OVERLAY PANEL */
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////////////////////// */

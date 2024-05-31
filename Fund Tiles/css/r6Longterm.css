@@ -1,0 +1,52 @@
+#r6-longterm-chart {
+    height: 539px;
+    position: relative;
+}
+
+.num-vals {
+    fill: white;
+    text-anchor: middle;
+    font-weight: 500;
+}
+
+.r6-lt-bot-lab {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    text-anchor: middle;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.r6-lt-bot-lab sup {
+    font-size: 55%;
+}
+
+@media (max-width: 1400px) {
+    .r6-lt-bot-lab {
+        font-size: 16px;
+    }
+
+    @media (max-height: 770px) {
+
+        #r6-longterm-chart {
+            height: 470px;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+    #r6-longterm-chart {
+        height: 395px;
+    }
+
+    .num-vals {
+        font-size: 11px;
+        transform: translate(0px, -8px);
+    }
+
+    .r6-lt-bot-lab {
+        font-size: 11px;
+    }
+}

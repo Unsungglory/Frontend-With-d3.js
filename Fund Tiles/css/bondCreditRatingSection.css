@@ -1,0 +1,135 @@
+
+    #fp-bond-4 {
+        height: 550px;
+    }
+
+.credit-rating-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 30px;
+    grid-row-gap: 10px;
+    margin-top: 50px;
+}
+
+.cr-grid-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: black;
+    height: 60px;
+    transition: opacity .3s ease-in-out;
+}
+
+.blue-50 {
+   background-color: rgba(0, 155, 223, 0.25);
+   order: 0;
+}
+.blue-45 {
+    background-color: rgba(0, 155, 223, 0.225);
+    order: 2;
+}
+ .blue-40 {
+    background-color: rgba(0, 155, 223, 0.20);
+    order: 4;
+}
+ .blue-35 {
+    background-color: rgba(0, 155, 223, 0.175);
+    order: 6;
+}
+ .blue-30 {
+    background-color: rgba(0, 155, 223, 0.15);
+    order: 8;
+}
+ .blue-25 {
+    background-color: rgba(0, 155, 223, 0.125);
+    order: 1;
+}
+ .blue-20 {
+    background-color: rgba(0, 155, 223, 0.10);
+    order: 3;
+}
+ .blue-15 {
+    background-color: rgba(0, 155, 223, 0.075);
+    order: 5;
+}
+ .blue-10 {
+    background-color: rgba(0, 155, 223, 0.05);
+    order: 7;
+}
+ .blue-5 {
+    background-color: rgba(0, 155, 223, 0.025);
+    order: 9;
+}
+
+.cr-med {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.cr-big-bold {
+    font-weight: 700;
+    font-size: 22px;
+    width: 100px;
+    text-align: right;
+}
+
+.cr-reg-text {
+    transition: opacity .4s ease-in-out;
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.cr-alt-text {
+    position: absolute;
+    top: 0;
+    transition: opacity .4s ease-in-out;
+    opacity: 0;
+    white-space: nowrap;
+}
+
+.credit-rating-ds {
+    font-size: 12px;
+    margin-top: 15px;
+    line-height: 18px;
+}
+
+@media (max-width: 1400px) {
+
+    #fp-bond-4 {
+        height: 560px;
+    }
+
+    @media (max-height: 770px) {
+
+    #fp-bond-4 {
+        height: 550px;
+    }
+    
+    }
+
+  }
+
+  @media (max-width: 1100px) {
+    .cr-grid-box {
+        height: 40px;
+    }    
+
+    #fp-bond-4 {
+        height: 440px;
+    }
+
+    .cr-med {
+        font-size: 14px;
+    }
+    
+    .cr-big-bold {
+        font-size: 17px;
+    }   
+    
+    .credit-rating-ds {
+        font-size: 9px;
+        margin-top: 15px;
+        line-height: 15px;
+    }
+  }

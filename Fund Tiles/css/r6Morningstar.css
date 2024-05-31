@@ -1,0 +1,702 @@
+#r6-ms-sup-2, #rd-ms-sup-1 {
+    margin-left: -.45em;
+}
+
+#r6-ms-sup-1 {
+    left: -.17rem;
+}
+
+.r6-three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.r6-16 {
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.r6-morn-big {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.mtop {
+    margin-top: 57px;
+}
+
+.r6-morn-grey {
+    font-size: 19px;
+    color: rgba(93, 93, 93, 1);
+    margin-top: 47px;
+    margin-bottom: 15px;
+}
+
+.r6-morn-fund-holder {
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: 30px auto;
+    align-items: center;
+}
+
+.r6-circle {
+    width: 20px;
+    height: 20px;
+    background-color: whitesmoke;
+    border-radius: 100px;
+}
+
+.r6-morn-bold {
+   font-size: 18px;
+   font-weight: 500; 
+}
+
+.dc-fund-builder-grid .r6-mstar-overlay-text {
+    z-index: 1;
+    background-color: transparent;
+    color: white;
+    font-size: 26px;
+    font-weight: 700;
+    position: absolute;
+}
+
+.mstar-fund-overlay {
+    position: absolute;
+    opacity: 0;
+}
+
+.r6-mstar-overlay-text {
+    opacity: 0;
+}
+
+#AMCAP-overlay {
+    background-image: url(../blobs/amcap.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#AMCAP-overlay-text {
+    left: 330px;
+    top: 60px;
+}
+
+#CIB-overlay {
+    background-image: url(../blobs/cib.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#CIB-overlay-text {
+    left: 330px;
+    top: 60px;
+}
+
+#DWGI-overlay {
+    background-image: url(../blobs/dwgi.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#DWGI-overlay-text {
+    left: 330px;
+    top: 60px;
+}
+
+#EUPAC-overlay {
+    background-image: url(../blobs/eupac.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#EUPAC-overlay-text {
+    left: 330px;
+    top: 14%;
+}
+
+#FI-overlay {
+    background-image: url(../blobs/fi.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#FI-overlay-text {
+    left: 330px;
+    top: 60px;
+}
+
+#GBAL-overlay {
+    background-image: url(../blobs/gbal.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#GBAL-overlay-text {
+    left: 33%;
+    top: 60px;
+}
+
+#GFA-overlay {
+    background-image: url(../blobs/gfa.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#GFA-overlay-text {
+    left: 330px;
+    top: 60px;
+}
+
+#NPF-overlay {
+    background-image: url(../blobs/npf.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#NPF-overlay-text {
+    left: 330px;
+    top: 60px;
+}
+
+#WMIF-overlay {
+    background-image: url(../blobs/wmif.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#WMIF-overlay-text {
+    left: 180px;
+    top: 60px;
+}
+
+#AMBAL-overlay {
+    background-image: url(../blobs/ambal.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#AMBAL-overlay-text {
+    left: 230px;
+    top: 60px;
+}
+
+#IVE-overlay {
+    background-image: url(../blobs/IVE.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#IVE-overlay-text {
+    left: 60%;
+    top: 16%;
+}
+
+#IFA-overlay {
+    background-image: url(../blobs/ifa.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#IFA-overlay-text {
+    left: 22%;
+    top: 22%;
+}
+
+#NWF-overlay {
+    background-image: url(../blobs/nwf.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#NWF-overlay-text {
+    left: 60%;
+    top: 16%;
+}
+
+#AMF-overlay {
+    background-image: url(../blobs/amf.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#AMF-overlay-text {
+    left: 24%;
+    top: 15%;
+}
+
+#GIF-overlay {
+    background-image: url(../blobs/GIF.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#GIF-overlay-text {
+    left: 44%;
+    top: 12%;
+}
+
+#NEF-overlay {
+    background-image: url(../blobs/NEF.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#NEF-overlay-text {
+    left: 54%;
+    top: 15%;
+}
+
+#SCWF-overlay {
+    background-image: url(../blobs/SCWF.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+#SCWF-overlay-text {
+    left: 64%;
+    top: 50%;
+}
+
+#WGI-overlay {
+    background-image: url(../blobs/WGI.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#WGI-overlay-text {
+    left: 24%;
+    top: 15%;
+}
+
+#IGI-overlay {
+    background-image: url(../blobs/IGI.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#IGI-overlay-text {
+    left: 24%;
+    top: 15%;
+}
+
+#ICA-overlay {
+    background-image: url(../blobs/ica.svg);
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#ICA-overlay-text {
+    left: 24%;
+    top: 10%;
+}
+
+
+
+@keyframes redRing {
+    0%   {    
+        r: 6;
+    }
+
+    50%   {    
+        opacity: 1;
+    }
+
+    100%   {    
+        r: 12;
+        opacity: 0;
+    }
+
+  }
+
+
+
+
+.dc-fund-builder-grid .blue {
+    background-color: rgba(0, 87, 184, 1);
+}
+
+.ring-svg {
+    width: 28px;
+    height: 28px;
+}
+
+.dc-fund-builder-grid .red-dot {
+    /* r: 7px;
+    cx: 14px;
+    cy: 14px; */
+    fill: rgba(217, 25, 67, 1);
+    stroke: none;
+}
+
+.dc-fund-builder-grid .red-ring {
+    /* r: 12px;
+    cx: 14px;
+    cy: 14px; */
+    fill: none;
+    stroke-width: 2px;
+    stroke: rgba(217, 25, 67, 1);
+    animation: redRing 4s 0s ease-in-out infinite;
+}
+
+#red-dot-container {
+    left: 590px;
+    top: 0px;
+    position: absolute;
+    background-color: transparent;
+}
+
+.dc-outline {
+    outline: 1px solid rgba(0, 41, 75, 0.05);
+}
+
+.dc-grid-margin {
+    display: grid;
+    grid-template-rows: 40px auto;
+    grid-template-columns: 48px auto;
+    transition: .25s all ease-in-out;
+}
+
+.dc-top-margin {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    width: 640px;
+    align-items: flex-start;
+    background-color: white;
+}
+
+.dc-left-margin {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    width: 404px;
+    height: 40px;
+    transform: rotate(-90deg) translate(-404px, 0px);
+    transform-origin: left top;
+    align-items: flex-start;
+    background-color: white;
+}
+
+.dc-top-margin div,
+.dc-left-margin div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.dc-fund-builder-grid {
+    background-color: rgb(221, 220, 220);
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 33.33% 33.33% 33.33%;
+    grid-gap: 1px;
+    width: 640px;
+    height: 400px;
+    grid-row: 2;
+    grid-column: 2;
+    overflow: hidden;
+    position: relative;
+    outline: 1px solid rgba(0, 41, 75, 0.15);
+}
+
+.dc-fund-builder-grid div {
+    background-color: rgba(247, 247, 247, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+.dc-fund-overlay {
+    position: absolute;
+}
+
+#fund-1-overlay {
+    width: 450px;
+    height: 250px;
+    border-radius: 350px;
+    left: 218px;
+    top: -84px;
+}
+
+#fund-1-overlay-text {
+    top: 55px;
+    left: 350px;
+    z-index: 1;
+    background-color: transparent;
+    color: white;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.r6-first-col {
+    width: 600px;
+    padding-right: 50px;
+}
+
+
+@media (max-width: 1400px) {
+
+    .r6-first-col {
+        width: 360px;
+        padding-right: 10px;
+    }
+
+    .dc-top-margin {
+        width: 410px;
+    }
+
+    .dc-fund-builder-grid {
+        width: 410px;
+        height: 400px;
+    }
+
+    .dc-left-margin {
+        width: 404px;
+        transform: rotate(-90deg) translate(-404px, 0px);
+    }
+
+    .dc-grid-margin {
+        grid-template-rows: 30px auto;
+        grid-template-columns: 31px auto;
+    }
+
+    #AMCAP-overlay,
+    #EUPAC-overlay,
+    #GFA-overlay, 
+    #NPF-overlay,
+    #WMIF-overlay,
+    #AMBAL-overlay,
+    #IVE-overlay,
+    #NWF-overlay,
+    #AMF-overlay {
+        background-size: 410px 340px;
+    }
+    #AMCAP-overlay-text {
+        left: 210px;
+    }
+    #EUPAC-overlay-text {
+        left: 240px;
+    }
+    #GFA-overlay-text {
+        left: 260px;
+        top: 60px;
+    }
+    #NPF-overlay-text {
+        left: 270px;
+        top: 60px;
+    }
+    #WMIF-overlay-text {
+        left: 110px;
+        top: 60px;
+    }
+    #AMBAL-overlay-text {
+        left: 110px;
+        top: 60px;
+    }
+
+    #IVE-overlay-text {
+        left: 60%;
+        top: 11%;
+    }    
+
+    #WGI-overlay-text {
+        left: 24%;
+        top: 7%;
+    }
+
+    #IGI-overlay-text {
+        left: 24%;
+        top: 10%;
+    }    
+    
+
+    @media (max-height: 770px) {
+        #WGI-overlay-text {
+            left: 24%;
+            top: 7%;
+        }
+        
+        #IGI-overlay-text {
+            left: 24%;
+            top: 10%;
+        }
+    }
+}
+
+@media (max-width: 1100px) {
+
+    .dc-fund-builder-grid .r6-mstar-overlay-text {
+        font-size: 16px;
+    }
+
+    .r6-first-col {
+        width: 270px;
+        padding-right: 10px;
+    }
+
+    .r6-16 {
+        font-size: 12px;
+    }   
+    
+    .r6-morn-big {
+        font-size: 19px;
+    }
+
+    .r6-morn-grey {
+        font-size: 13px;
+        margin-top: 29px;
+    }
+
+    .r6-morn-bold {
+        font-size: 11px;
+    }    
+
+    .r6-circle {
+        width: 15px;
+        height: 15px;
+    }  
+    
+    .r6-morn-fund-holder {
+        display: grid;
+        grid-template-columns: 21px auto;
+        margin-top: 11px;
+    }
+
+    .dc-top-margin {
+        width: 270px;
+    }
+
+    .dc-fund-builder-grid {
+        width: 270px;
+        height: 250px;
+    }
+
+    .dc-left-margin {
+        width: 250px;
+        transform: rotate(-90deg) translate(-250px, 0px);
+    }
+
+    .dc-grid-margin {
+        grid-template-rows: 15px auto;
+        grid-template-columns: 15px auto;
+    }
+
+    .dc-top-margin div, .dc-left-margin div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+    }
+
+    .mtop {
+        margin-top: 27px;
+    }  
+    
+    #fund-1-overlay-text {
+        top: 55px;
+        left: 110px;
+        z-index: 1;
+        background-color: transparent;
+        color: white;
+        font-size: 17px;
+    }
+
+    #red-dot-container {
+        transform: scale(.65);
+        transform-origin: center center;
+    }
+
+    #AMCAP-overlay,
+    #EUPAC-overlay,
+    #GFA-overlay, 
+    #NPF-overlay,
+    #WMIF-overlay,
+    #AMBAL-overlay,
+    #IVE-overlay,
+    #NWF-overlay,
+    #AMF-overlay {
+        background-size: 270px 230px;
+    }
+
+    #AMCAP-overlay-text {
+        left: 130px;
+    }
+    #EUPAC-overlay-text {
+        left: 180px;
+    }
+    #GFA-overlay-text {
+        left: 180px;
+        top: 18%;
+
+    }
+    #NPF-overlay-text {
+        left: 170px;
+        top: 18%;
+
+    }
+    #WMIF-overlay-text {
+        left: 80px;
+        top: 50px;
+    }
+
+    #WGI-overlay-text {
+        left: 24%;
+        top: 7%
+    }
+
+    #AMBAL-overlay-text {
+        left: 70px;
+        top: 40px;
+    }
+
+    #SCWF-overlay-text {
+        left: 64%;
+        top: 47%;
+    }
+
+    #IGI-overlay-text {
+        left: 24%;
+        top: 9%;
+    }
+
+}
